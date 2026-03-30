@@ -22,7 +22,12 @@
         }
         .fade-in-delayed {
             animation: fadeIn 1.2s ease-in forwards;
-            animation-delay: 0.5s;
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+        .fade-in-delayed-2 {
+            animation: fadeIn 1.2s ease-in forwards;
+            animation-delay: 0.6s;
             opacity: 0;
         }
         @keyframes fadeIn {
@@ -37,16 +42,18 @@
 <body class="text-gray-800 antialiased font-sans min-h-screen flex flex-col">
     
     <!-- 头部横幅与个人信息 -->
-    <header class="flex-grow flex flex-col justify-center items-center text-center p-10 fade-in mt-12">
+    <header class="flex-grow flex flex-col justify-center items-center text-center p-10 fade-in mt-8">
         <img src="https://avatars.githubusercontent.com/u/100000000?v=4" alt="Avatar" class="w-36 h-36 rounded-full shadow-2xl mb-6 animate-float object-cover border-4 border-white" id="avatar" onerror="this.src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'">
         
         <h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 mb-4">
             Hi, 我是 2524278238
         </h1>
         
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed mb-8">
-            一名热衷于 AI 辅助编程、大语言模型工具开发和独立游戏的开发者。<br>
-            致力于探索 AI 时代的提效工具与创新应用。
+        <p class="text-xl text-gray-700 font-semibold max-w-2xl mx-auto leading-relaxed mb-2">
+            AI 大模型开发者 & 独立游戏爱好者
+        </p>
+        <p class="text-md text-gray-500 max-w-2xl mx-auto leading-relaxed mb-8">
+            白天研究 LLM 的业务落地与研发提效，夜晚沉浸于独立游戏的奇思妙想。
         </p>
         
         <div class="flex gap-4">
@@ -56,24 +63,47 @@
         </div>
     </header>
 
-    <!-- 精选项目展示区 -->
-    <section class="max-w-6xl mx-auto p-8 mb-20 fade-in-delayed w-full">
-        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
-            <i class="fas fa-star text-yellow-500 mr-2"></i> 精选项目
-        </h2>
+    <!-- 技术栈展示 (For HR & 老板) -->
+    <section class="max-w-6xl mx-auto px-8 mb-12 fade-in-delayed w-full">
+        <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100 relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-blue-100 text-blue-600 px-4 py-1 rounded-bl-xl text-xs font-bold uppercase tracking-wider">
+                Tech Stack
+            </div>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+                <i class="fas fa-layer-group text-blue-500 mr-3"></i> 核心技术栈
+            </h2>
+            <div class="flex flex-wrap gap-3">
+                <span class="px-4 py-2 bg-blue-50 text-blue-700 rounded-lg border border-blue-100 font-medium shadow-sm"><i class="fab fa-python mr-1"></i> Python</span>
+                <span class="px-4 py-2 bg-purple-50 text-purple-700 rounded-lg border border-purple-100 font-medium shadow-sm"><i class="fas fa-brain mr-1"></i> 大语言模型 (LLM) 开发</span>
+                <span class="px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg border border-indigo-100 font-medium shadow-sm"><i class="fas fa-magic mr-1"></i> Prompt Engineering</span>
+                <span class="px-4 py-2 bg-green-50 text-green-700 rounded-lg border border-green-100 font-medium shadow-sm"><i class="fas fa-gamepad mr-1"></i> Godot 引擎</span>
+                <span class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg border border-gray-200 font-medium shadow-sm"><i class="fas fa-cogs mr-1"></i> 自动化脚本工具</span>
+                <span class="px-4 py-2 bg-yellow-50 text-yellow-700 rounded-lg border border-yellow-100 font-medium shadow-sm"><i class="fas fa-code mr-1"></i> 跨端协同开发</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 专业项目区 (For HR & 老板) -->
+    <section class="max-w-6xl mx-auto px-8 mb-16 fade-in-delayed-2 w-full">
+        <div class="flex items-end justify-between mb-8 border-b-2 border-gray-200 pb-2">
+            <h2 class="text-3xl font-bold text-gray-800 flex items-center">
+                <i class="fas fa-briefcase text-blue-600 mr-3"></i> 专业积累：AI 与研发提效
+            </h2>
+            <span class="text-sm font-medium text-blue-600 bg-blue-100 px-3 py-1 rounded-full hidden sm:block">👨‍💻 针对 HR & 技术官</span>
+        </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- 项目1 -->
-            <a href="https://github.com/2524278238/use-ai-everyserver" target="_blank" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
+            <a href="https://github.com/2524278238/use-ai-everyserver" target="_blank" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2 border-l-4 border-blue-500">
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold text-blue-600">use-ai-everyserver</h3>
+                        <h3 class="text-xl font-bold text-gray-800">use-ai-everyserver</h3>
                         <i class="fas fa-server text-blue-400 text-2xl"></i>
                     </div>
-                    <p class="text-gray-600 mb-4 h-20 overflow-hidden text-sm">
-                        同步本地代码到远程服务器并运行的工具，让你能在老旧服务器上优雅地使用本地 AI 编程工具。
-                    </p>
+                    <div class="text-gray-600 mb-6 text-sm leading-relaxed">
+                        <p class="mb-2"><strong class="text-gray-800">痛点解决：</strong> 解决老旧服务器环境无法直接运行现代 AI 编程工具的问题。</p>
+                        <p><strong class="text-gray-800">项目介绍：</strong> 支持将本地代码同步到远程服务器并运行，使开发者能够在任意老旧或隔离环境中优雅地使用本地 AI 编程工具，大幅提升研发效能。</p>
+                    </div>
                     <div class="text-blue-500 font-medium text-sm flex items-center gap-1">
                         查看源码 <i class="fas fa-arrow-right"></i>
                     </div>
@@ -81,37 +111,72 @@
             </a>
 
             <!-- 项目2 -->
-            <a href="https://github.com/2524278238/FYDL-game" target="_blank" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
+            <a href="https://github.com/2524278238" target="_blank" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2 border-l-4 border-purple-500">
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold text-green-600">FYDL-game</h3>
-                        <i class="fas fa-gamepad text-green-400 text-2xl"></i>
+                        <h3 class="text-xl font-bold text-gray-800">大模型业务落地工具矩阵</h3>
+                        <i class="fas fa-robot text-purple-400 text-2xl"></i>
                     </div>
-                    <p class="text-gray-600 mb-4 h-20 overflow-hidden text-sm">
-                        基于 Godot 引擎开发的独立游戏项目，探索游戏开发与交互的无限可能。
+                    <div class="text-gray-600 mb-6 text-sm leading-relaxed">
+                        <p class="mb-2"><strong class="text-gray-800">技术方向：</strong> LLM 接口调用、Prompt 优化、文档自动化处理。</p>
+                        <p><strong class="text-gray-800">涵盖项目：</strong> 包含 <code>Error-prone-Words-Optimization</code>, <code>doc_generator</code>, <code>doc_fill</code>, <code>bid_clarification_llm</code> 等，覆盖了从文档自动生成、内容智能填充到标书澄清等多个真实业务场景的大模型落地实践。</p>
+                    </div>
+                    <div class="text-purple-500 font-medium text-sm flex items-center gap-1">
+                        探索更多 <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- 趣味项目区 (For 朋友 & 游客) -->
+    <section class="max-w-6xl mx-auto px-8 mb-20 fade-in-delayed-2 w-full">
+        <div class="flex items-end justify-between mb-8 border-b-2 border-gray-200 pb-2">
+            <h2 class="text-3xl font-bold text-gray-800 flex items-center">
+                <i class="fas fa-gamepad text-green-500 mr-3"></i> 独立创造：游戏与小玩意
+            </h2>
+            <span class="text-sm font-medium text-green-600 bg-green-100 px-3 py-1 rounded-full hidden sm:block">🎮 针对 朋友 & 游客</span>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- 项目3 -->
+            <a href="https://github.com/2524278238/FYDL-game" target="_blank" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2 border-t-4 border-green-500">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-800">FYDL-game</h3>
+                        <i class="fas fa-ghost text-green-400 text-xl"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 h-16 overflow-hidden text-sm">
+                        基于 Godot 引擎开发的独立游戏。这里存放着我关于玩法机制与交互设计的奇思妙想。
                     </p>
-                    <div class="text-green-500 font-medium text-sm flex items-center gap-1">
+                    <div class="text-green-500 font-medium text-sm flex items-center gap-1 mt-auto">
+                        试玩/源码 <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 项目4 -->
+            <a href="https://github.com/2524278238" target="_blank" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2 border-t-4 border-yellow-500">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-800">文档转换小工具</h3>
+                        <i class="fas fa-file-exchange text-yellow-400 text-xl"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 h-16 overflow-hidden text-sm">
+                        包含 Document-conversion-tool 等实用脚本。遇到重复性劳动？写个工具把它自动化掉！
+                    </p>
+                    <div class="text-yellow-500 font-medium text-sm flex items-center gap-1 mt-auto">
                         查看源码 <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
             </a>
 
-            <!-- 项目3 -->
-            <a href="https://github.com/2524278238" target="_blank" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold text-purple-600">LLM 工具集</h3>
-                        <i class="fas fa-robot text-purple-400 text-2xl"></i>
-                    </div>
-                    <p class="text-gray-600 mb-4 h-20 overflow-hidden text-sm">
-                        包含 Error-prone-Words-Optimization, doc_generator, doc_fill 等一系列基于大语言模型的文档处理与提效工具。
-                    </p>
-                    <div class="text-purple-500 font-medium text-sm flex items-center gap-1">
-                        查看更多 <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-            </a>
-            
+            <!-- 项目5 -->
+            <div class="block bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center p-6 text-gray-400 hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-flask text-3xl mb-3"></i>
+                <p class="font-medium">更多奇思妙想</p>
+                <p class="text-xs mt-1">正在实验室中酝酿...</p>
+            </div>
         </div>
     </section>
 
