@@ -37,6 +37,29 @@
         body {
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         }
+        
+        /* 小企鹅巡逻动画 */
+        @keyframes waddle {
+            0% { transform: translateX(-10vw) scaleX(1); }
+            49% { transform: translateX(110vw) scaleX(1); }
+            50% { transform: translateX(110vw) scaleX(-1); }
+            99% { transform: translateX(-10vw) scaleX(-1); }
+            100% { transform: translateX(-10vw) scaleX(1); }
+        }
+        @keyframes bounce {
+            0%, 100% { bottom: 10px; }
+            50% { bottom: 25px; }
+        }
+        .penguin-pet {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            font-size: 3.5rem; /* 如果你之后有gif图片，可以把这里删掉换成img标签 */
+            z-index: 9999;
+            animation: waddle 20s linear infinite, bounce 0.4s ease-in-out infinite;
+            pointer-events: none; /* 防止遮挡鼠标点击 */
+            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased font-sans min-h-screen flex flex-col">
@@ -200,5 +223,8 @@
             })
             .catch(err => console.error('Failed to load avatar', err));
     </script>
+
+    <!-- 页面宠物：小企鹅咕咕嘎嘎在巡逻 -->
+    <div class="penguin-pet" title="咕咕嘎嘎">🐧</div>
 </body>
 </html>
