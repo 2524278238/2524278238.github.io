@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>李扬韬 - 求职主页 (Resume)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .fade-in { animation: fadeIn 0.8s ease-in forwards; opacity: 0; }
+        .fade-in-delayed-1 { animation: fadeIn 0.8s ease-in forwards; animation-delay: 0.2s; opacity: 0; }
+        .fade-in-delayed-2 { animation: fadeIn 0.8s ease-in forwards; animation-delay: 0.4s; opacity: 0; }
+        .fade-in-delayed-3 { animation: fadeIn 0.8s ease-in forwards; animation-delay: 0.6s; opacity: 0; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* 自定义折叠面板动画 */
+        .collapse-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .collapse-toggle:checked ~ .collapse-content {
+            max-height: 500px; /* 足够容纳内容的高度 */
+        }
+        .collapse-toggle:checked ~ .collapse-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-gray-800 antialiased font-sans min-h-screen">
+
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="font-bold text-xl text-blue-600 tracking-wider">RESUME</div>
+            <a href="index.html" class="text-gray-500 hover:text-blue-600 transition flex items-center gap-2 text-sm font-medium">
+                <i class="fas fa-arrow-left"></i> 返回主页
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-10">
+        
+        <!-- 头部摘要 -->
+        <header class="mb-12 text-center fade-in">
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-4">李扬韬</h1>
+            <p class="text-xl text-blue-600 font-medium mb-6">算法工程师 / AI 智能体研发</p>
+            
+            <!-- 个人信息折叠面板 -->
+            <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden text-left">
+                <input type="checkbox" id="info-toggle" class="collapse-toggle hidden">
+                <label for="info-toggle" class="flex justify-between items-center p-5 cursor-pointer bg-blue-50/50 hover:bg-blue-50 transition">
+                    <span class="font-semibold text-gray-700 flex items-center gap-2">
+                        <i class="fas fa-id-card text-blue-500"></i> 基本信息 (点击展开/折叠)
+                    </span>
+                    <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300 collapse-icon"></i>
+                </label>
+                <div class="collapse-content bg-white">
+                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8 text-sm">
+                        <div class="flex border-b border-gray-100 pb-2"><span class="text-gray-400 w-20">姓名</span> <span class="font-medium">李扬韬</span></div>
+                        <div class="flex border-b border-gray-100 pb-2"><span class="text-gray-400 w-20">民族</span> <span class="font-medium">汉</span></div>
+                        <div class="flex border-b border-gray-100 pb-2"><span class="text-gray-400 w-20">电话</span> <span class="font-medium">18950115169</span></div>
+                        <div class="flex border-b border-gray-100 pb-2"><span class="text-gray-400 w-20">邮箱</span> <span class="font-medium">2524278328@qq.com</span></div>
+                        <div class="flex border-b border-gray-100 pb-2"><span class="text-gray-400 w-20">出生年月</span> <span class="font-medium">2001.04</span></div>
+                        <div class="flex border-b border-gray-100 pb-2"><span class="text-gray-400 w-20">政治面貌</span> <span class="font-medium">中共党员</span></div>
+                        <div class="flex border-b border-gray-100 pb-2 md:col-span-2"><span class="text-gray-400 w-20 shrink-0">住址</span> <span class="font-medium">福建省厦门市思明区</span></div>
+                        <div class="flex border-b border-gray-100 pb-2 md:col-span-2"><span class="text-gray-400 w-20 shrink-0">学历</span> <span class="font-medium text-blue-600 font-bold">硕士研究生（在读） - 软件工程</span></div>
+                        <div class="flex border-b border-gray-100 pb-2 md:col-span-2"><span class="text-gray-400 w-20 shrink-0">就读院校</span> <span class="font-medium">大连海事大学（本科） - 苏州大学（硕士）</span></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 专业技能 -->
+        <section class="mb-12 fade-in-delayed-1">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center border-b-2 border-blue-100 pb-2">
+                <i class="fas fa-tools text-blue-500 mr-3"></i> 专业技能
+            </h2>
+            <div class="grid grid-cols-1 gap-4">
+                <div class="bg-white p-5 rounded-lg shadow-sm border-l-4 border-blue-500">
+                    <h3 class="font-bold text-gray-800 mb-2">大模型算法与应用能力</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">熟悉 Llama、Qwen、DeepSeek 等开源大语言模型，具备 <strong>LoRA 微调</strong>、推理优化与 <strong>Prompt Engineering</strong> 实践经验；熟悉 PyTorch、Transformers、vLLM 等框架，具备 <strong>RAG 系统</strong>、长文本理解及 Agent 应用开发经验。</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-sm border-l-4 border-purple-500">
+                    <h3 class="font-bold text-gray-800 mb-2">Agent 系统开发能力</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">具备基于 Dify、HiAgent 等平台及纯代码方式构建智能体系统的经验，能够完成<strong>多 Agent 架构设计</strong>、任务流程编排与工具调用机制开发，并在医疗与政务等场景中实现落地应用。</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-sm border-l-4 border-green-500">
+                    <h3 class="font-bold text-gray-800 mb-2">工程与开发能力</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">熟练使用 <strong>Python</strong>，熟悉 Linux 与 Docker 开发环境，具备良好的工程实现能力；<strong>熟练运用 AI 编程工具</strong>，能够将复杂任务拆解为适合大模型协同完成的模块化流程。</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-sm border-l-4 border-yellow-500">
+                    <h3 class="font-bold text-gray-800 mb-2">技术创新与前沿探索</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">持续关注大模型技术发展与应用范式演进，对新的 AI 应用形态有自己的独特见解与实践动力。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 实习经历 -->
+        <section class="mb-12 fade-in-delayed-2">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center border-b-2 border-blue-100 pb-2">
+                <i class="fas fa-building text-blue-500 mr-3"></i> 实习经历
+            </h2>
+            
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-blue-500 text-white px-4 py-1 text-xs font-bold rounded-bl-lg">
+                    核心经历
+                </div>
+                
+                <div class="flex flex-col md:flex-row md:justify-between md:items-baseline mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">深圳自由动脉科技有限公司</h3>
+                        <p class="text-blue-600 font-medium mt-1">算法实习生</p>
+                    </div>
+                    <div class="text-gray-500 text-sm mt-2 md:mt-0 font-medium">
+                        <i class="far fa-calendar-alt"></i> 2025年6月 – 2025年12月
+                    </div>
+                </div>
+
+                <ul class="space-y-4 text-gray-600 text-sm leading-relaxed">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3 shrink-0"></i>
+                        <span><strong>智能体系统开发：</strong>基于 Dify、HiAgent 等平台开发面向医院与政府的智能体系统，涵盖病历质控、合同对比、辅助诊疗等应用场景，推动医疗流程智能化。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3 shrink-0"></i>
+                        <span><strong>小模型训练与优化：</strong>参与口腔病症识别小模型的训练与优化，负责数据预处理、模型微调与评估，提升模型在医疗场景下的轻量化与准确性。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3 shrink-0"></i>
+                        <div>
+                            <strong>招投标智能体算法研发：</strong>功能涵盖招标助手、合同助手、清标助手等，攻克了实际业务中的两大核心难题：
+                            <div class="mt-3 grid grid-cols-1 gap-3">
+                                <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                                    <span class="text-red-500 font-bold text-xs border border-red-200 bg-red-50 px-2 py-0.5 rounded mr-2">难题一</span>提取结构不规整且文档内容长的标书信息。<br>
+                                    <a href="https://github.com/2524278238/bid_clarification_llm" target="_blank" class="inline-block mt-2 text-blue-500 hover:text-blue-700 font-medium">
+                                        <i class="fab fa-github"></i> 解决方案：bid_clarification_llm &rarr;
+                                    </a>
+                                </div>
+                                <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                                    <span class="text-red-500 font-bold text-xs border border-red-200 bg-red-50 px-2 py-0.5 rounded mr-2">难题二</span>大模型生成文档如何与原文档格式一致。<br>
+                                    <div class="mt-2 flex gap-4">
+                                        <a href="https://github.com/2524278238/doc_fill" target="_blank" class="text-blue-500 hover:text-blue-700 font-medium"><i class="fab fa-github"></i> 解决方案 1：doc_fill</a>
+                                        <a href="https://github.com/2524278238/doc_generator" target="_blank" class="text-blue-500 hover:text-blue-700 font-medium"><i class="fab fa-github"></i> 解决方案 2：doc_generator</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 科研经历 -->
+        <section class="mb-12 fade-in-delayed-3">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center border-b-2 border-blue-100 pb-2">
+                <i class="fas fa-microscope text-blue-500 mr-3"></i> 科研经历
+            </h2>
+            
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+                <div class="mb-4">
+                    <span class="inline-block px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full mb-2">学术论文 (一作)</span>
+                    <h3 class="text-lg font-bold text-gray-900">基于源端易错词的大语言模型机器翻译优化方法</h3>
+                    <p class="text-gray-500 text-sm mt-1 font-medium"><i class="fas fa-book-open"></i> 《计算机工程与应用》录用，待刊出。</p>
+                </div>
+                
+                <div class="text-gray-600 text-sm leading-relaxed mb-6 bg-gray-50 p-4 rounded-lg">
+                    <strong class="text-gray-800">任务描述：</strong>提出一种基于源端易错词的翻译优化方法。首先，通过大规模语料统计识别出显著影响翻译质量的易错词。在此基础上，设计了结合 <strong>BGE 语义检索</strong>与<strong>无监督质量评估</strong>的检索增强生成（<strong>RAG</strong>）策略，用于优化上下文学习示例选择。同时，构建针对易错词的高质量训练数据集，并采用 <strong>LoRA</strong> 微调基线模型。结果表明，该方法能够显著提高翻译质量，为提升大语言模型机器翻译的稳定性与准确性提供了一种有效途径。
+                </div>
+                
+                <div class="flex flex-wrap gap-4">
+                    <a href="https://github.com/2524278238/Error-prone-Words-Optimization" target="_blank" class="px-5 py-2 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-700 transition flex items-center gap-2">
+                        <i class="fab fa-github"></i> 开源项目代码
+                    </a>
+                    <a href="#" class="px-5 py-2 bg-blue-50 text-blue-600 border border-blue-200 rounded-lg text-sm font-medium hover:bg-blue-100 transition flex items-center gap-2">
+                        <i class="fas fa-file-pdf"></i> 下载论文 PDF (2510-0140)
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 技术方向探索 -->
+        <section class="mb-12 fade-in-delayed-3">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center border-b-2 border-blue-100 pb-2">
+                <i class="fas fa-compass text-blue-500 mr-3"></i> 技术方向探索
+            </h2>
+            <p class="text-gray-600 text-sm mb-4">本人仍持续在以下前沿领域保持好奇心与探索欲：</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border border-gray-100 hover:border-blue-300 transition">
+                    <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <span class="text-sm font-medium text-gray-700">如何利用 LLM 进行量化交易？</span>
+                </div>
+                <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border border-gray-100 hover:border-blue-300 transition">
+                    <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <span class="text-sm font-medium text-gray-700">基于视觉大模型的 AI 输入法应用开发</span>
+                </div>
+                <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border border-gray-100 hover:border-blue-300 transition">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                        <i class="fas fa-file-word"></i>
+                    </div>
+                    <span class="text-sm font-medium text-gray-700">像 vibe-coding 一样撰写、修改 Word 文档</span>
+                </div>
+                <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border border-gray-100 hover:border-blue-300 transition">
+                    <div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center shrink-0">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <span class="text-sm font-medium text-gray-700">站在玩家的角度，LLM 如何给游戏带来革命？</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-100 text-gray-400 py-8 text-center border-t border-gray-200 mt-auto">
+        <p>&copy; 2024 李扬韬 (2524278238). All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
