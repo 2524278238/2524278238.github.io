@@ -73,10 +73,10 @@
         </h1>
         
         <p class="text-xl text-gray-700 font-semibold max-w-2xl mx-auto leading-relaxed mb-2">
-            AI 大模型开发者 & 独立游戏爱好者
+            AI时代探索者
         </p>
         <p class="text-md text-gray-500 max-w-2xl mx-auto leading-relaxed mb-8">
-            白天研究 LLM 的业务落地与研发提效，夜晚沉浸于独立游戏的奇思妙想。
+            致力于大模型技术落地与前沿探索，将奇思妙想转化为实际价值。
         </p>
         
         <div class="flex flex-wrap justify-center gap-4">
@@ -89,120 +89,65 @@
         </div>
     </header>
 
-    <!-- 技术栈展示 (For HR & 老板) -->
+    <!-- 个人能力六维图 -->
     <section class="max-w-6xl mx-auto px-8 mb-12 fade-in-delayed w-full">
         <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100 relative overflow-hidden">
             <div class="absolute top-0 right-0 bg-blue-100 text-blue-600 px-4 py-1 rounded-bl-xl text-xs font-bold uppercase tracking-wider">
-                Tech Stack
+                Skills Radar
             </div>
             <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center">
-                <i class="fas fa-layer-group text-blue-500 mr-3"></i> 核心技术栈
+                <i class="fas fa-chart-pie text-blue-500 mr-3"></i> 个人能力六维图
             </h2>
-            <div class="flex flex-wrap gap-3">
-                <span class="px-4 py-2 bg-blue-50 text-blue-700 rounded-lg border border-blue-100 font-medium shadow-sm"><i class="fab fa-python mr-1"></i> Python</span>
-                <span class="px-4 py-2 bg-purple-50 text-purple-700 rounded-lg border border-purple-100 font-medium shadow-sm"><i class="fas fa-brain mr-1"></i> 大语言模型 (LLM) 开发</span>
-                <span class="px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg border border-indigo-100 font-medium shadow-sm"><i class="fas fa-magic mr-1"></i> Prompt Engineering</span>
-                <span class="px-4 py-2 bg-green-50 text-green-700 rounded-lg border border-green-100 font-medium shadow-sm"><i class="fas fa-gamepad mr-1"></i> Godot 引擎</span>
-                <span class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg border border-gray-200 font-medium shadow-sm"><i class="fas fa-cogs mr-1"></i> 自动化脚本工具</span>
-                <span class="px-4 py-2 bg-yellow-50 text-yellow-700 rounded-lg border border-yellow-100 font-medium shadow-sm"><i class="fas fa-code mr-1"></i> 跨端协同开发</span>
+            <div class="w-full flex justify-center relative">
+                <div id="skills-radar" style="width: 100%; max-width: 600px; height: 450px;"></div>
+                <!-- 提示框将被 ECharts 动态触发，我们在JS中定义 -->
             </div>
+            <p class="text-center text-sm text-gray-400 mt-2">💡 提示：将鼠标悬停在雷达图的各个维度上，查看详细能力说明</p>
         </div>
     </section>
 
-    <!-- 专业项目区 (For HR & 老板) -->
-    <section class="max-w-6xl mx-auto px-8 mb-16 fade-in-delayed-2 w-full">
-        <div class="flex items-end justify-between mb-8 border-b-2 border-gray-200 pb-2">
-            <h2 class="text-3xl font-bold text-gray-800 flex items-center">
-                <i class="fas fa-briefcase text-blue-600 mr-3"></i> 专业积累：AI 与研发提效
-            </h2>
-            <span class="text-sm font-medium text-blue-600 bg-blue-100 px-3 py-1 rounded-full hidden sm:block">👨‍💻 针对 HR & 技术官</span>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- 项目1 -->
-            <a href="https://github.com/2524278238/use-ai-everyserver" target="_blank" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2 border-l-4 border-blue-500">
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold text-gray-800">use-ai-everyserver</h3>
-                        <i class="fas fa-server text-blue-400 text-2xl"></i>
-                    </div>
-                    <div class="text-gray-600 mb-6 text-sm leading-relaxed">
-                        <p class="mb-2"><strong class="text-gray-800">痛点解决：</strong> 解决老旧服务器环境无法直接运行现代 AI 编程工具的问题。</p>
-                        <p><strong class="text-gray-800">项目介绍：</strong> 支持将本地代码同步到远程服务器并运行，使开发者能够在任意老旧或隔离环境中优雅地使用本地 AI 编程工具，大幅提升研发效能。</p>
-                    </div>
-                    <div class="text-blue-500 font-medium text-sm flex items-center gap-1">
-                        查看源码 <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-            </a>
-
-            <!-- 项目2 -->
-            <a href="https://github.com/2524278238" target="_blank" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2 border-l-4 border-purple-500">
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold text-gray-800">大模型业务落地工具矩阵</h3>
-                        <i class="fas fa-robot text-purple-400 text-2xl"></i>
-                    </div>
-                    <div class="text-gray-600 mb-6 text-sm leading-relaxed">
-                        <p class="mb-2"><strong class="text-gray-800">技术方向：</strong> LLM 接口调用、Prompt 优化、文档自动化处理。</p>
-                        <p><strong class="text-gray-800">涵盖项目：</strong> 包含 <code>Error-prone-Words-Optimization</code>, <code>doc_generator</code>, <code>doc_fill</code>, <code>bid_clarification_llm</code> 等，覆盖了从文档自动生成、内容智能填充到标书澄清等多个真实业务场景的大模型落地实践。</p>
-                    </div>
-                    <div class="text-purple-500 font-medium text-sm flex items-center gap-1">
-                        探索更多 <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </section>
-
-    <!-- 趣味项目区 (For 朋友 & 游客) -->
+    <!-- 代表作 -->
     <section class="max-w-6xl mx-auto px-8 mb-20 fade-in-delayed-2 w-full">
         <div class="flex items-end justify-between mb-8 border-b-2 border-gray-200 pb-2">
             <h2 class="text-3xl font-bold text-gray-800 flex items-center">
-                <i class="fas fa-gamepad text-green-500 mr-3"></i> 独立创造：游戏与小玩意
+                <i class="fas fa-briefcase text-blue-600 mr-3"></i> 代表作：AI 与研发落地
             </h2>
-            <span class="text-sm font-medium text-green-600 bg-green-100 px-3 py-1 rounded-full hidden sm:block">🎮 针对 朋友 & 游客</span>
+            <span class="text-sm font-medium text-blue-600 bg-blue-100 px-3 py-1 rounded-full hidden sm:block">⭐ 精选项目</span>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- 项目3 -->
-            <a href="https://github.com/2524278238/FYDL-game" target="_blank" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2 border-t-4 border-green-500">
-                <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- 项目1：Error-prone-Words-Optimization -->
+            <a href="https://github.com/2524278238/Error-prone-Words-Optimization" target="_blank" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2 border-t-4 border-blue-500 flex flex-col h-full">
+                <div class="p-6 flex flex-col h-full">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-bold text-gray-800">FYDL-game</h3>
-                        <i class="fas fa-ghost text-green-400 text-xl"></i>
+                        <h3 class="text-xl font-bold text-gray-800">基于源端易错词的机器翻译优化</h3>
+                        <i class="fas fa-language text-blue-400 text-2xl"></i>
                     </div>
-                    <p class="text-gray-600 mb-6 h-16 overflow-hidden text-sm">
-                        基于 Godot 引擎开发的独立游戏。这里存放着我关于玩法机制与交互设计的奇思妙想。
+                    <p class="text-gray-600 mb-6 text-sm leading-relaxed flex-grow">
+                        提出一种基于源端易错词的翻译优化方法，结合 BGE 语义检索与无监督质量评估的检索增强生成（RAG）策略，并采用 LoRA 微调基线模型，显著提升了大模型机器翻译的稳定性与准确性。
+                        <br><br><span class="text-xs text-gray-400"><i class="fas fa-award"></i> 计算机工程与应用 一作录用</span>
                     </p>
-                    <div class="text-green-500 font-medium text-sm flex items-center gap-1 mt-auto">
-                        试玩/源码 <i class="fas fa-arrow-right"></i>
+                    <div class="text-blue-500 font-medium text-sm flex items-center gap-1 mt-auto">
+                        查看开源地址 <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
             </a>
 
-            <!-- 项目4 -->
-            <a href="https://github.com/2524278238" target="_blank" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2 border-t-4 border-yellow-500">
-                <div class="p-6">
+            <!-- 项目2：bid_clarification_llm -->
+            <a href="https://github.com/2524278238/bid_clarification_llm" target="_blank" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-2 border-t-4 border-purple-500 flex flex-col h-full">
+                <div class="p-6 flex flex-col h-full">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-bold text-gray-800">文档转换小工具</h3>
-                        <i class="fas fa-file-exchange text-yellow-400 text-xl"></i>
+                        <h3 class="text-xl font-bold text-gray-800">招投标智能体系统</h3>
+                        <i class="fas fa-robot text-purple-400 text-2xl"></i>
                     </div>
-                    <p class="text-gray-600 mb-6 h-16 overflow-hidden text-sm">
-                        包含 Document-conversion-tool 等实用脚本。遇到重复性劳动？写个工具把它自动化掉！
+                    <p class="text-gray-600 mb-6 text-sm leading-relaxed flex-grow">
+                        面向实际业务开发的招投标智能体系统。核心解决两大痛点：1. 提取结构不规整且超长文档的信息；2. 保证大模型生成的文档内容与原文档格式保持一致。在医疗与政务场景中实现了落地应用。
                     </p>
-                    <div class="text-yellow-500 font-medium text-sm flex items-center gap-1 mt-auto">
-                        查看源码 <i class="fas fa-arrow-right"></i>
+                    <div class="text-purple-500 font-medium text-sm flex items-center gap-1 mt-auto">
+                        探索更多细节 <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
             </a>
-
-            <!-- 项目5 -->
-            <div class="block bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center p-6 text-gray-400 hover:bg-gray-100 transition duration-300">
-                <i class="fas fa-flask text-3xl mb-3"></i>
-                <p class="font-medium">更多奇思妙想</p>
-                <p class="text-xs mt-1">正在实验室中酝酿...</p>
-            </div>
         </div>
     </section>
 
@@ -222,6 +167,131 @@
                 }
             })
             .catch(err => console.error('Failed to load avatar', err));
+    </script>
+
+    <!-- 引入 ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chartDom = document.getElementById('skills-radar');
+            if (chartDom) {
+                const myChart = echarts.init(chartDom);
+                
+                const reasons = {
+                    "算法基础": { score: 5, text: "较薄弱，正在补课八股。" },
+                    "建模与研究能力": { score: 7, text: "独立完成从idea到实验到论文撰写，也探索过其他课题。没有顶刊有点硬伤。" },
+                    "工程能力": { score: 7.5, text: "几乎独立完成过一个实际交付的agent项目，在没有合适的开源解决方案情况下解决了难题。能够利用ai将完整的需求拆解为适合ai解决的尺度，快速的将idea变成代码。有不少开源的demo级项目。目前尚缺少企业级项目的磨炼，需要在实际工作中补齐。" },
+                    "问题分析与Debug能力": { score: 7, text: "能识别原有方法在实验中的失败原因，能在导师方案无效的情况下提出替代建模路径。在ai coding出现之前也有较丰富的debug经验，会打断点，打印关键过程的输出进行调试。" },
+                    "技术前沿感知力": { score: 7.5, text: "具备一定的技术前沿敏感度，能够跟踪主流研究方向，并理解其基本原理及适用场景。" },
+                    "价值转化与产品思维": { score: 5.5, text: "相比其他cs研究生，我会更多的思考能利用ai做哪些有价值的产品。但目前仍处于“技术驱动”阶段，缺乏完整的产品闭环与用户验证。" }
+                };
+
+                const option = {
+                    tooltip: {
+                        show: false // 我们使用自定义 tooltip
+                    },
+                    radar: {
+                        indicator: Object.keys(reasons).map(key => ({ name: key, max: 10 })),
+                        shape: 'polygon',
+                        radius: '65%',
+                        axisName: {
+                            color: '#374151',
+                            backgroundColor: '#f3f4f6',
+                            borderRadius: 6,
+                            padding: [6, 10],
+                            fontWeight: 'bold',
+                            fontSize: 13,
+                            shadowColor: 'rgba(0,0,0,0.05)',
+                            shadowBlur: 4,
+                            shadowOffsetY: 2
+                        },
+                        splitArea: {
+                            areaStyle: {
+                                color: ['rgba(59, 130, 246, 0.02)', 'rgba(59, 130, 246, 0.05)', 'rgba(59, 130, 246, 0.08)', 'rgba(59, 130, 246, 0.12)', 'rgba(59, 130, 246, 0.16)'],
+                                shadowColor: 'rgba(0, 0, 0, 0.05)',
+                                shadowBlur: 10
+                            }
+                        },
+                        axisLine: {
+                            lineStyle: { color: 'rgba(59, 130, 246, 0.3)' }
+                        },
+                        splitLine: {
+                            lineStyle: { color: 'rgba(59, 130, 246, 0.3)' }
+                        },
+                        triggerEvent: true // 允许坐标轴触发事件
+                    },
+                    series: [{
+                        type: 'radar',
+                        data: [{
+                            value: Object.values(reasons).map(r => r.score),
+                            name: '我的能力评估',
+                            itemStyle: { color: '#3b82f6', borderWidth: 2 },
+                            areaStyle: { color: 'rgba(59, 130, 246, 0.3)' },
+                            lineStyle: { width: 3 }
+                        }]
+                    }]
+                };
+                myChart.setOption(option);
+
+                // 自定义 Tooltip
+                const tooltipDiv = document.createElement('div');
+                tooltipDiv.style.position = 'absolute';
+                tooltipDiv.style.display = 'none';
+                tooltipDiv.style.background = 'rgba(255, 255, 255, 0.98)';
+                tooltipDiv.style.border = '1px solid #e5e7eb';
+                tooltipDiv.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+                tooltipDiv.style.padding = '16px';
+                tooltipDiv.style.borderRadius = '12px';
+                tooltipDiv.style.pointerEvents = 'none';
+                tooltipDiv.style.zIndex = '1000';
+                tooltipDiv.style.maxWidth = '320px';
+                tooltipDiv.style.transition = 'opacity 0.2s';
+                document.body.appendChild(tooltipDiv);
+
+                myChart.on('mouseover', function (params) {
+                    if (params.componentType === 'radar' && params.name) {
+                        const dimName = params.name;
+                        const dimData = reasons[dimName];
+                        if (dimData) {
+                            tooltipDiv.innerHTML = `
+                                <div style="font-weight: 700; color: #2563eb; margin-bottom: 6px; font-size: 16px; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px;">
+                                    ${dimName} <span style="color:#6b7280; font-size:14px; font-weight:normal;">(${dimData.score} / 10)</span>
+                                </div>
+                                <div style="font-size: 14px; color: #4b5563; line-height: 1.6;">${dimData.text}</div>
+                            `;
+                            tooltipDiv.style.display = 'block';
+                            tooltipDiv.style.opacity = '1';
+                        }
+                    }
+                });
+
+                myChart.on('mouseout', function (params) {
+                    if (params.componentType === 'radar') {
+                        tooltipDiv.style.opacity = '0';
+                        setTimeout(() => {
+                            if (tooltipDiv.style.opacity === '0') tooltipDiv.style.display = 'none';
+                        }, 200);
+                    }
+                });
+
+                chartDom.addEventListener('mousemove', function (e) {
+                    if (tooltipDiv.style.display === 'block') {
+                        // 防止提示框超出屏幕右侧
+                        let x = e.pageX + 20;
+                        let y = e.pageY + 20;
+                        if (x + 320 > window.innerWidth) {
+                            x = e.pageX - 340;
+                        }
+                        tooltipDiv.style.left = x + 'px';
+                        tooltipDiv.style.top = y + 'px';
+                    }
+                });
+
+                window.addEventListener('resize', function() {
+                    myChart.resize();
+                });
+            }
+        });
     </script>
 
     <!-- 页面宠物：小企鹅咕咕嘎嘎在巡逻 -->
