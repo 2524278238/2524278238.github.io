@@ -54,15 +54,35 @@
             position: fixed;
             bottom: 10px;
             left: 0;
-            font-size: 3.5rem; /* 如果你之后有gif图片，可以把这里删掉换成img标签 */
+            font-size: 3.5rem;
             z-index: 9999;
             animation: waddle 20s linear infinite, bounce 0.4s ease-in-out infinite;
-            pointer-events: none; /* 防止遮挡鼠标点击 */
+            pointer-events: none;
             filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));
+        }
+        
+        /* 元胞自动机背景 */
+        #cellular-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+        }
+        
+        /* 确保内容在元胞背景之上 */
+        body > *:not(#cellular-canvas):not(.penguin-pet) {
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
 <body class="text-gray-800 antialiased font-sans min-h-screen flex flex-col">
+    
+    <!-- 元胞自动机背景画布 -->
+    <canvas id="cellular-canvas"></canvas>
     
     <!-- 头部横幅与个人信息 -->
     <header class="flex-grow flex flex-col justify-center items-center text-center p-10 fade-in mt-8">
@@ -302,5 +322,137 @@
 
     <!-- 页面宠物：小企鹅咕咕嘎嘎在巡逻 -->
     <img src="penguin.gif" class="penguin-pet" title="咕咕嘎嘎" alt="小企鹅" style="width: 120px;">
+
+    <!-- 元胞自动机背景脚本 -->
+    <script>
+        const canvas = document.getElementById('cellular-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let cols, rows;
+        let resolution = 12;
+        let grid = [];
+        let nextGrid = [];
+        
+        function setup() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            cols = Math.ceil(canvas.width / resolution);
+            rows = Math.ceil(canvas.height / resolution);
+            grid = createGrid();
+            nextGrid = createGrid();
+            initRandom();
+        }
+        
+        function createGrid() {
+            return new Array(cols).fill(null).map(() => new Array(rows).fill(0));
+        }
+        
+        function initRandom() {
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    grid[i][j] = Math.random() < 0.15 ? 1 : 0;
+                }
+            }
+        }
+        
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    const x = i * resolution;
+                    const y = j * resolution;
+                    
+                    if (grid[i][j] === 1) {
+                        ctx.fillStyle = 'rgba(59, 130, 246, 0.8)';
+                        ctx.strokeStyle = 'rgba(99, 102, 241, 0.6)';
+                    } else {
+                        ctx.fillStyle = 'rgba(226, 232, 240, 0.3)';
+                        ctx.strokeStyle = 'rgba(203, 213, 225, 0.5)';
+                    }
+                    
+                    ctx.beginPath();
+                    ctx.roundRect(x + 1, y + 1, resolution - 2, resolution - 2, 2);
+                    ctx.fill();
+                    ctx.stroke();
+                }
+            }
+            
+            computeNext();
+        }
+        
+        function computeNext() {
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    const neighbors = countNeighbors(i, j);
+                    const alive = grid[i][j];
+                    
+                    if (alive === 1) {
+                        nextGrid[i][j] = (neighbors === 2 || neighbors === 3) ? 1 : 0;
+                    } else {
+                        nextGrid[i][j] = neighbors === 3 ? 1 : 0;
+                    }
+                }
+            }
+            
+            [grid, nextGrid] = [nextGrid, grid];
+        }
+        
+        function countNeighbors(x, y) {
+            let count = 0;
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    if (i === 0 && j === 0) continue;
+                    const col = (x + i + cols) % cols;
+                    const row = (y + j + rows) % rows;
+                    count += grid[col][row];
+                }
+            }
+            return count;
+        }
+        
+        canvas.addEventListener('click', function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.floor((e.clientX - rect.left) / resolution);
+            const y = Math.floor((e.clientY - rect.top) / resolution);
+            
+            if (x >= 0 && x < cols && y >= 0 && y < rows) {
+                grid[x][y] = grid[x][y] === 1 ? 0 : 1;
+            }
+        });
+        
+        canvas.addEventListener('mousemove', function(e) {
+            if (e.buttons === 1) {
+                const rect = canvas.getBoundingClientRect();
+                const x = Math.floor((e.clientX - rect.left) / resolution);
+                const y = Math.floor((e.clientY - rect.top) / resolution);
+                
+                if (x >= 0 && x < cols && y >= 0 && y < rows) {
+                    grid[x][y] = 1;
+                }
+            }
+        });
+        
+        window.addEventListener('resize', function() {
+            const oldCols = cols;
+            const oldRows = rows;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            cols = Math.ceil(canvas.width / resolution);
+            rows = Math.ceil(canvas.height / resolution);
+            
+            const newGrid = createGrid();
+            for (let i = 0; i < Math.min(oldCols, cols); i++) {
+                for (let j = 0; j < Math.min(oldRows, rows); j++) {
+                    newGrid[i][j] = grid[i][j];
+                }
+            }
+            grid = newGrid;
+            nextGrid = createGrid();
+        });
+        
+        setup();
+        setInterval(draw, 80);
+    </script>
 </body>
 </html>
