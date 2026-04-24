@@ -65,8 +65,6 @@
         /* 企鹅对话气泡 */
         #penguin-speech {
             position: fixed;
-            bottom: 130px;
-            left: 20px;
             background: white;
             border-radius: 16px;
             padding: 12px 18px;
@@ -513,18 +511,34 @@
             '主人说：wps的功能还是太花里胡哨了，写文档改格式应该像vibe-coding一样。'
         ];
         let speechTimeout;
+        let rafId;
         const penguinImg = document.querySelector('.penguin-pet');
+        const speech = document.getElementById('penguin-speech');
+        
+        function updateSpeechPosition() {
+            const rect = penguinImg.getBoundingClientRect();
+            speech.style.left = rect.left + 'px';
+            speech.style.bottom = (window.innerHeight - rect.top + 15) + 'px';
+        }
+        
         function penguinTalk() {
-            const speech = document.getElementById('penguin-speech');
             const phrase = penguinPhrases[Math.floor(Math.random() * penguinPhrases.length)];
             speech.textContent = phrase;
             speech.classList.add('show');
-            // 说话时暂停移动动画
             penguinImg.style.animationPlayState = 'paused';
+            updateSpeechPosition();
+            // 持续更新气泡位置，跟随企鹅
+            function trackPosition() {
+                if (speech.classList.contains('show')) {
+                    updateSpeechPosition();
+                    rafId = requestAnimationFrame(trackPosition);
+                }
+            }
+            rafId = requestAnimationFrame(trackPosition);
             clearTimeout(speechTimeout);
             speechTimeout = setTimeout(() => {
                 speech.classList.remove('show');
-                // 对话结束后恢复移动
+                cancelAnimationFrame(rafId);
                 penguinImg.style.animationPlayState = 'running';
             }, 4000);
         }
