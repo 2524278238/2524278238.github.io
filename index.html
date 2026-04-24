@@ -57,8 +57,41 @@
             font-size: 3.5rem;
             z-index: 9999;
             animation: waddle 20s linear infinite, bounce 0.4s ease-in-out infinite;
-            pointer-events: none;
+            pointer-events: auto;
+            cursor: pointer;
             filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));
+        }
+        
+        /* 企鹅对话气泡 */
+        #penguin-speech {
+            position: fixed;
+            bottom: 130px;
+            left: 20px;
+            background: white;
+            border-radius: 16px;
+            padding: 12px 18px;
+            max-width: 300px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            font-size: 14px;
+            color: #374151;
+            line-height: 1.6;
+            z-index: 9998;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+        }
+        #penguin-speech.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #penguin-speech::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 30px;
+            border: 10px solid transparent;
+            border-top-color: white;
         }
         
         /* 元胞自动机背景 */
@@ -326,7 +359,8 @@
     </script>
 
     <!-- 页面宠物：小企鹅咕咕嘎嘎在巡逻 -->
-    <img src="penguin.gif" class="penguin-pet" title="咕咕嘎嘎" alt="小企鹅" style="width: 120px;">
+    <img src="penguin.gif" class="penguin-pet" title="咕咕嘎嘎" alt="小企鹅" style="width: 120px;" onclick="penguinTalk()">
+    <div id="penguin-speech"></div>
 
     <!-- 元胞自动机背景脚本 -->
     <script>
@@ -469,6 +503,26 @@
         
         setup();
         setInterval(draw, 100);
+
+        // 企鹅点击随机对话
+        const penguinPhrases = [
+            '咕咕嘎嘎！',
+            '主页背景是元胞自动机，点击可以改变元胞状态哦！',
+            '主人说：游戏mod其实具备很大的商业潜力...唔，泄露机密啦。',
+            '主人说：人脑神经元的连接是空间异构的，现在神经网络是一层一层的。',
+            '主人说：wps的功能还是太花里胡哨了，写文档改格式应该像vibe-coding一样。'
+        ];
+        let speechTimeout;
+        function penguinTalk() {
+            const speech = document.getElementById('penguin-speech');
+            const phrase = penguinPhrases[Math.floor(Math.random() * penguinPhrases.length)];
+            speech.textContent = phrase;
+            speech.classList.add('show');
+            clearTimeout(speechTimeout);
+            speechTimeout = setTimeout(() => {
+                speech.classList.remove('show');
+            }, 4000);
+        }
     </script>
 </body>
 </html>
