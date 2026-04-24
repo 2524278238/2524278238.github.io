@@ -513,14 +513,19 @@
             '主人说：wps的功能还是太花里胡哨了，写文档改格式应该像vibe-coding一样。'
         ];
         let speechTimeout;
+        const penguinImg = document.querySelector('.penguin-pet');
         function penguinTalk() {
             const speech = document.getElementById('penguin-speech');
             const phrase = penguinPhrases[Math.floor(Math.random() * penguinPhrases.length)];
             speech.textContent = phrase;
             speech.classList.add('show');
+            // 说话时暂停移动动画
+            penguinImg.style.animationPlayState = 'paused';
             clearTimeout(speechTimeout);
             speechTimeout = setTimeout(() => {
                 speech.classList.remove('show');
+                // 对话结束后恢复移动
+                penguinImg.style.animationPlayState = 'running';
             }, 4000);
         }
     </script>
