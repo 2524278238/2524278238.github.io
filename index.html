@@ -113,9 +113,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
-            opacity: 0.6; /* 稍微提升一点透明度展现金属光泽 */
-            mix-blend-mode: overlay; /* 让金属光泽更自然地融入背景 */
+            z-index: -1;
+            opacity: 0.85; /* 提升透明度，去掉mix-blend-mode以防在白色背景下隐身 */
         }
         
         /* 页面内容层 */
@@ -451,43 +450,45 @@
             
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Create a metallic gradient for alive cells
+            // 重新调整适合白色背景的金属蓝质感，不要太透，保证肉眼可见
             const metallicAlive = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-            metallicAlive.addColorStop(0, 'rgba(255, 255, 255, 0.8)'); // Silver highlight
-            metallicAlive.addColorStop(0.3, 'rgba(148, 163, 184, 0.4)'); // Slate metal
-            metallicAlive.addColorStop(0.5, 'rgba(59, 130, 246, 0.45)'); // Brand blue tint
-            metallicAlive.addColorStop(0.8, 'rgba(71, 85, 105, 0.5)'); // Dark steel
-            metallicAlive.addColorStop(1, 'rgba(226, 232, 240, 0.7)'); // Bottom reflection
+            metallicAlive.addColorStop(0, 'rgba(147, 197, 253, 0.85)');   // 亮蓝反光
+            metallicAlive.addColorStop(0.3, 'rgba(59, 130, 246, 0.7)');   // 品牌主色
+            metallicAlive.addColorStop(0.5, 'rgba(37, 99, 235, 0.75)');   // 略深的蓝
+            metallicAlive.addColorStop(0.8, 'rgba(30, 64, 175, 0.6)');    // 偏暗钢蓝
+            metallicAlive.addColorStop(1, 'rgba(191, 219, 254, 0.8)');    // 底部环境光
             
-            // Subtle gradient for dead cells to add texture
-            const deadColor = 'rgba(0, 0, 0, 0.02)';
-            
+            // 存活细胞自身的渐变（小范围立体感）
             for (let i = 0; i < cols; i++) {
                 for (let j = 0; j < rows; j++) {
                     const x = i * resolution;
                     const y = j * resolution;
                     
                     if (grid[i][j] === 1) {
-                        ctx.fillStyle = metallicAlive;
-                        // Add subtle shadow for 3D metallic effect
+                        // 每个小方块自己的金属质感
+                        const cellGrad = ctx.createLinearGradient(x, y, x + resolution, y + resolution);
+                        cellGrad.addColorStop(0, 'rgba(147, 197, 253, 0.9)'); // 左上角高光
+                        cellGrad.addColorStop(0.5, 'rgba(59, 130, 246, 0.85)'); // 中心色
+                        cellGrad.addColorStop(1, 'rgba(30, 58, 138, 0.7)'); // 右下角暗部
+                        
+                        ctx.fillStyle = cellGrad;
                         ctx.shadowColor = 'rgba(59, 130, 246, 0.4)';
                         ctx.shadowBlur = 4;
                         ctx.shadowOffsetX = 1;
                         ctx.shadowOffsetY = 1;
                     } else {
-                        ctx.fillStyle = deadColor;
+                        ctx.fillStyle = 'rgba(0, 0, 0, 0.03)';
                         ctx.shadowColor = 'transparent';
                         ctx.shadowBlur = 0;
                         ctx.shadowOffsetX = 0;
                         ctx.shadowOffsetY = 0;
                     }
                     
-                    // Slightly rounded inner rect for more "blocky" metallic look
                     ctx.fillRect(x + 1, y + 1, resolution - 2, resolution - 2);
                 }
             }
             
-            // Reset shadow for next frame to avoid performance leak
+            // Reset shadow for next frame
             ctx.shadowColor = 'transparent';
             ctx.shadowBlur = 0;
             
