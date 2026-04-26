@@ -7,19 +7,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Impeccable Colors Strategy - Tinted OKLCH */
+        /* Impeccable Colors Strategy - Tinted OKLCH (Dark Theme with Gold Accent) */
         :root {
-            --bg-base: oklch(0.98 0.005 250);
-            --bg-surface: oklch(0.995 0.002 250);
-            --text-primary: oklch(0.2 0.02 250);
-            --text-secondary: oklch(0.45 0.01 250);
-            --text-tertiary: oklch(0.65 0.005 250);
-            --brand-main: oklch(0.5 0.12 250);
-            --brand-surface: oklch(0.96 0.02 250);
-            --border-subtle: oklch(0.92 0.005 250);
+            /* 深邃夜空/黑金主题 */
+            --bg-base: oklch(0.18 0.01 260);        /* 深暗灰蓝色背景 */
+            --bg-surface: oklch(0.22 0.01 260);     /* 稍亮的深色卡片表面 */
             
-            /* ECharts Hex approximate for brand-main: #3b82f6 approx */
-            --chart-brand: #3b82f6; 
+            --text-primary: oklch(0.95 0.01 260);   /* 亮灰白文字 */
+            --text-secondary: oklch(0.75 0.01 260); /* 次级文字 */
+            --text-tertiary: oklch(0.55 0.01 260);  /* 弱化文字 */
+            
+            /* 金色金属主色调 */
+            --brand-main: oklch(0.75 0.15 80);      /* 亮金/香槟金 */
+            --brand-surface: oklch(0.3 0.05 80);    /* 暗金色底衬 */
+            --border-subtle: oklch(0.3 0.01 260);   /* 柔和的深色边框 */
+            
+            /* ECharts Hex approximate for brand-main: #d4af37 approx */
+            --chart-brand: #d4af37; 
         }
 
         body {
@@ -451,46 +455,47 @@
             
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // 极其克制的科技感：冰蓝色带一点点金属霜灰，降低透明度，作为背景不能喧宾夺主
-            const aliveColor = 'rgba(148, 163, 184, 0.15)'; // 默认的银灰色
-            const brandColor = 'rgba(59, 130, 246, 0.2)'; // 偶尔闪烁的主题蓝
-            
-            // 使用圆角或点阵而不是硬朗的方块，能大幅提升高级感
             for (let i = 0; i < cols; i++) {
                 for (let j = 0; j < rows; j++) {
                     const x = i * resolution;
                     const y = j * resolution;
                     
                     if (grid[i][j] === 1) {
-                        // 随机给一些块加上品牌色，其余是银灰，创造一种呼吸感
-                        ctx.fillStyle = (i + j) % 7 === 0 ? brandColor : aliveColor;
+                        // 金色金属质感渐变（黑金主题）
+                        const cellGrad = ctx.createLinearGradient(x, y, x + resolution, y + resolution);
+                        cellGrad.addColorStop(0, 'rgba(250, 235, 150, 0.9)');   // 亮金高光
+                        cellGrad.addColorStop(0.4, 'rgba(212, 175, 55, 0.8)');  // 纯金本色
+                        cellGrad.addColorStop(0.7, 'rgba(166, 124, 0, 0.8)');   // 暗金/黄铜色
+                        cellGrad.addColorStop(1, 'rgba(100, 75, 0, 0.7)');      // 底部深金暗面
                         
-                        // 画一个柔和的圆角矩形（高级感来源于克制的形状）
-                        ctx.beginPath();
-                        const radius = 3;
-                        const rectX = x + 2;
-                        const rectY = y + 2;
-                        const rectSize = resolution - 4;
-                        ctx.moveTo(rectX + radius, rectY);
-                        ctx.lineTo(rectX + rectSize - radius, rectY);
-                        ctx.quadraticCurveTo(rectX + rectSize, rectY, rectX + rectSize, rectY + radius);
-                        ctx.lineTo(rectX + rectSize, rectY + rectSize - radius);
-                        ctx.quadraticCurveTo(rectX + rectSize, rectY + rectSize, rectX + rectSize - radius, rectY + rectSize);
-                        ctx.lineTo(rectX + radius, rectY + rectSize);
-                        ctx.quadraticCurveTo(rectX, rectY + rectSize, rectX, rectY + rectSize - radius);
-                        ctx.lineTo(rectX, rectY + radius);
-                        ctx.quadraticCurveTo(rectX, rectY, rectX + radius, rectY);
-                        ctx.closePath();
-                        ctx.fill();
+                        ctx.fillStyle = cellGrad;
+                        
+                        // 金色辉光阴影，让金属感更强烈
+                        ctx.shadowColor = 'rgba(212, 175, 55, 0.3)';
+                        ctx.shadowBlur = 6;
+                        ctx.shadowOffsetX = 0;
+                        ctx.shadowOffsetY = 2;
+                        
+                        // 在深色背景下，硬朗的金属块边缘更能体现质感
+                        ctx.fillRect(x + 1, y + 1, resolution - 2, resolution - 2);
+                        
+                        // 添加一个微小的高光边框线增强立体感
+                        ctx.strokeStyle = 'rgba(255, 245, 200, 0.5)';
+                        ctx.lineWidth = 0.5;
+                        ctx.strokeRect(x + 1, y + 1, resolution - 2, resolution - 2);
                     } else {
-                        // 死亡细胞画极小的灰点，而不是整个背景网格
-                        ctx.fillStyle = 'rgba(0, 0, 0, 0.015)';
-                        ctx.beginPath();
-                        ctx.arc(x + resolution/2, y + resolution/2, 1, 0, Math.PI * 2);
-                        ctx.fill();
+                        // 死亡细胞用极弱的暗金点缀，保持深色背景的纯粹
+                        ctx.fillStyle = 'rgba(212, 175, 55, 0.02)';
+                        ctx.shadowColor = 'transparent';
+                        ctx.shadowBlur = 0;
+                        ctx.fillRect(x + resolution/2 - 1, y + resolution/2 - 1, 2, 2);
                     }
                 }
             }
+            
+            // Reset shadow for next frame
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
             
             computeNext();
         }
