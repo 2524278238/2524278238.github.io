@@ -107,12 +107,45 @@
         .link-subtle:hover {
             opacity: 0.7;
         }
+
+        /* Ambient Background Blobs */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+            animation: blob 18s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+
+        /* Scroll-driven Reveal */
+        @supports (animation-timeline: view()) {
+            .scroll-reveal {
+                animation: linear scrollReveal both;
+                animation-timeline: view();
+                animation-range: entry 5% cover 20%;
+            }
+            @keyframes scrollReveal {
+                from { opacity: 0; transform: translateY(40px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        }
     </style>
 </head>
 <body class="antialiased font-sans">
     
+    <!-- Subtle Ambient Background -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none flex justify-center items-center">
+        <div class="absolute top-[10%] left-[-10%] w-[400px] h-[400px] rounded-full blur-[100px] opacity-[0.2] animate-blob" style="background-color: var(--brand-main);"></div>
+        <div class="absolute top-[60%] right-[-10%] w-[500px] h-[500px] rounded-full blur-[120px] opacity-[0.15] animate-blob animation-delay-2000" style="background-color: var(--text-primary);"></div>
+    </div>
+
     <!-- 导航栏 -->
-    <nav class="sticky top-0 z-50 backdrop-blur-md" style="background-color: color-mix(in oklch, var(--bg-surface) 85%, transparent); border-bottom: 1px solid var(--border-subtle);">
+    <nav class="relative z-50 sticky top-0 backdrop-blur-md" style="background-color: color-mix(in oklch, var(--bg-surface) 85%, transparent); border-bottom: 1px solid var(--border-subtle);">
         <div class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2 text-sm font-medium link-subtle">
                 <i class="fas fa-home text-xs"></i> 返回主页
@@ -132,7 +165,7 @@
     </header>
 
     <!-- 现代化内容区 -->
-    <main class="max-w-5xl mx-auto px-6 pb-24 flex-grow w-full fade-in" style="animation-delay: 0.15s;">
+    <main class="relative z-10 max-w-5xl mx-auto px-6 pb-24 flex-grow w-full fade-in" style="animation-delay: 0.15s;">
         
         <!-- Tab 导航 -->
         <div class="flex justify-center gap-4 md:gap-8 mb-12">
@@ -283,7 +316,7 @@
     </main>
 
     <!-- 页脚 -->
-    <footer class="py-10 text-center mt-auto" style="border-top: 1px solid var(--border-subtle);">
+    <footer class="relative z-10 py-10 text-center mt-auto" style="border-top: 1px solid var(--border-subtle);">
         <p style="color: var(--text-tertiary);">&copy; 2026 2524278238. All rights reserved.</p>
     </footer>
 
