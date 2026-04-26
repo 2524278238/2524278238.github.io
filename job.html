@@ -300,23 +300,22 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 0;
-            padding: 8px 0 24px 0;
+            padding: 16px 0 24px 0;
         }
         .info-item {
             display: flex;
             justify-content: space-between;
-            padding: 14px 0;
+            align-items: center;
+            padding: 16px 24px;
             border-bottom: 1px solid var(--border);
         }
-        .info-item:nth-child(odd) {
-            padding-right: 32px;
+        .info-item:nth-child(odd):not(.full-width) {
+            border-right: 1px solid var(--border);
         }
-        .info-item:nth-child(even) {
-            padding-left: 32px;
-            border-left: 1px solid var(--border);
+        .info-item.full-width {
+            grid-column: span 2;
         }
-        .info-item:last-child,
-        .info-item:nth-last-child(2) {
+        .info-item:last-child {
             border-bottom: none;
         }
         .info-label {
@@ -426,15 +425,15 @@
                         <span class="info-label">政治面貌</span>
                         <span class="info-value highlight">中共党员</span>
                     </div>
-                    <div class="info-item" style="grid-column: span 2; border-left: none; padding-left: 0;">
+                    <div class="info-item full-width">
                         <span class="info-label">住址</span>
                         <span class="info-value">福建省厦门市思明区</span>
                     </div>
-                    <div class="info-item" style="grid-column: span 2; border-left: none; padding-left: 0;">
+                    <div class="info-item full-width">
                         <span class="info-label">学历</span>
                         <span class="info-value highlight">硕士研究生（在读） - 软件工程</span>
                     </div>
-                    <div class="info-item" style="grid-column: span 2; border-left: none; padding-left: 0;">
+                    <div class="info-item full-width">
                         <span class="info-label">就读院校</span>
                         <span class="info-value">大连海事大学（本科） - 苏州大学（硕士）</span>
                     </div>
@@ -548,13 +547,49 @@
                     </p>
                 </div>
             </div>
+        </section>
 
-            <div class="card" style="padding: 20px 24px;">
-                <div style="display: flex; align-items: center; gap: 16px;">
-                    <div class="stat-icon accent">
-                        <i class="fas fa-gamepad"></i>
+        <section class="fade-up fade-up-delay-4" style="margin-bottom: 56px;">
+            <div class="section-header">
+                <div class="accent-bar"></div>
+                <h2 class="section-title">技术方向探索</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+                <div class="card" style="padding: 20px 24px;">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div class="stat-icon" style="color: var(--accent); background: var(--bg-highlight); flex-shrink: 0;">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <span style="font-size: 1rem; color: var(--text-primary); font-weight: 600; line-height: 1.45;">如何利用 LLM 进行量化交易？</span>
                     </div>
-                    <span style="font-size: 1rem; color: var(--text-primary); font-weight: 600; line-height: 1.45;">站在玩家的角度，LLM 如何给游戏带来革命？</span>
+                </div>
+                
+                <div class="card" style="padding: 20px 24px;">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div class="stat-icon" style="color: var(--accent); background: var(--bg-highlight); flex-shrink: 0;">
+                            <i class="fas fa-keyboard"></i>
+                        </div>
+                        <span style="font-size: 1rem; color: var(--text-primary); font-weight: 600; line-height: 1.45;">基于视觉大模型的 AI 输入法应用开发</span>
+                    </div>
+                </div>
+                
+                <div class="card" style="padding: 20px 24px;">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div class="stat-icon" style="color: var(--accent); background: var(--bg-highlight); flex-shrink: 0;">
+                            <i class="fas fa-file-word"></i>
+                        </div>
+                        <span style="font-size: 1rem; color: var(--text-primary); font-weight: 600; line-height: 1.45;">像 vibe-coding 一样撰写、修改 Word 文档</span>
+                    </div>
+                </div>
+                
+                <div class="card" style="padding: 20px 24px;">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div class="stat-icon" style="color: var(--accent); background: var(--bg-highlight); flex-shrink: 0;">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <span style="font-size: 1rem; color: var(--text-primary); font-weight: 600; line-height: 1.45;">站在玩家的角度，LLM 如何给游戏带来革命？</span>
+                    </div>
                 </div>
             </div>
         </section>
