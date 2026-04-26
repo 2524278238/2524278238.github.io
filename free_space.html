@@ -51,24 +51,57 @@
             background: var(--text-tertiary);
         }
         
-        /* Tab 切换动画 */
+        /* Tab Content Styles */
         .tab-content {
             display: none;
-            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .tab-content.active {
             display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
         
+        /* 导航标签基础样式 */
+        .nav-tab {
+            color: var(--text-secondary);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        .nav-tab:hover {
+            color: var(--text-primary);
+        }
+        
+        /* 激活状态的标签 */
+        .nav-tab.active {
+            color: var(--brand-main);
+            font-weight: 600;
+        }
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--brand-main);
+            border-radius: 2px;
+        }
+
         /* 卡片悬停效果 - Impeccable style */
         .project-card {
             background-color: var(--bg-surface);
             border: 1px solid var(--border-subtle);
-            transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .project-card:hover {
             border-color: var(--brand-main);
             transform: translateY(-2px);
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.05);
         }
         
         /* 标签激活态 */
@@ -167,18 +200,18 @@
     <!-- 现代化内容区 -->
     <main class="relative z-10 max-w-5xl mx-auto px-6 pb-24 flex-grow w-full fade-in" style="animation-delay: 0.15s;">
         
-        <!-- Tab 导航 -->
-        <div class="flex justify-center gap-4 md:gap-8 mb-12">
-            <button onclick="switchTab('tools')" class="tab-btn active px-4 py-2 text-base font-semibold flex items-center gap-2" id="tab-tools">
+        <!-- 分类导航 -->
+        <nav class="flex justify-center gap-8 mb-12 border-b border-gray-100" style="border-color: var(--border-subtle);">
+            <button class="nav-tab active pb-4 px-2 flex items-center gap-2 text-sm" onclick="filterProjects('tools')">
                 <i class="fas fa-tools"></i> 实用工具
             </button>
-            <button onclick="switchTab('games')" class="tab-btn px-4 py-2 text-base font-semibold flex items-center gap-2" id="tab-games">
+            <button class="nav-tab pb-4 px-2 flex items-center gap-2 text-sm" onclick="filterProjects('games')">
                 <i class="fas fa-gamepad"></i> 独立游戏
             </button>
-            <button onclick="switchTab('blogs')" class="tab-btn px-4 py-2 text-base font-semibold flex items-center gap-2" id="tab-blogs">
+            <button class="nav-tab pb-4 px-2 flex items-center gap-2 text-sm" onclick="filterProjects('thoughts')">
                 <i class="fas fa-pen-nib"></i> 博客思考
             </button>
-        </div>
+        </nav>
 
         <!-- 工具 Tab -->
         <div id="content-tools" class="tab-content active">
@@ -322,15 +355,30 @@
 
     <!-- Tab 切换脚本 -->
     <script>
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(el => {
-                el.classList.remove('active');
+        function filterProjects(tabId) {
+            // Update Tab UI
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
             });
-            document.querySelectorAll('.tab-btn').forEach(el => {
-                el.classList.remove('active');
-            });
-            document.getElementById('content-' + tabName).classList.add('active');
-            document.getElementById('tab-' + tabName).classList.add('active');
+            
+            // map new categories to old IDs to not break structure
+            const map = {
+                'tools': 'content-tools',
+                'games': 'content-games',
+                'thoughts': 'content-blogs'
+            };
+
+            // Show selected tab content
+            const activeContent = document.getElementById(map[tabId]);
+            if (activeContent) {
+                activeContent.classList.add('active');
+            }
         }
     </script>
 
