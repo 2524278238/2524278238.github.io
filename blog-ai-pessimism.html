@@ -4,170 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我对AI发展的悲观，源自于对AI发展的乐观。 - 2524278238</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Impeccable Colors Strategy - Tinted OKLCH */
         :root {
-            --bg-base: #090b0e;
-            --bg-elevated: #12161c;
-            --bg-surface: #1a1f27;
-            --bg-highlight: #242b35;
-            --text-primary: #f0f2f4;
-            --text-secondary: #9ca3af;
-            --text-muted: #5c6370;
-            --accent: #f59e0b;
-            --accent-strong: #fbbf24;
-            --accent-dim: rgba(245, 158, 11, 0.12);
-            --border: #2a303a;
-            --border-light: #363e4a;
-            --indigo: #6366f1;
-            --indigo-dim: rgba(99, 102, 241, 0.12);
-            --teal: #14b8a6;
+            --bg-base: oklch(0.98 0.005 250);
+            --bg-surface: oklch(0.995 0.002 250);
+            --text-primary: oklch(0.2 0.02 250);
+            --text-secondary: oklch(0.45 0.01 250);
+            --text-tertiary: oklch(0.65 0.005 250);
+            --brand-main: oklch(0.5 0.12 250);
+            --brand-surface: oklch(0.96 0.02 250);
+            --border-subtle: oklch(0.92 0.005 250);
         }
         
-        * {
-            box-sizing: border-box;
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
         }
         
         .fade-in {
-            animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        body {
-            background: var(--bg-base);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+        /* Typography optimizations */
+        .text-reading-length {
+            max-width: 70ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            letter-spacing: -0.02em;
             color: var(--text-primary);
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-base);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--border-light);
-        }
-        
-        nav {
-            background: var(--bg-elevated);
-            border-bottom: 1px solid var(--border);
-        }
-        
-        nav a {
-            color: var(--teal);
-        }
-        
-        nav a:hover {
-            color: var(--accent);
-        }
-        
-        nav .blog-brand {
-            color: var(--text-muted);
-        }
-        
-        .article-card {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .article-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--indigo), var(--teal));
-        }
-        
-        .category-badge {
-            background: var(--indigo-dim);
-            color: var(--indigo);
-            border: 1px solid var(--indigo);
-        }
-        
-        .article-title {
-            color: var(--text-primary);
-        }
-        
-        .article-date {
-            color: var(--text-muted);
-        }
-        
-        .blog-content {
-            color: var(--text-secondary);
         }
         
         .blog-content p {
             margin-bottom: 1.5rem;
-            line-height: 1.9;
+            line-height: 1.75;
+            color: var(--text-secondary);
         }
         
         .blog-content strong {
-            color: var(--accent-strong);
+            color: var(--text-primary);
             font-weight: 600;
         }
-        
-        .quote-box {
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
+
+        /* Exponential easing for links */
+        .link-subtle {
+            color: var(--brand-main);
+            text-decoration: none;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        
-        .italic-quote {
-            color: var(--text-muted);
-        }
-        
-        footer {
-            background: var(--bg-elevated);
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
+        .link-subtle:hover {
+            opacity: 0.7;
         }
     </style>
 </head>
-<body>
+<body class="antialiased font-sans min-h-screen flex flex-col">
     
-    <nav class="p-4 sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <a href="free_space.html" class="text-xl font-bold hover:opacity-80 transition flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i> 返回博客列表
+    <!-- 极简导航栏 -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md" style="background-color: color-mix(in oklch, var(--bg-surface) 85%, transparent); border-bottom: 1px solid var(--border-subtle);">
+        <div class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center">
+            <a href="free_space.html" class="flex items-center gap-2 text-sm font-medium link-subtle">
+                <i class="fas fa-arrow-left text-xs"></i> 返回博客列表
             </a>
-            <div class="blog-brand font-medium">2524278238's Blog</div>
+            <div class="font-extrabold text-sm tracking-[0.2em] uppercase" style="color: var(--text-tertiary);">2524278238's Blog</div>
         </div>
     </nav>
 
-    <article class="max-w-4xl mx-auto px-6 py-12 fade-in">
-        <header class="mb-10 text-center">
-            <div class="inline-block category-badge px-4 py-1 rounded-full text-sm font-medium mb-4">
-                <i class="fas fa-pen-nib mr-1"></i> 博客与思考
+    <!-- 文章内容 -->
+    <article class="max-w-4xl mx-auto px-6 py-16 md:py-24 fade-in flex-grow w-full">
+        <header class="mb-16 text-center text-reading-length">
+            <div class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-6" style="background-color: var(--brand-surface); color: var(--brand-main);">
+                博客与思考
             </div>
-            <h1 class="text-3xl md:text-4xl font-extrabold mb-6 leading-tight article-title">
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">
                 我对AI发展的悲观，源自于对AI发展的乐观。
             </h1>
-            <div class="article-date text-sm">
+            <div class="text-sm" style="color: var(--text-tertiary);">
                 <i class="far fa-calendar-alt mr-1"></i> 2026年4月23日
             </div>
         </header>
 
-        <div class="article-card p-8 md:p-12">
-            <div class="blog-content text-base md:text-lg leading-relaxed space-y-5">
+        <div class="text-reading-length">
+            <div class="blog-content text-base md:text-lg">
                 <p>乍一看这个标题，会觉得左脑反击右脑，尖尖代替思考。这其实是不同层面的问题，悲观源于社会层面，乐观源于技术层面。</p>
 
                 <p>先说乐观吧，我不觉得agi会有长时间的瓶颈。因为人脑已经是现成的高效造物，对比llm耗能极低，这还是在人脑将大量能量用于控制身体，维持生命的情况下，如果只负责智能，耗能肯定更低。llm也不会是ai的终极范式，更何况当前的llm智能已经到了一个令人惊叹的地步。现在有无数资本、意志、聪明的脑瓜在投入这件事，我们在技术上一定会进步很快。</p>
@@ -176,7 +104,7 @@
 
                 <p>我知道一定有人要拿过去的工业革命说事：机器消灭了旧岗位，创造了更多新岗位。让我们复盘这个逻辑链条：</p>
 
-                <div class="quote-box p-5 rounded-xl font-mono text-sm my-6 text-center">
+                <div class="p-6 rounded-xl font-mono text-sm my-8 text-center" style="background-color: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-secondary);">
                     发明机器 → 生产力提升 → 生产成本降低 → 消费端需求提升 → 更多新岗位
                 </div>
 
@@ -184,7 +112,7 @@
 
                 <p>新的链条是：</p>
 
-                <div class="quote-box p-5 rounded-xl font-mono text-sm my-6 text-center">
+                <div class="p-6 rounded-xl font-mono text-sm my-8 text-center" style="background-color: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-secondary);">
                     发明ai → 生产力提升 → 生产成本降低 → 消费端需求停滞 → 传统岗位消失，新岗位不足以弥补
                 </div>
 
@@ -206,14 +134,14 @@
 
                 <p>所以我对AI的乐观，是技术上的：在不远的将来，能看到AGI，会看到科学突破，会看到物质极大丰富。但正是这种乐观让我悲观——因为我知道，当生产力跨越某个阈值，而社会制度没有同步进化时，技术的胜利就是普通人的失败。</p>
 
-                <p class="text-center italic mt-10 text-lg italic-quote">但愿我们是错的。</p>
+                <p class="text-center italic mt-16 text-lg" style="color: var(--text-tertiary);">但愿我们是错的。</p>
             </div>
         </div>
     </article>
 
-    <footer class="py-8 text-center mt-auto">
-        <p>&copy; 2024 2524278238. All rights reserved.</p>
-        <p class="text-sm mt-2">Built with ❤️</p>
+    <!-- 页脚 -->
+    <footer class="py-10 text-center mt-auto" style="border-top: 1px solid var(--border-subtle);">
+        <p style="color: var(--text-tertiary);">&copy; 2026 2524278238. All rights reserved.</p>
     </footer>
 
 </body>

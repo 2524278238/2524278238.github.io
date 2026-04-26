@@ -4,213 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>又幻想了 - 2524278238</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Impeccable Colors Strategy - Tinted OKLCH */
         :root {
-            --bg-base: #090b0e;
-            --bg-elevated: #12161c;
-            --bg-surface: #1a1f27;
-            --bg-highlight: #242b35;
-            --text-primary: #f0f2f4;
-            --text-secondary: #9ca3af;
-            --text-muted: #5c6370;
-            --accent: #f59e0b;
-            --accent-strong: #fbbf24;
-            --accent-dim: rgba(245, 158, 11, 0.12);
-            --border: #2a303a;
-            --border-light: #363e4a;
-            --teal: #14b8a6;
-            --teal-dim: rgba(20, 184, 166, 0.12);
-            --teal-glow: rgba(20, 184, 166, 0.3);
+            --bg-base: oklch(0.98 0.005 250);
+            --bg-surface: oklch(0.995 0.002 250);
+            --text-primary: oklch(0.2 0.02 250);
+            --text-secondary: oklch(0.45 0.01 250);
+            --text-tertiary: oklch(0.65 0.005 250);
+            --brand-main: oklch(0.5 0.12 250);
+            --brand-surface: oklch(0.96 0.02 250);
+            --border-subtle: oklch(0.92 0.005 250);
         }
         
-        * {
-            box-sizing: border-box;
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
         }
         
         .fade-in {
-            animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        body {
-            background: var(--bg-base);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+        /* Typography optimizations */
+        .text-reading-length {
+            max-width: 70ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            letter-spacing: -0.02em;
             color: var(--text-primary);
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-base);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--border-light);
-        }
-        
-        nav {
-            background: var(--bg-elevated);
-            border-bottom: 1px solid var(--border);
-        }
-        
-        nav a {
-            color: var(--teal);
-        }
-        
-        nav a:hover {
-            color: var(--accent);
-        }
-        
-        nav .blog-brand {
-            color: var(--text-muted);
-        }
-        
-        .article-card {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .article-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--teal), #10b981);
-        }
-        
-        .category-badge {
-            background: var(--teal-dim);
-            color: var(--teal);
-            border: 1px solid var(--teal);
-        }
-        
-        .article-title {
-            color: var(--text-primary);
-        }
-        
-        .article-date {
-            color: var(--text-muted);
-        }
-        
-        .blog-content {
-            color: var(--text-secondary);
         }
         
         .blog-content p {
             margin-bottom: 1.5rem;
-            line-height: 1.9;
-        }
-        
-        .blog-content strong {
-            color: var(--accent-strong);
-            font-weight: 600;
-        }
-        
-        .highlight-box {
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-        }
-        
-        .step-number {
-            background: var(--teal);
-            color: white;
-        }
-        
-        .hr-toggle {
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-        }
-        
-        .hr-toggle:hover {
-            background: var(--bg-highlight);
-        }
-        
-        .hr-content {
-            background: var(--bg-elevated);
-            border-top: 1px solid var(--border);
-        }
-        
-        .hr-text {
+            line-height: 1.75;
             color: var(--text-secondary);
         }
         
-        .hr-btn-text {
+        .blog-content strong {
             color: var(--text-primary);
+            font-weight: 600;
         }
-        
-        footer {
-            background: var(--bg-elevated);
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
+
+        /* Exponential easing for links */
+        .link-subtle {
+            color: var(--brand-main);
+            text-decoration: none;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .link-subtle:hover {
+            opacity: 0.7;
+        }
+
+        /* Subtle collapse panel */
+        .collapse-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+        }
+        .collapse-toggle:checked ~ .collapse-content {
+            max-height: 500px;
+            opacity: 1;
+        }
+        .collapse-toggle:checked ~ label .collapse-icon {
+            transform: rotate(180deg);
         }
     </style>
 </head>
-<body>
+<body class="antialiased font-sans min-h-screen flex flex-col">
 
-    <nav class="p-4 sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <a href="free_space.html" class="text-xl font-bold hover:opacity-80 transition flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i> 返回博客列表
+    <!-- 极简导航栏 -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md" style="background-color: color-mix(in oklch, var(--bg-surface) 85%, transparent); border-bottom: 1px solid var(--border-subtle);">
+        <div class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center">
+            <a href="free_space.html" class="flex items-center gap-2 text-sm font-medium link-subtle">
+                <i class="fas fa-arrow-left text-xs"></i> 返回博客列表
             </a>
-            <div class="blog-brand font-medium">2524278238's Blog</div>
+            <div class="font-extrabold text-sm tracking-[0.2em] uppercase" style="color: var(--text-tertiary);">2524278238's Blog</div>
         </div>
     </nav>
 
-    <article class="max-w-4xl mx-auto px-6 py-12 fade-in flex-grow">
-        <header class="mb-10 text-center">
-            <div class="inline-block category-badge px-4 py-1 rounded-full text-sm font-medium mb-4">
-                <i class="fas fa-pen-nib mr-1"></i> 博客与思考
+    <article class="max-w-4xl mx-auto px-6 py-16 md:py-24 fade-in flex-grow w-full">
+        <header class="mb-16 text-center text-reading-length">
+            <div class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-6" style="background-color: var(--brand-surface); color: var(--brand-main);">
+                博客与思考
             </div>
-            <h1 class="text-3xl md:text-4xl font-extrabold mb-6 leading-tight article-title">
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">
                 又幻想了，幻想靠ai成为超级个体，赚够1000万直接退休
             </h1>
-            <div class="article-date text-sm">
+            <div class="text-sm" style="color: var(--text-tertiary);">
                 <i class="far fa-calendar-alt mr-1"></i> 2026年4月24日
             </div>
         </header>
 
-        <div class="article-card p-8 md:p-12">
-            <div class="blog-content text-base md:text-lg leading-relaxed space-y-5">
+        <div class="text-reading-length">
+            <div class="blog-content text-base md:text-lg">
                 <p>事实上，这并不只是我的幻想，而是当前真实的职业规划。</p>
 
                 <p>希望能找一份相对有空闲时间的，跟agent、算法、ai技术相关的工作。一方面磨砺自己的技术，赚点辛苦钱；另一方面接触真实的市场。利用空闲时间，把自己打造成超级个体。超级个体将包括以下几个方面：</p>
 
-                <div class="highlight-box rounded-xl p-6 my-6 space-y-4">
-                    <div class="flex items-start gap-3">
-                        <span class="w-8 h-8 rounded-full step-number flex items-center justify-center flex-shrink-0 text-sm font-bold">1</span>
-                        <div><strong>技术方面</strong>，利用ai-coding，一个人做到全栈的开发。</div>
+                <div class="rounded-xl p-8 my-8 space-y-6" style="background-color: var(--bg-surface); border: 1px solid var(--border-subtle);">
+                    <div class="flex items-start gap-4">
+                        <span class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold mt-1" style="background-color: var(--brand-surface); color: var(--brand-main);">1</span>
+                        <div style="color: var(--text-secondary);"><strong>技术方面</strong>，利用ai-coding，一个人做到全栈的开发。</div>
                     </div>
-                    <div class="flex items-start gap-3">
-                        <span class="w-8 h-8 rounded-full step-number flex items-center justify-center flex-shrink-0 text-sm font-bold">2</span>
-                        <div><strong>产品方面</strong>，运营一个或几个能盈利的产品。或者要求放低一点——有人用，有人玩，也不错。可以是ai工具、独立游戏、第三方平台等。</div>
+                    <div class="flex items-start gap-4">
+                        <span class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold mt-1" style="background-color: var(--brand-surface); color: var(--brand-main);">2</span>
+                        <div style="color: var(--text-secondary);"><strong>产品方面</strong>，运营一个或几个能盈利的产品。或者要求放低一点——有人用，有人玩，也不错。可以是ai工具、独立游戏、第三方平台等。</div>
                     </div>
-                    <div class="flex items-start gap-3">
-                        <span class="w-8 h-8 rounded-full step-number flex items-center justify-center flex-shrink-0 text-sm font-bold">3</span>
-                        <div><strong>推广方面</strong>，在各个社交媒体软件上输出内容，积累用户和粉丝。同步引流到个人网站上下载产品。但这只是动作。更深一层，我想经营的是个人品牌——或者说，一个被信任的"人设"。目标是让粉丝觉得：这人靠谱、有意思，像朋友圈里那个乐于助人的编程大佬，遇到问题愿意来找我。</div>
+                    <div class="flex items-start gap-4">
+                        <span class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold mt-1" style="background-color: var(--brand-surface); color: var(--brand-main);">3</span>
+                        <div style="color: var(--text-secondary);"><strong>推广方面</strong>，在各个社交媒体软件上输出内容，积累用户和粉丝。同步引流到个人网站上下载产品。但这只是动作。更深一层，我想经营的是个人品牌——或者说，一个被信任的"人设"。目标是让粉丝觉得：这人靠谱、有意思，像朋友圈里那个乐于助人的编程大佬，遇到问题愿意来找我。</div>
                     </div>
-                    <div class="flex items-start gap-3">
-                        <span class="w-8 h-8 rounded-full step-number flex items-center justify-center flex-shrink-0 text-sm font-bold">4</span>
-                        <div><strong>资产方面</strong>，搭建一套自己的量化交易系统，以长线指数投资为主，慢慢积累稳定的复利，滚雪球。</div>
+                    <div class="flex items-start gap-4">
+                        <span class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold mt-1" style="background-color: var(--brand-surface); color: var(--brand-main);">4</span>
+                        <div style="color: var(--text-secondary);"><strong>资产方面</strong>，搭建一套自己的量化交易系统，以长线指数投资为主，慢慢积累稳定的复利，滚雪球。</div>
                     </div>
                 </div>
 
@@ -220,34 +139,27 @@
 
                 <p>至于为啥我敢想1000万，是因为大学那时候我预感房价将要大跌，特别是我家那块。就劝我爸最好尽快卖掉家里的两套房子。如果他当时听我的，1000万就只是起点了。</p>
 
-                <div class="mt-10 border border-gray-800 rounded-xl overflow-hidden">
-                    <button onclick="toggleHR()" id="hr-toggle" class="w-full flex items-center justify-between px-6 py-4 hr-toggle hover:opacity-90 transition text-left">
-                        <span class="font-semibold hr-btn-text flex items-center gap-2">
-                            <i class="fas fa-user-tie text-teal"></i> 写给可能看到这里的 HR：
+                <!-- HR 折叠组件 -->
+                <div class="mt-12" style="border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+                    <input type="checkbox" id="hr-toggle" class="collapse-toggle hidden">
+                    <label for="hr-toggle" class="flex justify-between items-center py-6 cursor-pointer transition ease-out-expo hover:opacity-70">
+                        <span class="font-semibold flex items-center gap-3" style="color: var(--text-primary);">
+                            <i class="fas fa-user-tie" style="color: var(--brand-main);"></i> 写给可能看到这里的 HR：
                         </span>
-                        <i id="hr-arrow" class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
-                    </button>
-                    <div id="hr-content" class="hidden px-6 py-5 hr-content">
-                        <p class="hr-text leading-relaxed">如果你真的点到了这一页，说明你对我已经够好奇了——谢谢你的耐心。</p>
-                        <p class="hr-text leading-relaxed mt-3">上面写的是我的长期规划，但有一件事我必须说清楚：主业的优先级永远排第一。我不会用上班时间搞副业，也不会把公司当跳板。我只是希望在完成本职工作之余，有空间探索自己的产品——如果你能接受一个有"第二引擎"但干活不敷衍的人，我们可能会很合拍。</p>
+                        <i class="fas fa-chevron-down collapse-icon transition-transform duration-500 ease-out-expo text-sm" style="color: var(--text-tertiary);"></i>
+                    </label>
+                    <div class="collapse-content pb-6">
+                        <p style="color: var(--text-secondary);">如果你真的点到了这一页，说明你对我已经够好奇了——谢谢你的耐心。</p>
+                        <p style="color: var(--text-secondary);">上面写的是我的长期规划，但有一件事我必须说清楚：主业的优先级永远排第一。我不会用上班时间搞副业，也不会把公司当跳板。我只是希望在完成本职工作之余，有空间探索自己的产品——如果你能接受一个有"第二引擎"但干活不敷衍的人，我们可能会很合拍。</p>
                     </div>
                 </div>
-                <script>
-                    function toggleHR() {
-                        const content = document.getElementById('hr-content');
-                        const arrow = document.getElementById('hr-arrow');
-                        content.classList.toggle('hidden');
-                        arrow.classList.toggle('rotate-180');
-                    }
-                </script>
 
             </div>
         </div>
     </article>
 
-    <footer class="py-8 text-center mt-auto">
-        <p>&copy; 2026 2524278238. All rights reserved.</p>
-        <p class="text-sm mt-2">Built with ❤️</p>
+    <footer class="py-10 text-center mt-auto" style="border-top: 1px solid var(--border-subtle);">
+        <p style="color: var(--text-tertiary);">&copy; 2026 2524278238. All rights reserved.</p>
     </footer>
 
 </body>
