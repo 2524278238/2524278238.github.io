@@ -49,6 +49,34 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Ambient Background Blobs (Delight & Overdrive) */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+            animation: blob 18s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+
+        /* Scroll-driven Reveal (Progressive Enhancement) */
+        @supports (animation-timeline: view()) {
+            .scroll-reveal {
+                animation: linear scrollReveal both;
+                animation-timeline: view();
+                animation-range: entry 5% cover 20%;
+                opacity: 1; /* Override the default opacity:0 of fade-in */
+            }
+            @keyframes scrollReveal {
+                from { opacity: 0; transform: translateY(40px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        }
+
         /* Subtle collapse panel */
         .collapse-content {
             max-height: 0;
@@ -75,7 +103,14 @@
         }
     </style>
 </head>
-<body class="antialiased font-sans min-h-screen flex flex-col">
+<body class="antialiased font-sans min-h-screen flex flex-col relative">
+
+    <!-- Subtle Ambient Background -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none flex justify-center items-center">
+        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[120px] opacity-[0.15] animate-blob" style="background-color: var(--brand-main);"></div>
+        <div class="absolute top-[30%] right-[-10%] w-[400px] h-[400px] rounded-full blur-[100px] opacity-[0.1] animate-blob animation-delay-2000" style="background-color: var(--text-primary);"></div>
+        <div class="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] rounded-full blur-[140px] opacity-[0.1] animate-blob animation-delay-4000" style="background-color: var(--brand-main);"></div>
+    </div>
 
     <!-- 极简导航栏 -->
     <nav class="sticky top-0 z-50 backdrop-blur-md" style="background-color: color-mix(in oklch, var(--bg-surface) 85%, transparent); border-bottom: 1px solid var(--border-subtle);">
@@ -91,8 +126,8 @@
         
         <!-- 头部摘要 -->
         <header class="mb-20 fade-in">
-            <h1 class="text-5xl md:text-6xl font-extrabold mb-4" style="color: var(--text-primary);">李扬韬</h1>
-            <p class="text-xl md:text-2xl font-medium mb-10" style="color: var(--brand-main);">算法工程师 / AI 智能体研发</p>
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 transition-transform duration-700 ease-out-expo hover:translate-x-2 cursor-default" style="color: var(--text-primary);">李扬韬</h1>
+            <p class="text-xl md:text-2xl font-medium mb-10 transition-colors duration-500 ease-out-expo hover:text-opacity-80" style="color: var(--brand-main);">算法工程师 / AI 智能体研发</p>
             
             <!-- 个人信息折叠面板 (去除嵌套卡片，改为平滑展开的区块) -->
             <div class="border-y" style="border-color: var(--border-subtle);">
@@ -120,7 +155,7 @@
         </header>
 
         <!-- 专业技能 (抛弃同质化卡片与侧边条纹，改用排版对比) -->
-        <section class="mb-24 fade-in delay-1">
+        <section class="mb-24 fade-in delay-1 scroll-reveal">
             <h2 class="text-xs uppercase tracking-widest font-bold mb-10 pb-4 border-b" style="color: var(--text-secondary); border-color: var(--border-subtle);">
                 专业技能
             </h2>
@@ -145,7 +180,7 @@
         </section>
 
         <!-- 实习经历 (去除“卡片包卡片”反模式) -->
-        <section class="mb-24 fade-in delay-2">
+        <section class="mb-24 fade-in delay-2 scroll-reveal">
             <h2 class="text-xs uppercase tracking-widest font-bold mb-10 pb-4 border-b" style="color: var(--text-secondary); border-color: var(--border-subtle);">
                 实习经历
             </h2>
@@ -200,7 +235,7 @@
         </section>
 
         <!-- 科研经历 -->
-        <section class="mb-24 fade-in delay-3">
+        <section class="mb-24 fade-in delay-3 scroll-reveal">
             <h2 class="text-xs uppercase tracking-widest font-bold mb-10 pb-4 border-b" style="color: var(--text-secondary); border-color: var(--border-subtle);">
                 科研经历
             </h2>
@@ -216,39 +251,41 @@
                 </div>
                 
                 <div class="flex flex-wrap gap-6">
-                    <a href="https://github.com/2524278238/Error-prone-Words-Optimization" target="_blank" class="px-6 py-3 font-semibold text-sm transition ease-out-expo hover:opacity-80 rounded flex items-center gap-2" style="background-color: var(--text-primary); color: var(--bg-surface);">
-                        <i class="fab fa-github"></i> 开源项目代码
+                    <a href="https://github.com/2524278238/Error-prone-Words-Optimization" target="_blank" class="group relative overflow-hidden px-6 py-3 font-semibold text-sm transition-all duration-500 ease-out-expo rounded-lg flex items-center gap-2 shadow-sm hover:shadow-xl hover:-translate-y-1" style="background-color: var(--text-primary); color: var(--bg-surface);">
+                        <span class="absolute inset-0 w-full h-full bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out-expo rounded-lg"></span>
+                        <i class="fab fa-github relative z-10"></i> <span class="relative z-10">开源项目代码</span>
                     </a>
-                    <a href="(2510-0140) .pdf" download="基于源端易错词的大语言模型机器翻译优化方法.pdf" class="px-6 py-3 font-semibold text-sm transition ease-out-expo hover:bg-opacity-80 rounded flex items-center gap-2" style="background-color: var(--brand-surface); color: var(--brand-main);">
-                        <i class="fas fa-file-pdf"></i> 下载论文 PDF
+                    <a href="(2510-0140) .pdf" download="基于源端易错词的大语言模型机器翻译优化方法.pdf" class="group relative overflow-hidden px-6 py-3 font-semibold text-sm transition-all duration-500 ease-out-expo rounded-lg flex items-center gap-2 border hover:border-transparent hover:shadow-lg hover:-translate-y-1" style="background-color: transparent; border-color: var(--brand-main); color: var(--brand-main);">
+                        <span class="absolute inset-0 w-full h-full translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out-expo rounded-lg" style="background-color: var(--brand-surface);"></span>
+                        <i class="fas fa-file-pdf relative z-10"></i> <span class="relative z-10">下载论文 PDF</span>
                     </a>
                 </div>
             </div>
         </section>
 
         <!-- 技术方向探索 (使用错落有致的文本列表替代图标卡片阵列) -->
-        <section class="mb-16 fade-in delay-3">
+        <section class="mb-16 fade-in delay-3 scroll-reveal">
             <h2 class="text-xs uppercase tracking-widest font-bold mb-10 pb-4 border-b" style="color: var(--text-secondary); border-color: var(--border-subtle);">
                 技术方向探索
             </h2>
             <p class="text-base mb-8 text-reading-length" style="color: var(--text-secondary);">本人仍持续在以下前沿领域保持好奇心与探索欲：</p>
             
             <ul class="space-y-6 text-lg font-medium" style="color: var(--text-primary);">
-                <li class="flex items-start gap-4 group">
-                    <span class="text-sm mt-1 transition ease-out-expo group-hover:translate-x-1" style="color: var(--brand-main);">&rarr;</span>
-                    <span>如何利用 LLM 进行量化交易？</span>
+                <li class="flex items-start gap-4 group cursor-default transition-transform duration-500 ease-out-expo hover:translate-x-2">
+                    <span class="text-sm mt-1 transition-transform duration-500 ease-out-expo group-hover:translate-x-2 group-hover:scale-125" style="color: var(--brand-main);">&rarr;</span>
+                    <span class="transition-colors duration-500 ease-out-expo group-hover:text-[var(--brand-main)]">如何利用 LLM 进行量化交易？</span>
                 </li>
-                <li class="flex items-start gap-4 group">
-                    <span class="text-sm mt-1 transition ease-out-expo group-hover:translate-x-1" style="color: var(--brand-main);">&rarr;</span>
-                    <span>基于视觉大模型的 AI 输入法应用开发</span>
+                <li class="flex items-start gap-4 group cursor-default transition-transform duration-500 ease-out-expo hover:translate-x-2">
+                    <span class="text-sm mt-1 transition-transform duration-500 ease-out-expo group-hover:translate-x-2 group-hover:scale-125" style="color: var(--brand-main);">&rarr;</span>
+                    <span class="transition-colors duration-500 ease-out-expo group-hover:text-[var(--brand-main)]">基于视觉大模型的 AI 输入法应用开发</span>
                 </li>
-                <li class="flex items-start gap-4 group">
-                    <span class="text-sm mt-1 transition ease-out-expo group-hover:translate-x-1" style="color: var(--brand-main);">&rarr;</span>
-                    <span>像 vibe-coding 一样撰写、修改 Word 文档</span>
+                <li class="flex items-start gap-4 group cursor-default transition-transform duration-500 ease-out-expo hover:translate-x-2">
+                    <span class="text-sm mt-1 transition-transform duration-500 ease-out-expo group-hover:translate-x-2 group-hover:scale-125" style="color: var(--brand-main);">&rarr;</span>
+                    <span class="transition-colors duration-500 ease-out-expo group-hover:text-[var(--brand-main)]">像 vibe-coding 一样撰写、修改 Word 文档</span>
                 </li>
-                <li class="flex items-start gap-4 group">
-                    <span class="text-sm mt-1 transition ease-out-expo group-hover:translate-x-1" style="color: var(--brand-main);">&rarr;</span>
-                    <span>站在玩家的角度，LLM 如何给游戏带来革命？</span>
+                <li class="flex items-start gap-4 group cursor-default transition-transform duration-500 ease-out-expo hover:translate-x-2">
+                    <span class="text-sm mt-1 transition-transform duration-500 ease-out-expo group-hover:translate-x-2 group-hover:scale-125" style="color: var(--brand-main);">&rarr;</span>
+                    <span class="transition-colors duration-500 ease-out-expo group-hover:text-[var(--brand-main)]">站在玩家的角度，LLM 如何给游戏带来革命？</span>
                 </li>
             </ul>
         </section>
