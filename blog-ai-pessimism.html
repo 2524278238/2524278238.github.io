@@ -4,57 +4,170 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我对AI发展的悲观，源自于对AI发展的乐观。 - 2524278238</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --bg-base: #090b0e;
+            --bg-elevated: #12161c;
+            --bg-surface: #1a1f27;
+            --bg-highlight: #242b35;
+            --text-primary: #f0f2f4;
+            --text-secondary: #9ca3af;
+            --text-muted: #5c6370;
+            --accent: #f59e0b;
+            --accent-strong: #fbbf24;
+            --accent-dim: rgba(245, 158, 11, 0.12);
+            --border: #2a303a;
+            --border-light: #363e4a;
+            --indigo: #6366f1;
+            --indigo-dim: rgba(99, 102, 241, 0.12);
+            --teal: #14b8a6;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
         .fade-in {
-            animation: fadeIn 0.8s ease-in forwards;
+            animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
             opacity: 0;
         }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
         body {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            background: var(--bg-base);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-primary);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
+        
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-base);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--border-light);
+        }
+        
+        nav {
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        nav a {
+            color: var(--teal);
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        nav .blog-brand {
+            color: var(--text-muted);
+        }
+        
+        .article-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--indigo), var(--teal));
+        }
+        
+        .category-badge {
+            background: var(--indigo-dim);
+            color: var(--indigo);
+            border: 1px solid var(--indigo);
+        }
+        
+        .article-title {
+            color: var(--text-primary);
+        }
+        
+        .article-date {
+            color: var(--text-muted);
+        }
+        
+        .blog-content {
+            color: var(--text-secondary);
+        }
+        
         .blog-content p {
-            margin-bottom: 1.25rem;
-            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            line-height: 1.9;
         }
+        
         .blog-content strong {
-            color: #1e40af;
+            color: var(--accent-strong);
+            font-weight: 600;
+        }
+        
+        .quote-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+        
+        .italic-quote {
+            color: var(--text-muted);
+        }
+        
+        footer {
+            background: var(--bg-elevated);
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
         }
     </style>
 </head>
-<body class="text-gray-800 antialiased font-sans min-h-screen flex flex-col">
+<body>
     
-    <!-- 导航栏 -->
-    <nav class="bg-white shadow-sm p-4 sticky top-0 z-50">
+    <nav class="p-4 sticky top-0 z-50">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <a href="free_space.html" class="text-xl font-bold text-teal-600 hover:text-teal-800 transition flex items-center gap-2">
+            <a href="free_space.html" class="text-xl font-bold hover:opacity-80 transition flex items-center gap-2">
                 <i class="fas fa-arrow-left"></i> 返回博客列表
             </a>
-            <div class="text-gray-500 font-medium">2524278238's Blog</div>
+            <div class="blog-brand font-medium">2524278238's Blog</div>
         </div>
     </nav>
 
-    <!-- 文章内容 -->
     <article class="max-w-4xl mx-auto px-6 py-12 fade-in">
         <header class="mb-10 text-center">
-            <div class="inline-block bg-indigo-100 text-indigo-600 px-4 py-1 rounded-full text-sm font-medium mb-4">
+            <div class="inline-block category-badge px-4 py-1 rounded-full text-sm font-medium mb-4">
                 <i class="fas fa-pen-nib mr-1"></i> 博客与思考
             </div>
-            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 leading-tight">
+            <h1 class="text-3xl md:text-4xl font-extrabold mb-6 leading-tight article-title">
                 我对AI发展的悲观，源自于对AI发展的乐观。
             </h1>
-            <div class="text-gray-400 text-sm">
+            <div class="article-date text-sm">
                 <i class="far fa-calendar-alt mr-1"></i> 2026年4月23日
             </div>
         </header>
 
-        <div class="bg-white rounded-2xl shadow-sm p-8 md:p-12 border-t-4 border-indigo-400">
-            <div class="blog-content text-gray-700 text-base md:text-lg leading-relaxed space-y-5">
+        <div class="article-card p-8 md:p-12">
+            <div class="blog-content text-base md:text-lg leading-relaxed space-y-5">
                 <p>乍一看这个标题，会觉得左脑反击右脑，尖尖代替思考。这其实是不同层面的问题，悲观源于社会层面，乐观源于技术层面。</p>
 
                 <p>先说乐观吧，我不觉得agi会有长时间的瓶颈。因为人脑已经是现成的高效造物，对比llm耗能极低，这还是在人脑将大量能量用于控制身体，维持生命的情况下，如果只负责智能，耗能肯定更低。llm也不会是ai的终极范式，更何况当前的llm智能已经到了一个令人惊叹的地步。现在有无数资本、意志、聪明的脑瓜在投入这件事，我们在技术上一定会进步很快。</p>
@@ -63,7 +176,7 @@
 
                 <p>我知道一定有人要拿过去的工业革命说事：机器消灭了旧岗位，创造了更多新岗位。让我们复盘这个逻辑链条：</p>
 
-                <div class="bg-gray-50 p-5 rounded-xl font-mono text-sm text-indigo-800 my-6 text-center border border-indigo-100">
+                <div class="quote-box p-5 rounded-xl font-mono text-sm my-6 text-center">
                     发明机器 → 生产力提升 → 生产成本降低 → 消费端需求提升 → 更多新岗位
                 </div>
 
@@ -71,7 +184,7 @@
 
                 <p>新的链条是：</p>
 
-                <div class="bg-gray-50 p-5 rounded-xl font-mono text-sm text-indigo-800 my-6 text-center border border-indigo-100">
+                <div class="quote-box p-5 rounded-xl font-mono text-sm my-6 text-center">
                     发明ai → 生产力提升 → 生产成本降低 → 消费端需求停滞 → 传统岗位消失，新岗位不足以弥补
                 </div>
 
@@ -93,15 +206,14 @@
 
                 <p>所以我对AI的乐观，是技术上的：在不远的将来，能看到AGI，会看到科学突破，会看到物质极大丰富。但正是这种乐观让我悲观——因为我知道，当生产力跨越某个阈值，而社会制度没有同步进化时，技术的胜利就是普通人的失败。</p>
 
-                <p class="text-center italic text-gray-500 mt-10 text-lg">但愿我们是错的。</p>
+                <p class="text-center italic mt-10 text-lg italic-quote">但愿我们是错的。</p>
             </div>
         </div>
     </article>
 
-    <!-- 页脚 -->
-    <footer class="bg-gray-900 text-gray-400 py-8 text-center mt-auto">
+    <footer class="py-8 text-center mt-auto">
         <p>&copy; 2024 2524278238. All rights reserved.</p>
-        <p class="text-sm mt-2">Built with ❤️ and Tailwind CSS</p>
+        <p class="text-sm mt-2">Built with ❤️</p>
     </footer>
 
 </body>

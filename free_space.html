@@ -4,257 +4,394 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2524278238 - 自由空间</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --bg-base: #090b0e;
+            --bg-elevated: #12161c;
+            --bg-surface: #1a1f27;
+            --bg-highlight: #242b35;
+            --text-primary: #f0f2f4;
+            --text-secondary: #9ca3af;
+            --text-muted: #5c6370;
+            --accent: #f59e0b;
+            --accent-strong: #fbbf24;
+            --accent-dim: rgba(245, 158, 11, 0.12);
+            --accent-glow: rgba(245, 158, 11, 0.3);
+            --border: #2a303a;
+            --border-light: #363e4a;
+            --teal: #14b8a6;
+            --teal-dim: rgba(20, 184, 166, 0.12);
+            --teal-glow: rgba(20, 184, 166, 0.3);
+            --orange: #f97316;
+            --orange-dim: rgba(249, 115, 22, 0.12);
+            --indigo: #6366f1;
+            --indigo-dim: rgba(99, 102, 241, 0.12);
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
         .fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
+            animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
             opacity: 0;
         }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
         body {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            background: var(--bg-base);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            color: var(--text-primary);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
         
-        /* 自定义滚动条 */
         ::-webkit-scrollbar {
             width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: var(--bg-base);
         }
         ::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
+            background: var(--border);
             border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #a1a1a1;
+            background: var(--border-light);
         }
         
-        /* Tab 切换动画 */
         .tab-content {
             display: none;
-            animation: fadeIn 0.4s ease-out;
+            animation: fadeIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .tab-content.active {
             display: block;
         }
         
-        /* 卡片悬停效果 */
         .project-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 20px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+        }
+        
         .project-card:hover {
             transform: translateY(-6px);
+            border-color: var(--border-light);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
+        
         .project-card:hover .card-icon {
             transform: scale(1.1);
         }
-        .project-card:hover .card-arrow {
-            transform: translateX(4px);
-        }
+        
         .card-icon {
-            transition: transform 0.3s ease;
-        }
-        .card-arrow {
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* 玻璃态效果 */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-        }
-        
-        /* 标签激活态 */
         .tab-btn {
             position: relative;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--text-secondary);
+            background: transparent;
+            border: 1px solid transparent;
         }
-        .tab-btn::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 3px;
-            border-radius: 2px;
-            transition: width 0.3s ease;
+        
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-surface);
         }
+        
         .tab-btn.active {
-            color: #0d9488;
+            color: var(--teal);
+            background: var(--teal-dim);
+            border-color: var(--teal);
         }
+        
         .tab-btn.active::after {
-            width: 60%;
-            background: linear-gradient(90deg, #14b8a6, #0d9488);
+            display: none;
+        }
+        
+        nav {
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        nav a {
+            color: var(--teal);
+        }
+        
+        nav a:hover {
+            color: var(--teal-glow);
+        }
+        
+        .text-muted-nav {
+            color: var(--text-muted);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--teal) 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header-desc {
+            color: var(--text-secondary);
+        }
+        
+        .card-title {
+            color: var(--text-primary);
+        }
+        
+        .card-desc {
+            color: var(--text-secondary);
+        }
+        
+        .card-arrow {
+            color: var(--text-muted);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .project-card:hover .card-arrow {
+            color: var(--teal);
+            transform: translateX(4px);
+        }
+        
+        .icon-bg {
+            background: var(--teal-dim);
+        }
+        
+        .icon-bg-orange {
+            background: var(--orange-dim);
+        }
+        
+        .icon-bg-indigo {
+            background: var(--indigo-dim);
+        }
+        
+        .card-link {
+            color: var(--teal);
+        }
+        
+        .card-link:hover {
+            color: var(--accent);
+        }
+        
+        .card-link-orange {
+            color: var(--orange);
+        }
+        
+        .card-link-orange:hover {
+            color: var(--accent);
+        }
+        
+        .card-link-emerald {
+            color: #10b981;
+        }
+        
+        .card-link-emerald:hover {
+            color: var(--accent);
+        }
+        
+        .card-link-pink {
+            color: #ec4899;
+        }
+        
+        .card-link-pink:hover {
+            color: var(--accent);
+        }
+        
+        footer {
+            background: var(--bg-elevated);
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+        
+        .date-badge {
+            background: var(--bg-surface);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+        
+        .game-icon-gradient {
+            background: var(--orange-dim);
+            border: 1px solid var(--orange);
+        }
+        
+        .game-icon-gradient-emerald {
+            background: var(--teal-dim);
+            border: 1px solid var(--teal);
+        }
+        
+        .separator {
+            color: var(--border);
         }
     </style>
 </head>
-<body class="text-gray-800 antialiased font-sans">
+<body>
     
-    <!-- 导航栏 -->
-    <nav class="bg-white/80 backdrop-blur-md shadow-sm p-4 sticky top-0 z-50 border-b border-gray-100">
+    <nav class="p-4 sticky top-0 z-50">
         <div class="max-w-5xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-xl font-bold text-teal-600 hover:text-teal-800 transition flex items-center gap-2">
+            <a href="index.html" class="text-xl font-bold hover:opacity-80 transition flex items-center gap-2">
                 <i class="fas fa-home"></i> 返回主页
             </a>
-            <div class="text-gray-400 text-sm font-medium">自由空间</div>
+            <div class="text-sm font-medium text-muted-nav">自由空间</div>
         </div>
     </nav>
 
-    <!-- 页面标题 -->
     <header class="text-center pt-12 pb-8 px-4">
-        <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-emerald-600 mb-4">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 gradient-text">
             自由空间
         </h1>
-        <p class="text-gray-500 max-w-xl mx-auto text-base md:text-lg">
+        <p class="header-desc max-w-xl mx-auto text-base md:text-lg">
             这里展示我的很多创新和实践，以及思考
         </p>
     </header>
 
-    <!-- 现代化内容区 -->
     <main class="max-w-5xl mx-auto px-6 pb-16 flex-grow">
         
-        <!-- Tab 导航 -->
         <div class="flex justify-center gap-2 md:gap-6 mb-10">
-            <button onclick="switchTab('tools')" class="tab-btn active px-5 py-2.5 text-base font-semibold text-gray-600 rounded-xl hover:bg-teal-50 transition flex items-center gap-2" id="tab-tools">
+            <button onclick="switchTab('tools')" class="tab-btn active px-5 py-2.5 text-base font-semibold rounded-xl flex items-center gap-2" id="tab-tools">
                 <i class="fas fa-tools"></i> 实用工具
             </button>
-            <button onclick="switchTab('games')" class="tab-btn px-5 py-2.5 text-base font-semibold text-gray-600 rounded-xl hover:bg-orange-50 transition flex items-center gap-2" id="tab-games">
+            <button onclick="switchTab('games')" class="tab-btn px-5 py-2.5 text-base font-semibold rounded-xl flex items-center gap-2" id="tab-games">
                 <i class="fas fa-gamepad"></i> 独立游戏
             </button>
-            <button onclick="switchTab('blogs')" class="tab-btn px-5 py-2.5 text-base font-semibold text-gray-600 rounded-xl hover:bg-indigo-50 transition flex items-center gap-2" id="tab-blogs">
+            <button onclick="switchTab('blogs')" class="tab-btn px-5 py-2.5 text-base font-semibold rounded-xl flex items-center gap-2" id="tab-blogs">
                 <i class="fas fa-pen-nib"></i> 博客思考
             </button>
         </div>
 
-        <!-- 工具 Tab -->
         <div id="content-tools" class="tab-content active">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <!-- 工具卡片1 -->
-                <a href="https://github.com/2524278238/AI-input" target="_blank" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-100 flex items-start gap-4">
-                    <div class="card-icon w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-keyboard text-teal-500 text-xl"></i>
+                <a href="https://github.com/2524278238/AI-input" target="_blank" class="project-card rounded-2xl p-6 flex items-start gap-4">
+                    <div class="card-icon w-12 h-12 rounded-xl icon-bg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-keyboard text-teal text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <h3 class="text-lg font-bold text-gray-800 mb-1.5">ai输入补全插件</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">大模型最擅长预测下一个词，输入法也是。这是一个ai输入法插件，调用视觉模型看到你的屏幕和输入，在你输入一个词后自动调用，生成后续输入。</p>
+                        <h3 class="text-lg font-bold card-title mb-1.5">ai输入补全插件</h3>
+                        <p class="card-desc text-sm leading-relaxed">大模型最擅长预测下一个词，输入法也是。这是一个ai输入法插件，调用视觉模型看到你的屏幕和输入，在你输入一个词后自动调用，生成后续输入。</p>
                     </div>
-                    <div class="card-arrow text-teal-400 flex items-center opacity-0 group-hover:opacity-100">
+                    <div class="card-arrow flex items-center flex-shrink-0">
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
                 
-                <!-- 工具卡片2 -->
-                <a href="https://github.com/2524278238/clean_c_agent" target="_blank" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-100 flex items-start gap-4">
-                    <div class="card-icon w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-hard-drive text-teal-500 text-xl"></i>
+                <a href="https://github.com/2524278238/clean_c_agent" target="_blank" class="project-card rounded-2xl p-6 flex items-start gap-4">
+                    <div class="card-icon w-12 h-12 rounded-xl icon-bg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-hard-drive text-teal text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <h3 class="text-lg font-bold text-gray-800 mb-1.5">c盘清理工具</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">智能 Windows C 盘空间清理与分析工具。除了常规的系统清理，还能接入大模型告诉你每个文件夹的作用、风险等级和清理建议。</p>
+                        <h3 class="text-lg font-bold card-title mb-1.5">c盘清理工具</h3>
+                        <p class="card-desc text-sm leading-relaxed">智能 Windows C 盘空间清理与分析工具。除了常规的系统清理，还能接入大模型告诉你每个文件夹的作用、风险等级和清理建议。</p>
                     </div>
-                    <div class="card-arrow text-teal-400 flex items-center">
+                    <div class="card-arrow flex items-center flex-shrink-0">
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
                 
-                <!-- 工具卡片3 -->
-                <a href="https://github.com/2524278238/Document-conversion-tool" target="_blank" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-100 flex items-start gap-4">
-                    <div class="card-icon w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-file-alt text-teal-500 text-xl"></i>
+                <a href="https://github.com/2524278238/Document-conversion-tool" target="_blank" class="project-card rounded-2xl p-6 flex items-start gap-4">
+                    <div class="card-icon w-12 h-12 rounded-xl icon-bg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-file-alt text-teal text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <h3 class="text-lg font-bold text-gray-800 mb-1.5">文件转换工具</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">本地离线文件转换工具。完全免费、开源，所有转换过程都在本地离线完成，没有文件大小限制，也没有隐私泄露风险。</p>
+                        <h3 class="text-lg font-bold card-title mb-1.5">文件转换工具</h3>
+                        <p class="card-desc text-sm leading-relaxed">本地离线文件转换工具。完全免费、开源，所有转换过程都在本地离线完成，没有文件大小限制，也没有隐私泄露风险。</p>
                     </div>
-                    <div class="card-arrow text-teal-400 flex items-center">
+                    <div class="card-arrow flex items-center flex-shrink-0">
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
                 
-                <!-- 工具卡片4 -->
-                <a href="https://github.com/2524278238/doc_fill" target="_blank" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-100 flex items-start gap-4">
-                    <div class="card-icon w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-file-signature text-teal-500 text-xl"></i>
+                <a href="https://github.com/2524278238/doc_fill" target="_blank" class="project-card rounded-2xl p-6 flex items-start gap-4">
+                    <div class="card-icon w-12 h-12 rounded-xl icon-bg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-file-signature text-teal text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <h3 class="text-lg font-bold text-gray-800 mb-1.5">LLM 文档智能填充</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">基于 LLM 的 Word 文档自动填充工具。读取模板识别占位符，根据提供的字段数据，利用 LLM 智能生成和填充内容。</p>
+                        <h3 class="text-lg font-bold card-title mb-1.5">LLM 文档智能填充</h3>
+                        <p class="card-desc text-sm leading-relaxed">基于 LLM 的 Word 文档自动填充工具。读取模板识别占位符，根据提供的字段数据，利用 LLM 智能生成和填充内容。</p>
                     </div>
-                    <div class="card-arrow text-teal-400 flex items-center">
+                    <div class="card-arrow flex items-center flex-shrink-0">
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
                 
-                <!-- 工具卡片5 -->
-                <a href="https://github.com/2524278238/doc_generator" target="_blank" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-100 flex items-start gap-4">
-                    <div class="card-icon w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-magic text-teal-500 text-xl"></i>
+                <a href="https://github.com/2524278238/doc_generator" target="_blank" class="project-card rounded-2xl p-6 flex items-start gap-4">
+                    <div class="card-icon w-12 h-12 rounded-xl icon-bg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-magic text-teal text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <h3 class="text-lg font-bold text-gray-800 mb-1.5">智能文档生成工具</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">基于 Streamlit 和 LLM 的智能文档生成工具。根据 Word 模板和自然语言要求，自动生成格式一致、内容符合需求的新文档。</p>
+                        <h3 class="text-lg font-bold card-title mb-1.5">智能文档生成工具</h3>
+                        <p class="card-desc text-sm leading-relaxed">基于 Streamlit 和 LLM 的智能文档生成工具。根据 Word 模板和自然语言要求，自动生成格式一致、内容符合需求的新文档。</p>
                     </div>
-                    <div class="card-arrow text-teal-400 flex items-center">
+                    <div class="card-arrow flex items-center flex-shrink-0">
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
                 
-                <!-- 工具卡片6 -->
-                <a href="https://github.com/2524278238/use-ai-everyserver" target="_blank" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-100 flex items-start gap-4">
-                    <div class="card-icon w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-server text-teal-500 text-xl"></i>
+                <a href="https://github.com/2524278238/use-ai-everyserver" target="_blank" class="project-card rounded-2xl p-6 flex items-start gap-4">
+                    <div class="card-icon w-12 h-12 rounded-xl icon-bg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-server text-teal text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <h3 class="text-lg font-bold text-gray-800 mb-1.5">Use AI Every Server</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">在本地使用AI编程，自动同步代码到远程服务器并执行，流式输出运行日志。让你在老旧服务器上也能用AI写代码。</p>
+                        <h3 class="text-lg font-bold card-title mb-1.5">Use AI Every Server</h3>
+                        <p class="card-desc text-sm leading-relaxed">在本地使用AI编程，自动同步代码到远程服务器并执行，流式输出运行日志。让你在老旧服务器上也能用AI写代码。</p>
                     </div>
-                    <div class="card-arrow text-teal-400 flex items-center">
+                    <div class="card-arrow flex items-center flex-shrink-0">
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
             </div>
         </div>
 
-        <!-- 游戏 Tab -->
         <div id="content-games" class="tab-content">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- 游戏卡片1 -->
-                <div class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-100 flex items-start gap-5">
-                    <div class="card-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-orange-200">
-                        <i class="fas fa-horse text-white text-2xl"></i>
+                <div class="project-card rounded-2xl p-6 flex items-start gap-5">
+                    <div class="card-icon w-16 h-16 rounded-2xl game-icon-gradient flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-horse text-orange text-2xl"></i>
                     </div>
                     <div class="flex-grow">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">赛马大富翁</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed mb-3">魔改版的大富翁游戏，事件由ai实时生成，并对游戏施加影响。</p>
-                        <a href="https://github.com/2524278238/Horse-Racing-Tycoon" target="_blank" class="inline-flex items-center gap-2 text-orange-500 text-sm font-medium hover:text-orange-700 transition">
+                        <h3 class="text-xl font-bold card-title mb-2">赛马大富翁</h3>
+                        <p class="card-desc text-sm leading-relaxed mb-3">魔改版的大富翁游戏，事件由ai实时生成，并对游戏施加影响。</p>
+                        <a href="https://github.com/2524278238/Horse-Racing-Tycoon" target="_blank" class="inline-flex items-center gap-2 card-link-orange text-sm font-medium hover:opacity-80 transition">
                             <i class="fab fa-github"></i> 查看源码
                         </a>
                     </div>
                 </div>
                 
-                <!-- 游戏卡片2 -->
-                <div class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-100 flex items-start gap-5">
-                    <div class="card-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-200">
-                        <i class="fas fa-dragon text-white text-2xl"></i>
+                <div class="project-card rounded-2xl p-6 flex items-start gap-5">
+                    <div class="card-icon w-16 h-16 rounded-2xl game-icon-gradient-emerald flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-dragon text-teal text-2xl"></i>
                     </div>
                     <div class="flex-grow">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">风云大陆</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed mb-3">基于Godot引擎开发的2D修仙题材RPG游戏。玩家在开放世界中探索、修炼。我想把这个游戏开发成一个"活的"世界。（半成品）</p>
+                        <h3 class="text-xl font-bold card-title mb-2">风云大陆</h3>
+                        <p class="card-desc text-sm leading-relaxed mb-3">基于Godot引擎开发的2D修仙题材RPG游戏。玩家在开放世界中探索、修炼。我想把这个游戏开发成一个"活的"世界。（半成品）</p>
                         <div class="flex items-center gap-3">
-                            <a href="https://github.com/2524278238/FYDL-game" target="_blank" class="text-emerald-500 text-sm font-medium flex items-center gap-1 hover:text-emerald-700 transition">
+                            <a href="https://github.com/2524278238/FYDL-game" target="_blank" class="card-link-emerald text-sm font-medium flex items-center gap-1 hover:opacity-80 transition">
                                 <i class="fab fa-github"></i> 源码
                             </a>
-                            <span class="text-gray-300">|</span>
-                            <a href="https://b23.tv/AjExplm" target="_blank" class="text-pink-500 text-sm font-medium flex items-center gap-1 hover:text-pink-700 transition">
+                            <span class="separator">|</span>
+                            <a href="https://b23.tv/AjExplm" target="_blank" class="card-link-pink text-sm font-medium flex items-center gap-1 hover:opacity-80 transition">
                                 <i class="fas fa-video"></i> B站演示
                             </a>
                         </div>
@@ -263,38 +400,35 @@
             </div>
         </div>
 
-        <!-- 博客 Tab -->
         <div id="content-blogs" class="tab-content">
             <div class="grid grid-cols-1 gap-5">
-                <!-- 博客卡片1 -->
-                <a href="blog-super-individual.html" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-100 flex items-center gap-5">
-                    <div class="card-icon w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-teal-200">
-                        <i class="fas fa-rocket text-white text-xl"></i>
+                <a href="blog-super-individual.html" class="project-card rounded-2xl p-6 flex items-center gap-5">
+                    <div class="card-icon w-14 h-14 rounded-2xl game-icon-gradient-emerald flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-rocket text-teal text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
                         <div class="flex items-center gap-3 mb-1">
-                            <h3 class="text-lg font-bold text-gray-800">又幻想了，幻想靠AI成为超级个体</h3>
-                            <span class="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">2026.04.24</span>
+                            <h3 class="text-lg font-bold card-title">又幻想了，幻想靠AI成为超级个体</h3>
+                            <span class="date-badge text-xs px-2 py-0.5 rounded-full">2026.04.24</span>
                         </div>
-                        <p class="text-gray-500 text-sm leading-relaxed line-clamp-2">事实上，这并不只是我的幻想，而是当前真实的职业规划...</p>
+                        <p class="card-desc text-sm leading-relaxed line-clamp-2">事实上，这并不只是我的幻想，而是当前真实的职业规划...</p>
                     </div>
-                    <div class="card-arrow text-teal-400 flex-shrink-0">
+                    <div class="card-arrow flex-shrink-0">
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
-                <!-- 博客卡片2 -->
-                <a href="blog-ai-pessimism.html" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-100 flex items-center gap-5">
-                    <div class="card-icon w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-200">
-                        <i class="fas fa-brain text-white text-xl"></i>
+                <a href="blog-ai-pessimism.html" class="project-card rounded-2xl p-6 flex items-center gap-5">
+                    <div class="card-icon w-14 h-14 rounded-2xl icon-bg-indigo flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-brain text-indigo text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
                         <div class="flex items-center gap-3 mb-1">
-                            <h3 class="text-lg font-bold text-gray-800">我对AI发展的悲观，源自于对AI发展的乐观。</h3>
-                            <span class="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">2026.04.23</span>
+                            <h3 class="text-lg font-bold card-title">我对AI发展的悲观，源自于对AI发展的乐观。</h3>
+                            <span class="date-badge text-xs px-2 py-0.5 rounded-full">2026.04.23</span>
                         </div>
-                        <p class="text-gray-500 text-sm leading-relaxed line-clamp-2">乍一看这个标题，会觉得左脑反击右脑，尖尖代替思考。这其实是不同层面的问题，悲观源于社会层面，乐观源于技术层面...</p>
+                        <p class="card-desc text-sm leading-relaxed line-clamp-2">乍一看这个标题，会觉得左脑反击右脑，尖尖代替思考。这其实是不同层面的问题，悲观源于社会层面，乐观源于技术层面...</p>
                     </div>
-                    <div class="card-arrow text-indigo-400 flex-shrink-0">
+                    <div class="card-arrow flex-shrink-0">
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
@@ -303,29 +437,23 @@
         
     </main>
 
-    <!-- 页脚 -->
-    <footer class="bg-gray-900 text-gray-400 py-8 text-center mt-auto">
+    <footer class="py-8 text-center mt-auto">
         <p>&copy; 2026 2524278238. All rights reserved.</p>
-        <p class="text-sm mt-2">Built with ❤️ and Tailwind CSS</p>
+        <p class="text-sm mt-2">Built with ❤️</p>
     </footer>
 
-    <!-- Tab 切换脚本 -->
     <script>
         function switchTab(tabName) {
-            // 隐藏所有 tab 内容
             document.querySelectorAll('.tab-content').forEach(el => {
                 el.classList.remove('active');
             });
             
-            // 重置所有 tab 按钮状态
             document.querySelectorAll('.tab-btn').forEach(el => {
                 el.classList.remove('active');
             });
             
-            // 显示目标 tab 内容
             document.getElementById('content-' + tabName).classList.add('active');
             
-            // 激活目标 tab 按钮
             document.getElementById('tab-' + tabName).classList.add('active');
         }
     </script>
