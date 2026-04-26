@@ -423,8 +423,6 @@
 
         #penguin-speech {
             position: fixed;
-            bottom: 120px;
-            left: 20px;
             background: var(--bg-surface);
             border: 1px solid var(--border);
             border-radius: 16px;
@@ -436,7 +434,7 @@
             z-index: 9998;
             opacity: 0;
             transform: translateY(10px);
-            transition: all 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.3s ease;
             pointer-events: none;
         }
 
@@ -553,18 +551,42 @@
     <div id="penguin-speech"></div>
 
     <script>
+        let penguinTimeout;
+
         function penguinTalk() {
+            const penguin = document.querySelector('.penguin-pet');
+            const el = document.getElementById('penguin-speech');
+            
+            // Stop penguin animation
+            penguin.style.animationPlayState = 'paused';
+            
+            // Calculate position
+            const rect = penguin.getBoundingClientRect();
+            // Position the speech bubble so its pointer (at left: 30px) points to the center of the penguin
+            const speechLeft = rect.left + rect.width / 2 - 40;
+            // Position it just above the penguin
+            const speechBottom = window.innerHeight - rect.top + 10;
+            
+            el.style.left = speechLeft + 'px';
+            el.style.bottom = speechBottom + 'px';
+
             const speeches = [
-                '嘎嘎！欢迎来到我的主页~',
-                '嘎？点我干嘛呀',
-                '记得投简历哦！',
-                'AI时代，一起加油！'
+                '咕咕嘎嘎！',
+                '主页背景是元胞自动机，点击或拖动可以改变元胞状态哦！',
+                '主人说：游戏mod其实具备很大的商业潜力...唔，泄露机密啦。',
+                '主人说：人脑神经元的连接是空间异构的，现在神经网络是一层一层的。',
+                '主人说：wps的功能还是太花里胡哨了，写文档改格式应该像vibe-coding一样。'
             ];
             const speech = speeches[Math.floor(Math.random() * speeches.length)];
-            const el = document.getElementById('penguin-speech');
             el.textContent = speech;
             el.classList.add('show');
-            setTimeout(() => el.classList.remove('show'), 3000);
+            
+            if (penguinTimeout) clearTimeout(penguinTimeout);
+            
+            penguinTimeout = setTimeout(() => {
+                el.classList.remove('show');
+                penguin.style.animationPlayState = 'running';
+            }, 4000);
         }
 
         fetch('https://api.github.com/users/2524278238')
@@ -740,10 +762,24 @@
             return count;
         }
 
-        canvas.addEventListener('click', (e) => {
+        let isDrawing = false;
+        
+        function handleCanvasInteraction(e) {
+            // Ignore clicks on interactive elements
+            if (e.target.tagName === 'A' || e.target.closest('a') || 
+                e.target.tagName === 'BUTTON' || e.target.closest('button') ||
+                e.target.closest('.card') || e.target.closest('.skills-section') ||
+                e.target.closest('.penguin-pet')) {
+                return;
+            }
+            
             const rect = canvas.getBoundingClientRect();
-            const x = Math.floor((e.clientX - rect.left) / resolution);
-            const y = Math.floor((e.clientY - rect.top) / resolution);
+            // In case of touch events
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            const x = Math.floor((clientX - rect.left) / resolution);
+            const y = Math.floor((clientY - rect.top) / resolution);
             const radius = 3;
             for (let i = -radius; i <= radius; i++) {
                 for (let j = -radius; j <= radius; j++) {
@@ -755,6 +791,33 @@
                 }
             }
             if (isPaused) draw();
+        }
+
+        document.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            handleCanvasInteraction(e);
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (isDrawing) handleCanvasInteraction(e);
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDrawing = false;
+        });
+
+        // Touch support
+        document.addEventListener('touchstart', (e) => {
+            isDrawing = true;
+            handleCanvasInteraction(e);
+        }, {passive: true});
+        
+        document.addEventListener('touchmove', (e) => {
+            if (isDrawing) handleCanvasInteraction(e);
+        }, {passive: true});
+        
+        document.addEventListener('touchend', () => {
+            isDrawing = false;
         });
 
         setup();
