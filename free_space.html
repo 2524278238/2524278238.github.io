@@ -7,108 +7,80 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Impeccable Colors Strategy - Tinted OKLCH */
         :root {
-            --bg-base: oklch(0.98 0.005 250);
-            --bg-surface: oklch(0.995 0.002 250);
-            --text-primary: oklch(0.2 0.02 250);
-            --text-secondary: oklch(0.45 0.01 250);
-            --text-tertiary: oklch(0.65 0.005 250);
-            --brand-main: oklch(0.5 0.12 250);
-            --brand-surface: oklch(0.96 0.02 250);
-            --border-subtle: oklch(0.92 0.005 250);
+            --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
         }
-        
+        .fade-up {
+            opacity: 0;
+            transform: translateY(22px);
+            animation: fadeUp 0.9s var(--ease-expo) forwards;
+        }
+        .fade-up-1 { animation-delay: 0.05s; }
+        .fade-up-2 { animation-delay: 0.18s; }
+        .fade-up-3 { animation-delay: 0.35s; }
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
         body {
-            background-color: var(--bg-base);
-            color: var(--text-primary);
+            background: linear-gradient(160deg, #fffbeb 0%, #fef3c7 40%, #fde68a 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-
-        .fade-in {
-            animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* 自定义滚动条 */
         ::-webkit-scrollbar {
             width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: var(--bg-surface);
+            background: #f1f1f1;
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--border-subtle);
+            background: #c1c1c1;
             border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-tertiary);
+            background: #a1a1a1;
         }
-        
-        /* Tab Content Styles */
         .tab-content {
             display: none;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: fadeUp 0.5s var(--ease-expo);
         }
         .tab-content.active {
             display: block;
-            opacity: 1;
-            transform: translateY(0);
         }
-        
-        /* 导航标签基础样式 */
-        .nav-tab {
-            color: var(--text-secondary);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
+        .card-hover {
+            transition: transform 0.35s var(--ease-expo), box-shadow 0.35s var(--ease-expo);
         }
-        .nav-tab:hover {
-            color: var(--text-primary);
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px -10px rgba(0, 0, 0, 0.12);
         }
-        
-        /* 激活状态的标签 */
-        .nav-tab.active {
-            color: var(--brand-main);
-            font-weight: 600;
-        }
-        .nav-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--brand-main);
-            border-radius: 2px;
-        }
-
-        /* 卡片悬停效果 - Impeccable style */
         .project-card {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
-            transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.35s var(--ease-expo), box-shadow 0.35s var(--ease-expo);
         }
         .project-card:hover {
-            border-color: var(--brand-main);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.05);
+            transform: translateY(-5px);
         }
-        
-        /* 标签激活态 */
+        .project-card:hover .card-icon {
+            transform: scale(1.1);
+        }
+        .project-card:hover .card-arrow {
+            transform: translateX(4px);
+        }
+        .card-icon {
+            transition: transform 0.3s var(--ease-expo);
+        }
+        .card-arrow {
+            transition: transform 0.3s var(--ease-expo);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+        }
         .tab-btn {
             position: relative;
-            color: var(--text-secondary);
-            transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            color: #78716c;
+            font-weight: 600;
+            transition: color 0.3s var(--ease-expo);
         }
         .tab-btn::after {
             content: '';
@@ -119,160 +91,141 @@
             width: 0;
             height: 2px;
             border-radius: 2px;
-            background-color: var(--brand-main);
-            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .tab-btn:hover {
-            color: var(--text-primary);
+            transition: width 0.35s var(--ease-expo);
         }
         .tab-btn.active {
-            color: var(--brand-main);
+            color: #d97706;
         }
         .tab-btn.active::after {
             width: 60%;
+            background: linear-gradient(90deg, #d97706, #fbbf24);
         }
-
-        .link-subtle {
-            color: var(--brand-main);
-            text-decoration: none;
-            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        .pill-tag {
+            background: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fde68a;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 0.03em;
         }
-        .link-subtle:hover {
-            opacity: 0.7;
-        }
-
-        /* Ambient Background Blobs */
-        @keyframes blob {
-            0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-            100% { transform: translate(0px, 0px) scale(1); }
-        }
-        .animate-blob {
-            animation: blob 18s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform;
-        }
-        .animation-delay-2000 { animation-delay: 2s; }
-        .animation-delay-4000 { animation-delay: 4s; }
-
-        /* Scroll-driven Reveal */
-        @supports (animation-timeline: view()) {
-            .scroll-reveal {
-                animation: linear scrollReveal both;
-                animation-timeline: view();
-                animation-range: entry 5% cover 20%;
-            }
-            @keyframes scrollReveal {
-                from { opacity: 0; transform: translateY(40px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
+        .section-divider {
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, #d97706, #fbbf24);
+            border-radius: 2px;
         }
     </style>
 </head>
-<body class="antialiased font-sans">
+<body class="text-gray-800 antialiased font-sans">
     
-    <!-- Subtle Ambient Background -->
-    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none flex justify-center items-center">
-        <div class="absolute top-[10%] left-[-10%] w-[400px] h-[400px] rounded-full blur-[100px] opacity-[0.2] animate-blob" style="background-color: var(--brand-main);"></div>
-        <div class="absolute top-[60%] right-[-10%] w-[500px] h-[500px] rounded-full blur-[120px] opacity-[0.15] animate-blob animation-delay-2000" style="background-color: var(--text-primary);"></div>
-    </div>
-
     <!-- 导航栏 -->
-    <nav class="relative z-50 sticky top-0 backdrop-blur-md" style="background-color: color-mix(in oklch, var(--bg-surface) 85%, transparent); border-bottom: 1px solid var(--border-subtle);">
-        <div class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center">
-            <a href="index.html" class="flex items-center gap-2 text-sm font-medium link-subtle">
-                <i class="fas fa-home text-xs"></i> 返回主页
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm p-4 sticky top-0 z-50 border-b border-amber-100">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold text-amber-600 hover:text-amber-800 transition flex items-center gap-2">
+                <i class="fas fa-home"></i> 返回主页
             </a>
-            <div class="font-extrabold text-sm tracking-[0.2em] uppercase" style="color: var(--text-tertiary);">自由空间</div>
+            <div class="text-stone-400 text-sm font-medium">自由空间</div>
         </div>
     </nav>
 
     <!-- 页面标题 -->
-    <header class="text-center pt-20 pb-16 px-4 fade-in">
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-6" style="color: var(--text-primary); letter-spacing: -0.02em;">
+    <header class="text-center pt-12 pb-8 px-4 fade-up fade-up-1">
+        <div class="mb-5">
+            <span class="inline-block px-4 py-1.5 pill-tag rounded-full text-sm">AI时代探索者</span>
+        </div>
+        <h1 class="text-5xl md:text-6xl font-black text-stone-900 mb-5 tracking-tight leading-none">
             自由空间
         </h1>
-        <p class="max-w-xl mx-auto text-base md:text-lg" style="color: var(--text-secondary);">
+        <p class="text-stone-500 max-w-xl mx-auto text-base md:text-lg mb-6">
             这里展示我的很多创新和实践，以及思考
         </p>
+        <div class="flex items-center justify-center gap-3">
+            <div class="section-divider"></div>
+        </div>
     </header>
 
     <!-- 现代化内容区 -->
-    <main class="relative z-10 max-w-5xl mx-auto px-6 pb-24 flex-grow w-full fade-in" style="animation-delay: 0.15s;">
-        
-        <!-- 分类导航 -->
-        <nav class="flex justify-center gap-8 mb-12 border-b border-gray-100" style="border-color: var(--border-subtle);">
-            <button class="nav-tab active pb-4 px-2 flex items-center gap-2 text-sm" onclick="filterProjects('tools')">
+    <main class="max-w-5xl mx-auto px-6 pb-16 flex-grow">
+
+        <!-- Tab 导航 -->
+        <div class="flex justify-center gap-2 md:gap-6 mb-10 fade-up fade-up-2">
+            <button onclick="switchTab('tools')" class="tab-btn active px-5 py-2.5 text-base font-semibold text-gray-600 rounded-xl hover:bg-amber-50 transition flex items-center gap-2" id="tab-tools">
                 <i class="fas fa-tools"></i> 实用工具
             </button>
-            <button class="nav-tab pb-4 px-2 flex items-center gap-2 text-sm" onclick="filterProjects('games')">
+            <button onclick="switchTab('games')" class="tab-btn px-5 py-2.5 text-base font-semibold text-gray-600 rounded-xl hover:bg-amber-50 transition flex items-center gap-2" id="tab-games">
                 <i class="fas fa-gamepad"></i> 独立游戏
             </button>
-            <button class="nav-tab pb-4 px-2 flex items-center gap-2 text-sm" onclick="filterProjects('thoughts')">
+            <button onclick="switchTab('blogs')" class="tab-btn px-5 py-2.5 text-base font-semibold text-gray-600 rounded-xl hover:bg-amber-50 transition flex items-center gap-2" id="tab-blogs">
                 <i class="fas fa-pen-nib"></i> 博客思考
             </button>
-        </nav>
+        </div>
 
         <!-- 工具 Tab -->
         <div id="content-tools" class="tab-content active">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <a href="https://github.com/2524278238/AI-input" target="_blank" class="project-card rounded-xl p-6 flex items-start gap-5">
-                    <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: var(--brand-surface); color: var(--brand-main);">
-                        <i class="fas fa-keyboard text-xl"></i>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <!-- 工具卡片1 -->
+                <a href="https://github.com/2524278238/AI-input" target="_blank" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-amber-100 flex items-start gap-4 card-hover">
+                    <div class="card-icon w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-keyboard text-amber-500 text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <h3 class="text-lg font-bold mb-2" style="color: var(--text-primary);">ai输入补全插件</h3>
-                        <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">大模型最擅长预测下一个词，输入法也是。这是一个ai输入法插件，调用视觉模型看到你的屏幕和输入，在你输入一个词后自动调用，生成后续输入。</p>
+                        <h3 class="text-lg font-bold text-stone-800 mb-1.5">ai输入补全插件</h3>
+                        <p class="text-stone-500 text-sm leading-relaxed">大模型最擅长预测下一个词，输入法也是。这是一个ai输入法插件，调用视觉模型看到你的屏幕和输入，在你输入一个词后自动调用，生成后续输入。</p>
                     </div>
                 </a>
                 
-                <a href="https://github.com/2524278238/clean_c_agent" target="_blank" class="project-card rounded-xl p-6 flex items-start gap-5">
-                    <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: var(--brand-surface); color: var(--brand-main);">
-                        <i class="fas fa-hard-drive text-xl"></i>
+                <!-- 工具卡片2 -->
+                <a href="https://github.com/2524278238/clean_c_agent" target="_blank" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-amber-100 flex items-start gap-4 card-hover">
+                    <div class="card-icon w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-hard-drive text-amber-500 text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <h3 class="text-lg font-bold mb-2" style="color: var(--text-primary);">c盘清理工具</h3>
-                        <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">智能 Windows C 盘空间清理与分析工具。除了常规的系统清理，还能接入大模型告诉你每个文件夹的作用、风险等级和清理建议。</p>
+                        <h3 class="text-lg font-bold text-stone-800 mb-1.5">c盘清理工具</h3>
+                        <p class="text-stone-500 text-sm leading-relaxed">智能 Windows C 盘空间清理与分析工具。除了常规的系统清理，还能接入大模型告诉你每个文件夹的作用、风险等级和清理建议。</p>
                     </div>
                 </a>
                 
-                <a href="https://github.com/2524278238/Document-conversion-tool" target="_blank" class="project-card rounded-xl p-6 flex items-start gap-5">
-                    <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: var(--brand-surface); color: var(--brand-main);">
-                        <i class="fas fa-file-alt text-xl"></i>
+                <!-- 工具卡片3 -->
+                <a href="https://github.com/2524278238/Document-conversion-tool" target="_blank" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-amber-100 flex items-start gap-4 card-hover">
+                    <div class="card-icon w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-file-alt text-amber-500 text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <h3 class="text-lg font-bold mb-2" style="color: var(--text-primary);">文件转换工具</h3>
-                        <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">本地离线文件转换工具。完全免费、开源，所有转换过程都在本地离线完成，没有文件大小限制，也没有隐私泄露风险。</p>
+                        <h3 class="text-lg font-bold text-stone-800 mb-1.5">文件转换工具</h3>
+                        <p class="text-stone-500 text-sm leading-relaxed">本地离线文件转换工具。完全免费、开源，所有转换过程都在本地离线完成，没有文件大小限制，也没有隐私泄露风险。</p>
                     </div>
                 </a>
                 
-                <a href="https://github.com/2524278238/doc_fill" target="_blank" class="project-card rounded-xl p-6 flex items-start gap-5">
-                    <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: var(--brand-surface); color: var(--brand-main);">
-                        <i class="fas fa-file-signature text-xl"></i>
+                <!-- 工具卡片4 -->
+                <a href="https://github.com/2524278238/doc_fill" target="_blank" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-amber-100 flex items-start gap-4 card-hover">
+                    <div class="card-icon w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-file-signature text-amber-500 text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <h3 class="text-lg font-bold mb-2" style="color: var(--text-primary);">LLM 文档智能填充</h3>
-                        <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">基于 LLM 的 Word 文档自动填充工具。读取模板识别占位符，根据提供的字段数据，利用 LLM 智能生成和填充内容。</p>
+                        <h3 class="text-lg font-bold text-stone-800 mb-1.5">LLM 文档智能填充</h3>
+                        <p class="text-stone-500 text-sm leading-relaxed">基于 LLM 的 Word 文档自动填充工具。读取模板识别占位符，根据提供的字段数据，利用 LLM 智能生成和填充内容。</p>
                     </div>
                 </a>
                 
-                <a href="https://github.com/2524278238/doc_generator" target="_blank" class="project-card rounded-xl p-6 flex items-start gap-5">
-                    <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: var(--brand-surface); color: var(--brand-main);">
-                        <i class="fas fa-magic text-xl"></i>
+                <!-- 工具卡片5 -->
+                <a href="https://github.com/2524278238/doc_generator" target="_blank" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-amber-100 flex items-start gap-4 card-hover">
+                    <div class="card-icon w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-magic text-amber-500 text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <h3 class="text-lg font-bold mb-2" style="color: var(--text-primary);">智能文档生成工具</h3>
-                        <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">基于 Streamlit 和 LLM 的智能文档生成工具。根据 Word 模板和自然语言要求，自动生成格式一致、内容符合需求的新文档。</p>
+                        <h3 class="text-lg font-bold text-stone-800 mb-1.5">智能文档生成工具</h3>
+                        <p class="text-stone-500 text-sm leading-relaxed">基于 Streamlit 和 LLM 的智能文档生成工具。根据 Word 模板和自然语言要求，自动生成格式一致、内容符合需求的新文档。</p>
                     </div>
                 </a>
                 
-                <a href="https://github.com/2524278238/use-ai-everyserver" target="_blank" class="project-card rounded-xl p-6 flex items-start gap-5">
-                    <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: var(--brand-surface); color: var(--brand-main);">
-                        <i class="fas fa-server text-xl"></i>
+                <!-- 工具卡片6 -->
+                <a href="https://github.com/2524278238/use-ai-everyserver" target="_blank" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-amber-100 flex items-start gap-4 card-hover">
+                    <div class="card-icon w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-server text-amber-500 text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <h3 class="text-lg font-bold mb-2" style="color: var(--text-primary);">Use AI Every Server</h3>
-                        <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">在本地使用AI编程，自动同步代码到远程服务器并执行，流式输出运行日志。让你在老旧服务器上也能用AI写代码。</p>
+                        <h3 class="text-lg font-bold text-stone-800 mb-1.5">Use AI Every Server</h3>
+                        <p class="text-stone-500 text-sm leading-relaxed">在本地使用AI编程，自动同步代码到远程服务器并执行，流式输出运行日志。让你在老旧服务器上也能用AI写代码。</p>
                     </div>
                 </a>
             </div>
@@ -281,32 +234,34 @@
         <!-- 游戏 Tab -->
         <div id="content-games" class="tab-content">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="project-card rounded-xl p-6 flex items-start gap-5">
-                    <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: var(--brand-surface); color: var(--brand-main);">
-                        <i class="fas fa-horse text-xl"></i>
+                <!-- 游戏卡片1 -->
+                <div class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-amber-100 flex items-start gap-5 card-hover">
+                    <div class="card-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-200">
+                        <i class="fas fa-horse text-white text-2xl"></i>
                     </div>
                     <div class="flex-grow">
-                        <h3 class="text-lg font-bold mb-2" style="color: var(--text-primary);">赛马大富翁</h3>
-                        <p class="text-sm leading-relaxed mb-4" style="color: var(--text-secondary);">魔改版的大富翁游戏，事件由ai实时生成，并对游戏施加影响。</p>
-                        <a href="https://github.com/2524278238/Horse-Racing-Tycoon" target="_blank" class="text-sm font-medium link-subtle">
+                        <h3 class="text-xl font-bold text-stone-800 mb-2">赛马大富翁</h3>
+                        <p class="text-stone-500 text-sm leading-relaxed mb-3">魔改版的大富翁游戏，事件由ai实时生成，并对游戏施加影响。</p>
+                        <a href="https://github.com/2524278238/Horse-Racing-Tycoon" target="_blank" class="inline-flex items-center gap-2 text-amber-500 text-sm font-bold hover:text-amber-700 transition">
                             <i class="fab fa-github"></i> 查看源码
                         </a>
                     </div>
                 </div>
                 
-                <div class="project-card rounded-xl p-6 flex items-start gap-5">
-                    <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: var(--brand-surface); color: var(--brand-main);">
-                        <i class="fas fa-dragon text-xl"></i>
+                <!-- 游戏卡片2 -->
+                <div class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-amber-100 flex items-start gap-5 card-hover">
+                    <div class="card-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-200">
+                        <i class="fas fa-dragon text-white text-2xl"></i>
                     </div>
                     <div class="flex-grow">
-                        <h3 class="text-lg font-bold mb-2" style="color: var(--text-primary);">风云大陆</h3>
-                        <p class="text-sm leading-relaxed mb-4" style="color: var(--text-secondary);">基于Godot引擎开发的2D修仙题材RPG游戏。玩家在开放世界中探索、修炼。我想把这个游戏开发成一个"活的"世界。（半成品）</p>
-                        <div class="flex items-center gap-4">
-                            <a href="https://github.com/2524278238/FYDL-game" target="_blank" class="text-sm font-medium link-subtle">
+                        <h3 class="text-xl font-bold text-stone-800 mb-2">风云大陆</h3>
+                        <p class="text-stone-500 text-sm leading-relaxed mb-3">基于Godot引擎开发的2D修仙题材RPG游戏。玩家在开放世界中探索、修炼。我想把这个游戏开发成一个"活的"世界。（半成品）</p>
+                        <div class="flex items-center gap-3">
+                            <a href="https://github.com/2524278238/FYDL-game" target="_blank" class="text-amber-500 text-sm font-bold flex items-center gap-1 hover:text-amber-700 transition">
                                 <i class="fab fa-github"></i> 源码
                             </a>
-                            <span style="color: var(--border-subtle);">|</span>
-                            <a href="https://b23.tv/AjExplm" target="_blank" class="text-sm font-medium link-subtle">
+                            <span class="text-stone-300">|</span>
+                            <a href="https://b23.tv/AjExplm" target="_blank" class="text-amber-500 text-sm font-bold flex items-center gap-1 hover:text-amber-700 transition">
                                 <i class="fas fa-video"></i> B站演示
                             </a>
                         </div>
@@ -317,30 +272,31 @@
 
         <!-- 博客 Tab -->
         <div id="content-blogs" class="tab-content">
-            <div class="grid grid-cols-1 gap-6">
-                <a href="blog-super-individual.html" class="project-card rounded-xl p-6 flex items-center gap-5">
-                    <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: var(--brand-surface); color: var(--brand-main);">
-                        <i class="fas fa-rocket text-xl"></i>
+            <div class="grid grid-cols-1 gap-5">
+                <!-- 博客卡片1 -->
+                <a href="blog-super-individual.html" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-amber-100 flex items-center gap-5 card-hover">
+                    <div class="card-icon w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-200">
+                        <i class="fas fa-rocket text-white text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <div class="flex items-center gap-3 mb-2">
-                            <h3 class="text-lg font-bold" style="color: var(--text-primary);">又幻想了，幻想靠AI成为超级个体</h3>
-                            <span class="text-xs px-2 py-1 rounded" style="background-color: var(--bg-base); color: var(--text-tertiary);">2026.04.24</span>
+                        <div class="flex items-center gap-3 mb-1">
+                            <h3 class="text-lg font-bold text-stone-800">又幻想了，幻想靠AI成为超级个体</h3>
+                            <span class="text-xs text-stone-400 bg-amber-50 px-2 py-0.5 rounded-full">2026.04.24</span>
                         </div>
-                        <p class="text-sm leading-relaxed truncate" style="color: var(--text-secondary);">事实上，这并不只是我的幻想，而是当前真实的职业规划...</p>
+                        <p class="text-stone-500 text-sm leading-relaxed line-clamp-2">事实上，这并不只是我的幻想，而是当前真实的职业规划...</p>
                     </div>
                 </a>
-
-                <a href="blog-ai-pessimism.html" class="project-card rounded-xl p-6 flex items-center gap-5">
-                    <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: var(--brand-surface); color: var(--brand-main);">
-                        <i class="fas fa-brain text-xl"></i>
+                <!-- 博客卡片2 -->
+                <a href="blog-ai-pessimism.html" class="project-card glass-card rounded-2xl p-6 shadow-sm hover:shadow-xl border border-amber-100 flex items-center gap-5 card-hover">
+                    <div class="card-icon w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-200">
+                        <i class="fas fa-brain text-white text-xl"></i>
                     </div>
                     <div class="flex-grow min-w-0">
-                        <div class="flex items-center gap-3 mb-2">
-                            <h3 class="text-lg font-bold" style="color: var(--text-primary);">我对AI发展的悲观，源自于对AI发展的乐观。</h3>
-                            <span class="text-xs px-2 py-1 rounded" style="background-color: var(--bg-base); color: var(--text-tertiary);">2026.04.23</span>
+                        <div class="flex items-center gap-3 mb-1">
+                            <h3 class="text-lg font-bold text-stone-800">我对AI发展的悲观，源自于对AI发展的乐观。</h3>
+                            <span class="text-xs text-stone-400 bg-amber-50 px-2 py-0.5 rounded-full">2026.04.23</span>
                         </div>
-                        <p class="text-sm leading-relaxed truncate" style="color: var(--text-secondary);">乍一看这个标题，会觉得左脑反击右脑，尖尖代替思考。这其实是不同层面的问题，悲观源于社会层面，乐观源于技术层面...</p>
+                        <p class="text-stone-500 text-sm leading-relaxed line-clamp-2">乍一看这个标题，会觉得左脑反击右脑，尖尖代替思考。这其实是不同层面的问题，悲观源于社会层面，乐观源于技术层面...</p>
                     </div>
                 </a>
             </div>
@@ -349,36 +305,29 @@
     </main>
 
     <!-- 页脚 -->
-    <footer class="relative z-10 py-10 text-center mt-auto" style="border-top: 1px solid var(--border-subtle);">
-        <p style="color: var(--text-tertiary);">&copy; 2026 2524278238. All rights reserved.</p>
+    <footer class="bg-gray-900 text-gray-400 py-8 text-center mt-auto">
+        <p>&copy; 2026 2524278238. All rights reserved.</p>
+        <p class="text-sm mt-2">Built with ❤️ and Tailwind CSS</p>
     </footer>
 
     <!-- Tab 切换脚本 -->
     <script>
-        function filterProjects(tabId) {
-            // Update Tab UI
-            const tabs = document.querySelectorAll('.nav-tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-
-            // Hide all tab contents
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => {
-                content.classList.remove('active');
+        function switchTab(tabName) {
+            // 隐藏所有 tab 内容
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
             });
             
-            // map new categories to old IDs to not break structure
-            const map = {
-                'tools': 'content-tools',
-                'games': 'content-games',
-                'thoughts': 'content-blogs'
-            };
-
-            // Show selected tab content
-            const activeContent = document.getElementById(map[tabId]);
-            if (activeContent) {
-                activeContent.classList.add('active');
-            }
+            // 重置所有 tab 按钮状态
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // 显示目标 tab 内容
+            document.getElementById('content-' + tabName).classList.add('active');
+            
+            // 激活目标 tab 按钮
+            document.getElementById('tab-' + tabName).classList.add('active');
         }
     </script>
 

@@ -7,62 +7,150 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Impeccable Colors Strategy - Tinted OKLCH (Dark Theme with Gold Accent) */
         :root {
-            /* 深邃夜空/黑金主题 */
-            --bg-base: oklch(0.18 0.01 260);        /* 深暗灰蓝色背景 */
-            --bg-surface: oklch(0.22 0.01 260);     /* 稍亮的深色卡片表面 */
-            
-            --text-primary: oklch(0.95 0.01 260);   /* 亮灰白文字 */
-            --text-secondary: oklch(0.75 0.01 260); /* 次级文字 */
-            --text-tertiary: oklch(0.55 0.01 260);  /* 弱化文字 */
-            
-            /* 金色金属主色调 */
-            --brand-main: oklch(0.75 0.15 80);      /* 亮金/香槟金 */
-            --brand-surface: oklch(0.3 0.05 80);    /* 暗金色底衬 */
-            --border-subtle: oklch(0.3 0.01 260);   /* 柔和的深色边框 */
-            
-            /* ECharts Hex approximate for brand-main: #d4af37 approx */
-            --chart-brand: #d4af37; 
+            --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
         }
-
-        body {
-            background-color: var(--bg-base);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* 动画效果 */
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
         .animate-float {
-            animation: float 4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+            animation: float 3s ease-in-out infinite;
         }
-        
-        .fade-in {
-            animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .fade-up {
             opacity: 0;
+            transform: translateY(22px);
+            animation: fadeUp 0.9s var(--ease-expo) forwards;
         }
-        .fade-in-delayed {
-            animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.2s;
-            opacity: 0;
-        }
-        .fade-in-delayed-2 {
-            animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.4s;
-            opacity: 0;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(16px); }
+        .fade-up-1 { animation-delay: 0.05s; }
+        .fade-up-2 { animation-delay: 0.18s; }
+        .fade-up-3 { animation-delay: 0.35s; }
+        .fade-up-4 { animation-delay: 0.52s; }
+        .fade-up-5 { animation-delay: 0.68s; }
+        @keyframes fadeUp {
             to { opacity: 1; transform: translateY(0); }
         }
+        body {
+            background: #020014;
+            position: relative;
+        }
+        /* 增加全局渐变背景光晕 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(255, 42, 117, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: -2;
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -20%;
+            right: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: -2;
+            filter: blur(80px);
+            pointer-events: none;
+        }
         
+        /* 渐变文字光泽 */
+        .text-gradient-glow {
+            background: linear-gradient(135deg, #ff2a75 0%, #a855f7 50%, #0ea5e9 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shine 3s linear infinite;
+        }
+        @keyframes gradient-shine {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 卡片光泽扫过特效 */
+        .glossy-overlay {
+            position: relative;
+            overflow: hidden;
+        }
+        .glossy-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            transition: left 0.7s var(--ease-expo);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .glossy-overlay:hover::before {
+            left: 200%;
+        }
+
+        .section-divider {
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, #ff2a75, #0ea5e9);
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(255, 42, 117, 0.5);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: #ff2a75;
+            transition: width 0.35s var(--ease-expo);
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .pill-btn {
+            background: rgba(15, 23, 42, 0.6);
+            color: #0ea5e9;
+            border: 1.5px solid #0ea5e9;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            transition: all 0.3s var(--ease-expo);
+            backdrop-filter: blur(8px);
+        }
+        .pill-btn:hover {
+            background: #0ea5e9;
+            color: #fff;
+            border-color: #0ea5e9;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px -6px rgba(14, 165, 233, 0.6);
+        }
+        .card-hover {
+            transition: transform 0.35s var(--ease-expo), box-shadow 0.35s var(--ease-expo);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px -10px rgba(0, 0, 0, 0.12);
+        }
+        .project-card {
+            transition: transform 0.35s var(--ease-expo), box-shadow 0.35s var(--ease-expo);
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
         /* 小企鹅巡逻动画 */
         @keyframes waddle {
             0% { transform: translateX(-10vw) scaleX(1); }
@@ -81,35 +169,44 @@
             left: 0;
             font-size: 3.5rem;
             z-index: 9999;
-            animation: waddle 20s linear infinite, bounce 0.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+            animation: waddle 20s linear infinite, bounce 0.4s ease-in-out infinite;
             pointer-events: auto;
             cursor: pointer;
-            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1));
+            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));
         }
-        
+
         /* 企鹅对话气泡 */
         #penguin-speech {
             position: fixed;
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid #0ea5e9;
+            border-radius: 16px;
             padding: 12px 18px;
             max-width: 300px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.3);
             font-size: 14px;
-            color: var(--text-primary);
+            color: #cbd5e1;
             line-height: 1.6;
             z-index: 9998;
             opacity: 0;
             transform: translateY(10px);
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.3s, transform 0.3s;
             pointer-events: none;
+            backdrop-filter: blur(4px);
         }
         #penguin-speech.show {
             opacity: 1;
             transform: translateY(0);
         }
-        
+        #penguin-speech::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 30px;
+            border: 10px solid transparent;
+            border-top-color: #0ea5e9;
+        }
+
         /* 元胞自动机背景 */
         #cellular-canvas {
             position: fixed;
@@ -118,143 +215,121 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 1; /* 使用canvas内部alpha控制透明度，这里不再削弱 */
-            pointer-events: none; /* 让背景不阻挡鼠标事件 */
+            opacity: 0.8;
         }
-        
+
         /* 页面内容层 */
         .page-content {
             position: relative;
-            z-index: 10;
         }
 
-        /* Impeccable 卡片样式 */
-        .card-surface {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
-            border-radius: 16px;
-            transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        /* 页脚 */
+        footer {
+            background: #050510;
         }
-        .card-surface:hover {
-            border-color: var(--brand-main);
-            transform: translateY(-2px);
-        }
-
-        /* 按钮样式 */
-        .btn-primary {
-            background-color: var(--text-primary);
-            color: var(--bg-base);
-            transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .btn-primary:hover {
-            background-color: var(--text-secondary);
-            transform: translateY(-1px);
-        }
-        .btn-secondary {
-            background-color: var(--brand-surface);
-            color: var(--brand-main);
-            border: 1px solid transparent;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .btn-secondary:hover {
-            border-color: var(--brand-main);
-            transform: translateY(-1px);
+        .name-glow {
+            text-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
         }
     </style>
 </head>
-<body class="antialiased font-sans">
+<body class="text-slate-200 antialiased font-sans min-h-screen flex flex-col">
     
     <!-- 元胞自动机背景画布 -->
     <canvas id="cellular-canvas"></canvas>
     
     <!-- 页面内容容器 -->
-    <div class="page-content flex flex-col min-h-screen">
+    <div class="page-content">
     
     <!-- 头部横幅与个人信息 -->
-    <header class="flex-grow flex flex-col justify-center items-center text-center p-10 fade-in mt-12 mb-8">
-        <img alt="Avatar" class="w-32 h-32 rounded-full mb-8 animate-float object-cover" style="display: none; border: 2px solid var(--border-subtle);" id="avatar" onerror="this.style.display='none'">
-        
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-6" style="color: var(--text-primary); letter-spacing: -0.02em;">
+    <header class="flex-grow flex flex-col justify-center items-center text-center p-10 fade-up fade-up-1 mt-8">
+        <img alt="Avatar" class="w-36 h-36 rounded-full shadow-2xl mb-6 animate-float object-cover border-4 border-white" id="avatar" style="display: none;" onerror="this.style.display='none'">
+
+        <div class="mb-6">
+            <span class="inline-block px-4 py-1.5 pill-btn rounded-full mb-5 text-sm glossy-overlay">AI时代探索者</span>
+        </div>
+        <h1 class="text-6xl font-black mb-5 tracking-tight leading-none text-gradient-glow name-glow">
             兄弟，我发现 LLM is all you need!
         </h1>
-        
-        <p class="text-lg md:text-xl font-semibold max-w-2xl mx-auto leading-relaxed mb-3" style="color: var(--text-secondary);">
-            AI时代探索者
+
+        <p class="text-xl text-cyan-400 font-semibold max-w-2xl mx-auto leading-relaxed mb-2">
+            致力于大模型技术落地与前沿探索
         </p>
-        <p class="text-base max-w-2xl mx-auto leading-relaxed mb-10" style="color: var(--text-tertiary);">
-            致力于大模型技术落地与前沿探索，将奇思妙想转化为实际价值。
+        <p class="text-sm text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10">
+            将奇思妙想转化为实际价值
         </p>
-        
+
+        <div class="flex items-center justify-center gap-3 mb-12">
+            <div class="section-divider"></div>
+        </div>
+
         <div class="flex flex-wrap justify-center gap-4">
-            <a href="https://github.com/2524278238" target="_blank" class="px-6 py-3 btn-primary rounded-full font-medium flex items-center gap-2 text-sm">
-                <i class="fab fa-github text-base"></i> 访问 GitHub
+            <a href="https://github.com/2524278238" target="_blank" class="px-8 py-3 bg-slate-800 border border-slate-700 text-white rounded-full font-bold hover:bg-slate-700 hover:border-cyan-500 hover:shadow-[0_0_15px_rgba(14,165,233,0.4)] transition duration-300 shadow-lg flex items-center gap-2 card-hover glossy-overlay">
+                <i class="fab fa-github text-xl"></i> 访问我的 GitHub
             </a>
-            <a href="job.html" class="px-6 py-3 btn-secondary rounded-full font-medium flex items-center gap-2 text-sm">
-                <i class="fas fa-file-alt text-base"></i> 求职区
+            <a href="job.html" class="px-8 py-3 pill-btn rounded-full font-bold transition duration-300 shadow-lg flex items-center gap-2 card-hover glossy-overlay">
+                <i class="fas fa-file-alt text-xl"></i> 求职区
             </a>
-            <a href="free_space.html" class="px-6 py-3 btn-secondary rounded-full font-medium flex items-center gap-2 text-sm">
-                <i class="fas fa-rocket text-base"></i> 自由空间
+            <a href="free_space.html" class="px-8 py-3 pill-btn rounded-full font-bold transition duration-300 shadow-lg flex items-center gap-2 card-hover glossy-overlay">
+                <i class="fas fa-rocket text-xl"></i> 自由空间
             </a>
         </div>
     </header>
 
     <!-- 个人能力六维图 -->
-    <section class="max-w-5xl mx-auto px-6 mb-16 fade-in-delayed w-full">
-        <div class="card-surface p-8 md:p-12 relative overflow-hidden">
-            <div class="absolute top-0 right-0 px-4 py-1 rounded-bl-xl text-xs font-bold uppercase tracking-wider" style="background-color: var(--brand-surface); color: var(--brand-main);">
+    <section class="max-w-6xl mx-auto px-8 mb-20 fade-up fade-up-2 w-full">
+        <div class="bg-slate-900/60 backdrop-blur-md rounded-2xl shadow-sm p-8 border border-pink-500/30 relative overflow-hidden glossy-overlay">
+            <div class="absolute top-0 right-0 bg-pink-500/20 text-pink-400 px-4 py-1 rounded-bl-xl text-xs font-bold uppercase tracking-wider z-10">
                 Skills Radar
             </div>
-            <h2 class="text-2xl font-bold mb-8 flex items-center" style="color: var(--text-primary); letter-spacing: -0.02em;">
-                <i class="fas fa-chart-pie mr-3" style="color: var(--brand-main);"></i> 个人能力评估
+            <h2 class="text-2xl font-bold mb-6 text-slate-100 flex items-center relative z-10">
+                <i class="fas fa-chart-pie text-pink-500 mr-3"></i> 个人能力六维图
             </h2>
-            <div class="w-full flex justify-center relative">
-                <div id="skills-radar" style="width: 100%; max-width: 600px; height: 400px;"></div>
+            <div class="w-full flex justify-center relative z-10">
+                <div id="skills-radar" style="width: 100%; max-width: 600px; height: 450px;"></div>
             </div>
-            <p class="text-center text-sm mt-4" style="color: var(--text-tertiary);">💡 提示：将鼠标悬停在雷达图的各个维度上，查看详细能力说明</p>
+            <p class="text-center text-sm text-slate-500 mt-2 relative z-10">💡 提示：将鼠标悬停在雷达图的各个维度上，查看详细能力说明</p>
         </div>
     </section>
 
     <!-- 代表作 -->
-    <section class="max-w-5xl mx-auto px-6 mb-24 fade-in-delayed-2 w-full">
-        <div class="flex items-end justify-between mb-8 pb-4" style="border-bottom: 1px solid var(--border-subtle);">
-            <h2 class="text-2xl font-bold flex items-center" style="color: var(--text-primary); letter-spacing: -0.02em;">
-                <i class="fas fa-briefcase mr-3" style="color: var(--brand-main);"></i> 代表作：AI 与研发落地
+    <section class="max-w-6xl mx-auto px-8 mb-20 fade-up fade-up-3 w-full">
+        <div class="flex items-end justify-between mb-8 pb-2">
+            <h2 class="text-3xl font-black text-white flex items-center">
+                <i class="fas fa-briefcase text-pink-500 mr-3"></i> 代表作：AI 与研发落地
             </h2>
-            <span class="text-xs font-bold px-3 py-1 rounded-full hidden sm:block uppercase tracking-wider" style="background-color: var(--brand-surface); color: var(--brand-main);">
-                ⭐ 精选项目
-            </span>
+            <span class="text-sm font-bold text-pink-400 bg-slate-800 border border-pink-500/30 px-3 py-1 rounded-full hidden sm:block shadow-[0_0_10px_rgba(255,42,117,0.2)]">⭐ 精选项目</span>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- 项目1 -->
-            <a href="https://github.com/2524278238/Error-prone-Words-Optimization" target="_blank" class="block card-surface flex flex-col h-full group">
-                <div class="p-8 flex flex-col h-full">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- 项目1：Error-prone-Words-Optimization -->
+            <a href="https://github.com/2524278238/Error-prone-Words-Optimization" target="_blank" class="block bg-slate-900/80 backdrop-blur-sm rounded-2xl shadow-md overflow-hidden hover:shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:border-cyan-500 transition duration-300 transform hover:-translate-y-2 border-t-4 border-pink-500 flex flex-col h-full card-hover glossy-overlay">
+                <div class="p-7 flex flex-col h-full relative z-10">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold" style="color: var(--text-primary); letter-spacing: -0.01em;">基于源端易错词的机器翻译优化</h3>
-                        <i class="fas fa-language text-xl" style="color: var(--text-tertiary);"></i>
+                        <h3 class="text-xl font-bold text-slate-100">基于源端易错词的机器翻译优化</h3>
+                        <i class="fas fa-language text-cyan-400 text-2xl"></i>
                     </div>
-                    <p class="mb-6 text-sm leading-relaxed flex-grow" style="color: var(--text-secondary);">
+                    <p class="text-slate-300 mb-6 text-sm leading-relaxed flex-grow">
                         提出一种基于源端易错词的翻译优化方法，结合 BGE 语义检索与无监督质量评估的检索增强生成（RAG）策略，并采用 LoRA 微调基线模型，显著提升了大模型机器翻译的稳定性与准确性。
-                        <br><br><span class="text-xs font-medium px-2 py-1 rounded" style="background-color: var(--bg-base); border: 1px solid var(--border-subtle); color: var(--text-secondary);"><i class="fas fa-award"></i> 计算机工程与应用 一作录用</span>
+                        <br><br><span class="text-xs text-slate-500"><i class="fas fa-award text-pink-400"></i> 计算机工程与应用 一作录用</span>
                     </p>
-                    <div class="font-medium text-sm flex items-center gap-1 mt-auto" style="color: var(--brand-main);">
-                        查看开源地址 <i class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                    <div class="text-cyan-500 font-bold text-sm flex items-center gap-1 mt-auto">
+                        查看开源地址 <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
             </a>
 
-            <!-- 项目2 -->
-            <a href="https://github.com/2524278238/bid_clarification_llm" target="_blank" class="block card-surface flex flex-col h-full group">
-                <div class="p-8 flex flex-col h-full">
+            <!-- 项目2：bid_clarification_llm -->
+            <a href="https://github.com/2524278238/bid_clarification_llm" target="_blank" class="block bg-slate-900/80 backdrop-blur-sm rounded-2xl shadow-md overflow-hidden hover:shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:border-cyan-500 transition duration-300 transform hover:-translate-y-2 border-t-4 border-pink-500 flex flex-col h-full card-hover glossy-overlay">
+                <div class="p-7 flex flex-col h-full relative z-10">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold" style="color: var(--text-primary); letter-spacing: -0.01em;">清标助手</h3>
-                        <i class="fas fa-robot text-xl" style="color: var(--text-tertiary);"></i>
+                        <h3 class="text-xl font-bold text-slate-100">清标助手</h3>
+                        <i class="fas fa-robot text-cyan-400 text-2xl"></i>
                     </div>
-                    <p class="mb-6 text-sm leading-relaxed flex-grow" style="color: var(--text-secondary);">
+                    <p class="text-slate-300 mb-6 text-sm leading-relaxed flex-grow">
                         本项目是一个基于 LLM（大语言模型）和 OCR 技术构建的智能清标工具，旨在自动化处理投标文件，从非结构化文档（PDF/Word）中精准提取商务和技术关键信息。
                     </p>
-                    <div class="font-medium text-sm flex items-center gap-1 mt-auto" style="color: var(--brand-main);">
-                        探索核心方案 <i class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                    <div class="text-cyan-500 font-bold text-sm flex items-center gap-1 mt-auto">
+                        探索核心方案 <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
             </a>
@@ -265,9 +340,9 @@
     </div>
 
     <!-- 页脚 -->
-    <footer class="py-10 text-center mt-auto" style="border-top: 1px solid var(--border-subtle); background-color: var(--bg-base); position: relative; z-index: 10;">
-        <p style="color: var(--text-tertiary);">&copy; 2026 2524278238. All rights reserved.</p>
-        <p class="text-sm mt-2" style="color: var(--text-tertiary);">Built with ❤️</p>
+    <footer class="text-gray-500 py-8 text-center mt-auto" style="background: #1c1917;">
+        <p>&copy; 2026 2524278238. All rights reserved.</p>
+        <p class="text-sm mt-2">Built with ❤️ and Tailwind CSS</p>
     </footer>
 
     <!-- 动态获取真实的 GitHub 头像 -->
@@ -278,7 +353,7 @@
                 if(data.avatar_url) {
                     const avatarImg = document.getElementById('avatar');
                     avatarImg.src = data.avatar_url;
-                    avatarImg.style.display = 'block';
+                    avatarImg.style.display = 'block'; // 获取成功后显示
                 }
             })
             .catch(err => console.error('Failed to load avatar', err));
@@ -301,52 +376,48 @@
                     "价值转化与产品思维": { score: 5.5, text: "相比其他cs研究生，我会更多的思考能利用ai做哪些有价值的产品。但目前仍处于“技术驱动”阶段，缺乏完整的产品闭环与用户验证。" }
                 };
 
-                // Approximate Hex values for OKLCH theme colors to use in ECharts
-                const themeColors = {
-                    textPrimary: '#2f343d',    /* ~oklch(0.2 0.02 250) */
-                    textSecondary: '#656b76',  /* ~oklch(0.45 0.01 250) */
-                    brandMain: '#3b82f6',      /* ~oklch(0.5 0.12 250) */
-                    brandSurface: '#eff4ff',   /* ~oklch(0.96 0.02 250) */
-                    bgSurface: '#fdfdff'       /* ~oklch(0.995 0.002 250) */
-                };
-
                 const option = {
                     tooltip: {
-                        show: false
+                        show: false // 我们使用自定义 tooltip
                     },
                     radar: {
                         indicator: Object.keys(reasons).map(key => ({ name: key, max: 10 })),
                         shape: 'polygon',
-                        radius: '60%',
+                        radius: '65%',
                         axisName: {
-                            color: themeColors.textPrimary,
-                            backgroundColor: themeColors.brandSurface,
+                            color: '#e2e8f0',
+                            backgroundColor: 'rgba(30, 41, 59, 0.8)',
                             borderRadius: 6,
-                            padding: [6, 12],
-                            fontWeight: '600',
-                            fontSize: 13
+                            padding: [6, 10],
+                            fontWeight: 'bold',
+                            fontSize: 13,
+                            shadowColor: 'rgba(0,0,0,0.5)',
+                            shadowBlur: 4,
+                            shadowOffsetY: 2
                         },
                         splitArea: {
                             areaStyle: {
-                                color: ['rgba(59, 130, 246, 0.01)', 'rgba(59, 130, 246, 0.03)', 'rgba(59, 130, 246, 0.05)', 'rgba(59, 130, 246, 0.07)', 'rgba(59, 130, 246, 0.09)']
-                            }
-                        },
-                        axisLine: {
-                            lineStyle: { color: 'rgba(59, 130, 246, 0.2)' }
-                        },
-                        splitLine: {
-                            lineStyle: { color: 'rgba(59, 130, 246, 0.2)' }
-                        },
-                        triggerEvent: true
+                                    color: ['rgba(255, 42, 117, 0.02)', 'rgba(255, 42, 117, 0.05)', 'rgba(255, 42, 117, 0.08)', 'rgba(255, 42, 117, 0.12)', 'rgba(255, 42, 117, 0.16)'],
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)',
+                                    shadowBlur: 10
+                                }
+                            },
+                            axisLine: {
+                                lineStyle: { color: 'rgba(255, 42, 117, 0.3)' }
+                            },
+                            splitLine: {
+                                lineStyle: { color: 'rgba(255, 42, 117, 0.3)' }
+                            },
+                        triggerEvent: true // 允许坐标轴触发事件
                     },
                     series: [{
                         type: 'radar',
                         data: [{
                             value: Object.values(reasons).map(r => r.score),
                             name: '我的能力评估',
-                            itemStyle: { color: themeColors.brandMain, borderWidth: 2 },
-                            areaStyle: { color: 'rgba(59, 130, 246, 0.2)' },
-                            lineStyle: { width: 2 }
+                            itemStyle: { color: '#ff2a75', borderWidth: 2 },
+                            areaStyle: { color: 'rgba(255, 42, 117, 0.25)' },
+                            lineStyle: { width: 3, color: '#ff2a75' }
                         }]
                     }]
                 };
@@ -356,15 +427,15 @@
                 const tooltipDiv = document.createElement('div');
                 tooltipDiv.style.position = 'absolute';
                 tooltipDiv.style.display = 'none';
-                tooltipDiv.style.background = 'var(--bg-surface)';
-                tooltipDiv.style.border = '1px solid var(--border-subtle)';
-                tooltipDiv.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.05)';
+                tooltipDiv.style.background = 'rgba(15, 23, 42, 0.95)';
+                tooltipDiv.style.border = '1px solid #334155';
+                tooltipDiv.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3)';
                 tooltipDiv.style.padding = '16px';
                 tooltipDiv.style.borderRadius = '12px';
                 tooltipDiv.style.pointerEvents = 'none';
                 tooltipDiv.style.zIndex = '1000';
                 tooltipDiv.style.maxWidth = '320px';
-                tooltipDiv.style.transition = 'opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+                tooltipDiv.style.transition = 'opacity 0.2s';
                 document.body.appendChild(tooltipDiv);
 
                 myChart.on('mouseover', function (params) {
@@ -373,14 +444,13 @@
                         const dimData = reasons[dimName];
                         if (dimData) {
                             tooltipDiv.innerHTML = `
-                                <div style="font-weight: 700; color: var(--brand-main); margin-bottom: 8px; font-size: 15px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
-                                    ${dimName} <span style="color:var(--text-tertiary); font-size:13px; font-weight:normal;">(${dimData.score} / 10)</span>
+                                <div style="font-weight: 700; color: #ff2a75; margin-bottom: 6px; font-size: 16px; border-bottom: 1px solid #334155; padding-bottom: 6px;">
+                                    ${dimName} <span style="color:#f472b6; font-size:14px; font-weight:normal;">(${dimData.score} / 10)</span>
                                 </div>
-                                <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">${dimData.text}</div>
+                                <div style="font-size: 14px; color: #cbd5e1; line-height: 1.6;">${dimData.text}</div>
                             `;
                             tooltipDiv.style.display = 'block';
-                            // Allow a tiny reflow before setting opacity
-                            setTimeout(() => { tooltipDiv.style.opacity = '1'; }, 10);
+                            tooltipDiv.style.opacity = '1';
                         }
                     }
                 });
@@ -390,12 +460,13 @@
                         tooltipDiv.style.opacity = '0';
                         setTimeout(() => {
                             if (tooltipDiv.style.opacity === '0') tooltipDiv.style.display = 'none';
-                        }, 300);
+                        }, 200);
                     }
                 });
 
                 chartDom.addEventListener('mousemove', function (e) {
                     if (tooltipDiv.style.display === 'block') {
+                        // 防止提示框超出屏幕右侧
                         let x = e.pageX + 20;
                         let y = e.pageY + 20;
                         if (x + 320 > window.innerWidth) {
@@ -453,49 +524,39 @@
         function draw() {
             if (isPaused) return;
             
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // 使用半透明填充实现酷炫的霓虹拖尾效果
+            ctx.fillStyle = 'rgba(2, 0, 20, 0.15)'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             
             for (let i = 0; i < cols; i++) {
                 for (let j = 0; j < rows; j++) {
                     const x = i * resolution;
                     const y = j * resolution;
+                    const centerX = x + resolution / 2;
+                    const centerY = y + resolution / 2;
                     
                     if (grid[i][j] === 1) {
-                        // 金色金属质感渐变（黑金主题）
-                        const cellGrad = ctx.createLinearGradient(x, y, x + resolution, y + resolution);
-                        cellGrad.addColorStop(0, 'rgba(250, 235, 150, 0.9)');   // 亮金高光
-                        cellGrad.addColorStop(0.4, 'rgba(212, 175, 55, 0.8)');  // 纯金本色
-                        cellGrad.addColorStop(0.7, 'rgba(166, 124, 0, 0.8)');   // 暗金/黄铜色
-                        cellGrad.addColorStop(1, 'rgba(100, 75, 0, 0.7)');      // 底部深金暗面
+                        // 绘制活跃的细胞：发光霓虹圆点
+                        // 1. 外层光晕 (赛博粉)
+                        ctx.fillStyle = 'rgba(255, 42, 117, 0.3)';
+                        ctx.beginPath();
+                        ctx.arc(centerX, centerY, resolution / 2 - 2, 0, Math.PI * 2);
+                        ctx.fill();
                         
-                        ctx.fillStyle = cellGrad;
-                        
-                        // 金色辉光阴影，让金属感更强烈
-                        ctx.shadowColor = 'rgba(212, 175, 55, 0.3)';
-                        ctx.shadowBlur = 6;
-                        ctx.shadowOffsetX = 0;
-                        ctx.shadowOffsetY = 2;
-                        
-                        // 在深色背景下，硬朗的金属块边缘更能体现质感
-                        ctx.fillRect(x + 1, y + 1, resolution - 2, resolution - 2);
-                        
-                        // 添加一个微小的高光边框线增强立体感
-                        ctx.strokeStyle = 'rgba(255, 245, 200, 0.5)';
-                        ctx.lineWidth = 0.5;
-                        ctx.strokeRect(x + 1, y + 1, resolution - 2, resolution - 2);
+                        // 2. 内层高亮核心
+                        ctx.fillStyle = '#ff2a75';
+                        ctx.beginPath();
+                        ctx.arc(centerX, centerY, resolution / 2 - 5, 0, Math.PI * 2);
+                        ctx.fill();
                     } else {
-                        // 死亡细胞用极弱的暗金点缀，保持深色背景的纯粹
-                        ctx.fillStyle = 'rgba(212, 175, 55, 0.02)';
-                        ctx.shadowColor = 'transparent';
-                        ctx.shadowBlur = 0;
-                        ctx.fillRect(x + resolution/2 - 1, y + resolution/2 - 1, 2, 2);
+                        // 绘制死细胞：维持科技感的暗淡网格点阵 (赛博蓝)
+                        ctx.fillStyle = 'rgba(14, 165, 233, 0.05)';
+                        ctx.beginPath();
+                        ctx.arc(centerX, centerY, 1.5, 0, Math.PI * 2);
+                        ctx.fill();
                     }
                 }
             }
-            
-            // Reset shadow for next frame
-            ctx.shadowColor = 'transparent';
-            ctx.shadowBlur = 0;
             
             computeNext();
         }
@@ -613,6 +674,7 @@
             speech.classList.add('show');
             penguinImg.style.animationPlayState = 'paused';
             updateSpeechPosition();
+            // 持续更新气泡位置，跟随企鹅
             function trackPosition() {
                 if (speech.classList.contains('show')) {
                     updateSpeechPosition();

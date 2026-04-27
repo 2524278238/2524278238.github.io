@@ -7,294 +7,340 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Impeccable Colors Strategy - Tinted OKLCH */
         :root {
-            --bg-base: oklch(0.98 0.005 250); /* Tinted off-white background */
-            --bg-surface: oklch(0.995 0.002 250); /* Surface, not pure white */
-            --text-primary: oklch(0.2 0.02 250); /* Deep tinted gray, not black */
-            --text-secondary: oklch(0.45 0.01 250); /* Muted gray */
-            --text-tertiary: oklch(0.65 0.005 250); /* Lightest readable gray */
-            --brand-main: oklch(0.5 0.12 250); /* Restrained blue accent */
-            --brand-surface: oklch(0.96 0.02 250); /* Light brand background */
-            --border-subtle: oklch(0.92 0.005 250); /* Soft borders */
+            --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
         }
-        
         body {
-            background-color: var(--bg-base);
-            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
-
-        /* Typography optimizations */
-        .text-reading-length {
-            max-width: 70ch; /* 65-75ch limit for comfortable reading */
+        .hero-bg {
+            background-color: #fafaf7;
+            background-image: radial-gradient(circle at 1px 1px, #e8e4dc 1px, transparent 0);
+            background-size: 28px 28px;
         }
-        
-        h1, h2, h3, h4, h5, h6 {
-            letter-spacing: -0.02em;
+        .fade-up {
+            opacity: 0;
+            transform: translateY(22px);
+            animation: fadeUp 0.9s var(--ease-expo) forwards;
         }
-
-        /* Exponential easing curves (No bounce, no linear) */
-        .ease-out-expo {
-            transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        /* Entrance Animations */
-        .fade-in { animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
-        .delay-1 { animation-delay: 0.15s; }
-        .delay-2 { animation-delay: 0.3s; }
-        .delay-3 { animation-delay: 0.45s; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
+        .fade-up-1 { animation-delay: 0.05s; }
+        .fade-up-2 { animation-delay: 0.15s; }
+        .fade-up-3 { animation-delay: 0.25s; }
+        .fade-up-4 { animation-delay: 0.38s; }
+        .fade-up-5 { animation-delay: 0.50s; }
+        .fade-up-6 { animation-delay: 0.62s; }
+        .fade-up-7 { animation-delay: 0.74s; }
+        @keyframes fadeUp {
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Ambient Background Blobs (Delight & Overdrive) */
-        @keyframes blob {
-            0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-            100% { transform: translate(0px, 0px) scale(1); }
-        }
-        .animate-blob {
-            animation: blob 18s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform;
-        }
-        .animation-delay-2000 { animation-delay: 2s; }
-        .animation-delay-4000 { animation-delay: 4s; }
-
-        /* Scroll-driven Reveal (Progressive Enhancement) */
-        @supports (animation-timeline: view()) {
-            .scroll-reveal {
-                animation: linear scrollReveal both;
-                animation-timeline: view();
-                animation-range: entry 5% cover 20%;
-                opacity: 1; /* Override the default opacity:0 of fade-in */
-            }
-            @keyframes scrollReveal {
-                from { opacity: 0; transform: translateY(40px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-        }
-
-        /* Subtle collapse panel */
         .collapse-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            opacity: 0;
+            transition: max-height 0.6s var(--ease-expo);
         }
         .collapse-toggle:checked ~ .collapse-content {
-            max-height: 600px;
-            opacity: 1;
+            max-height: 700px;
         }
         .collapse-toggle:checked ~ .collapse-icon {
             transform: rotate(180deg);
         }
-        
-        /* Clean Link Styles */
-        .link-subtle {
-            color: var(--brand-main);
-            text-decoration: none;
-            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        .card-hover {
+            transition: transform 0.35s var(--ease-expo), box-shadow 0.35s var(--ease-expo);
         }
-        .link-subtle:hover {
-            opacity: 0.7;
+        .card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.10);
+        }
+        .btn-hover {
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+        }
+        .btn-hover:active {
+            transform: scale(0.97);
+        }
+        .accent-bar {
+            display: inline-block;
+            width: 3rem;
+            height: 3px;
+            background: #d97706;
+            border-radius: 2px;
+            vertical-align: middle;
+            margin-right: 0.75rem;
+        }
+        .tag-red {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fee2e2;
+        }
+        .name-glow {
+            text-shadow: 0 2px 20px rgba(217, 119, 6, 0.12);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #d97706;
+            transition: width 0.3s var(--ease-expo);
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .section-divider {
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, #d97706, #fbbf24);
+            border-radius: 2px;
+        }
+        .pill-tag {
+            background: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fde68a;
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 0.03em;
         }
     </style>
 </head>
-<body class="antialiased font-sans min-h-screen flex flex-col relative">
+<body class="bg-stone-50 text-stone-800 antialiased min-h-screen">
 
-    <!-- Subtle Ambient Background -->
-    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none flex justify-center items-center">
-        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[100px] opacity-[0.35] animate-blob" style="background-color: var(--brand-main);"></div>
-        <div class="absolute top-[30%] right-[-10%] w-[400px] h-[400px] rounded-full blur-[80px] opacity-[0.25] animate-blob animation-delay-2000" style="background-color: var(--text-primary);"></div>
-        <div class="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] rounded-full blur-[120px] opacity-[0.25] animate-blob animation-delay-4000" style="background-color: var(--brand-main);"></div>
-    </div>
-
-    <!-- 极简导航栏 -->
-    <nav class="relative z-50 sticky top-0 backdrop-blur-md" style="background-color: color-mix(in oklch, var(--bg-surface) 85%, transparent); border-bottom: 1px solid var(--border-subtle);">
-        <div class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center">
-            <div class="font-extrabold text-sm tracking-[0.2em] uppercase" style="color: var(--brand-main);">Resume</div>
-            <a href="index.html" class="flex items-center gap-2 text-sm font-medium transition ease-out-expo hover:opacity-70" style="color: var(--text-secondary);">
+    <nav class="bg-white/90 backdrop-blur-sm shadow-sm sticky top-0 z-50 border-b border-stone-100">
+        <div class="max-w-3xl mx-auto px-8 py-4 flex justify-between items-center">
+            <span class="font-bold text-base text-stone-800 tracking-[0.2em] flex items-center gap-2">
+                <span class="accent-bar" style="width:20px;height:3px;background:#d97706;display:inline-block;border-radius:2px;"></span>RESUME
+            </span>
+            <a href="index.html" class="nav-link text-stone-400 hover:text-stone-800 transition flex items-center gap-2 text-sm font-medium">
                 <i class="fas fa-arrow-left text-xs"></i> 返回主页
             </a>
         </div>
     </nav>
 
-    <main class="relative z-10 max-w-4xl mx-auto px-6 py-16 md:py-24 flex-grow w-full">
-        
-        <!-- 头部摘要 -->
-        <header class="mb-20 fade-in">
-            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 transition-transform duration-700 ease-out-expo hover:translate-x-2 cursor-default" style="color: var(--text-primary);">李扬韬</h1>
-            <p class="text-xl md:text-2xl font-medium mb-10 transition-colors duration-500 ease-out-expo hover:text-opacity-80" style="color: var(--brand-main);">算法工程师 / AI 智能体研发</p>
-            
-            <!-- 个人信息折叠面板 (去除嵌套卡片，改为平滑展开的区块) -->
-            <div class="border-y" style="border-color: var(--border-subtle);">
+    <main class="max-w-3xl mx-auto px-8">
+
+        <header class="pt-16 pb-12 text-center fade-up fade-up-1">
+            <div class="mb-6">
+                <span class="inline-block px-3 py-1 pill-tag rounded-full mb-5">算法工程师 / AI 智能体</span>
+                <h1 class="text-7xl font-black text-stone-900 tracking-tight mb-4 name-glow leading-none">李扬韬</h1>
+                <div class="flex items-center justify-center gap-3 mt-3">
+                    <div class="section-divider"></div>
+                    <span class="text-stone-400 text-sm font-medium tracking-widest uppercase">Algorithm &amp; AI Agent</span>
+                    <div class="section-divider"></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden text-left max-w-xl mx-auto fade-up fade-up-2">
                 <input type="checkbox" id="info-toggle" class="collapse-toggle hidden">
-                <label for="info-toggle" class="flex justify-between items-center py-5 cursor-pointer transition ease-out-expo hover:opacity-70">
-                    <span class="font-semibold flex items-center gap-3 text-base" style="color: var(--text-primary);">
-                        <i class="fas fa-id-card text-sm" style="color: var(--text-tertiary);"></i> 基本信息 (点击展开/折叠)
+                <label for="info-toggle" class="flex justify-between items-center p-5 cursor-pointer hover:bg-stone-50 transition">
+                    <span class="font-semibold text-stone-500 flex items-center gap-2 text-sm tracking-wide">
+                        <i class="fas fa-id-card text-amber-500"></i> 基本信息（点击展开 / 折叠）
                     </span>
-                    <i class="fas fa-chevron-down transition-transform duration-500 ease-out-expo collapse-icon" style="color: var(--text-tertiary);"></i>
+                    <i class="fas fa-chevron-down text-stone-300 transition-transform duration-300 collapse-icon"></i>
                 </label>
                 <div class="collapse-content">
-                    <div class="pb-6 pt-2 grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12 text-sm">
-                        <div class="flex flex-col gap-1"><span class="uppercase tracking-widest text-xs font-bold" style="color: var(--text-tertiary);">姓名</span> <span class="font-medium text-base" style="color: var(--text-primary);">李扬韬</span></div>
-                        <div class="flex flex-col gap-1"><span class="uppercase tracking-widest text-xs font-bold" style="color: var(--text-tertiary);">民族</span> <span class="font-medium text-base" style="color: var(--text-primary);">汉</span></div>
-                        <div class="flex flex-col gap-1"><span class="uppercase tracking-widest text-xs font-bold" style="color: var(--text-tertiary);">电话</span> <span class="font-medium text-base" style="color: var(--text-primary);">18950115169</span></div>
-                        <div class="flex flex-col gap-1"><span class="uppercase tracking-widest text-xs font-bold" style="color: var(--text-tertiary);">邮箱</span> <span class="font-medium text-base" style="color: var(--text-primary);">2524278328@qq.com</span></div>
-                        <div class="flex flex-col gap-1"><span class="uppercase tracking-widest text-xs font-bold" style="color: var(--text-tertiary);">出生年月</span> <span class="font-medium text-base" style="color: var(--text-primary);">2001.04</span></div>
-                        <div class="flex flex-col gap-1"><span class="uppercase tracking-widest text-xs font-bold" style="color: var(--text-tertiary);">政治面貌</span> <span class="font-medium text-base" style="color: var(--text-primary);">中共党员</span></div>
-                        <div class="flex flex-col gap-1 md:col-span-2"><span class="uppercase tracking-widest text-xs font-bold" style="color: var(--text-tertiary);">住址</span> <span class="font-medium text-base" style="color: var(--text-primary);">福建省厦门市思明区</span></div>
-                        <div class="flex flex-col gap-1 md:col-span-2"><span class="uppercase tracking-widest text-xs font-bold" style="color: var(--brand-main);">学历</span> <span class="font-bold text-lg" style="color: var(--text-primary);">硕士研究生（在读） - 软件工程</span></div>
-                        <div class="flex flex-col gap-1 md:col-span-2"><span class="uppercase tracking-widest text-xs font-bold" style="color: var(--text-tertiary);">就读院校</span> <span class="font-medium text-base" style="color: var(--text-primary);">大连海事大学（本科） - 苏州大学（硕士）</span></div>
+                    <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 text-sm">
+                        <div class="flex border-b border-stone-50 pb-2"><span class="text-stone-300 w-16 shrink-0">姓名</span> <span class="font-semibold text-stone-700">李扬韬</span></div>
+                        <div class="flex border-b border-stone-50 pb-2"><span class="text-stone-300 w-16 shrink-0">民族</span> <span class="font-semibold text-stone-700">汉</span></div>
+                        <div class="flex border-b border-stone-50 pb-2"><span class="text-stone-300 w-16 shrink-0">电话</span> <span class="font-semibold text-stone-700">18950115169</span></div>
+                        <div class="flex border-b border-stone-50 pb-2"><span class="text-stone-300 w-16 shrink-0">邮箱</span> <span class="font-semibold text-stone-700">2524278328@qq.com</span></div>
+                        <div class="flex border-b border-stone-50 pb-2"><span class="text-stone-300 w-16 shrink-0">出生年月</span> <span class="font-semibold text-stone-700">2001.04</span></div>
+                        <div class="flex border-b border-stone-50 pb-2"><span class="text-stone-300 w-16 shrink-0">政治面貌</span> <span class="font-semibold text-stone-700">中共党员</span></div>
+                        <div class="flex border-b border-stone-50 pb-2 sm:col-span-2"><span class="text-stone-300 w-16 shrink-0">住址</span> <span class="font-semibold text-stone-700">福建省厦门市思明区</span></div>
+                        <div class="flex border-b border-stone-50 pb-2 sm:col-span-2"><span class="text-stone-300 w-16 shrink-0">学历</span> <span class="font-semibold text-stone-700">硕士研究生（在读） - 软件工程</span></div>
+                        <div class="flex border-b border-stone-50 pb-2 sm:col-span-2"><span class="text-stone-300 w-16 shrink-0">就读院校</span> <span class="font-semibold text-stone-700">大连海事大学（本科） - 苏州大学（硕士）</span></div>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- 专业技能 (抛弃同质化卡片与侧边条纹，改用排版对比) -->
-        <section class="mb-24 fade-in delay-1 scroll-reveal">
-            <h2 class="text-xs uppercase tracking-widest font-bold mb-10 pb-4 border-b" style="color: var(--text-secondary); border-color: var(--border-subtle);">
-                专业技能
+        <section class="mb-20 fade-up fade-up-3">
+            <h2 class="text-2xl font-bold text-stone-900 mb-2 flex items-center gap-3">
+                <i class="fas fa-tools text-amber-500 text-lg"></i> 专业技能
             </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
-                <div class="flex flex-col gap-3">
-                    <h3 class="text-lg font-bold" style="color: var(--text-primary);">大模型算法与应用能力</h3>
-                    <p class="text-base leading-relaxed text-reading-length" style="color: var(--text-secondary);">熟悉 Llama、Qwen、DeepSeek 等开源大语言模型，具备 <strong style="color: var(--text-primary);">LoRA 微调</strong>、推理优化与 <strong style="color: var(--text-primary);">Prompt Engineering</strong> 实践经验；熟悉 PyTorch、Transformers、vLLM 等框架，具备 <strong style="color: var(--text-primary);">RAG 系统</strong>、长文本理解及 Agent 应用开发经验。</p>
-                </div>
-                <div class="flex flex-col gap-3">
-                    <h3 class="text-lg font-bold" style="color: var(--text-primary);">Agent 系统开发能力</h3>
-                    <p class="text-base leading-relaxed text-reading-length" style="color: var(--text-secondary);">具备基于 Dify、HiAgent 等平台及纯代码方式构建智能体系统的经验，能够完成<strong style="color: var(--text-primary);">多 Agent 架构设计</strong>、任务流程编排与工具调用机制开发，并在医疗与政务等场景中实现落地应用。</p>
-                </div>
-                <div class="flex flex-col gap-3">
-                    <h3 class="text-lg font-bold" style="color: var(--text-primary);">工程与开发能力</h3>
-                    <p class="text-base leading-relaxed text-reading-length" style="color: var(--text-secondary);">熟练使用 <strong style="color: var(--text-primary);">Python</strong>，熟悉 Linux 与 Docker 开发环境，具备良好的工程实现能力；<strong style="color: var(--text-primary);">熟练运用 AI 编程工具</strong>，能够将复杂任务拆解为适合大模型协同完成的模块化流程。</p>
-                </div>
-                <div class="flex flex-col gap-3">
-                    <h3 class="text-lg font-bold" style="color: var(--text-primary);">技术创新与前沿探索</h3>
-                    <p class="text-base leading-relaxed text-reading-length" style="color: var(--text-secondary);">持续关注大模型技术发展与应用范式演进，对新的 AI 应用形态有自己的独特见解与实践动力。</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 实习经历 (去除“卡片包卡片”反模式) -->
-        <section class="mb-24 fade-in delay-2 scroll-reveal">
-            <h2 class="text-xs uppercase tracking-widest font-bold mb-10 pb-4 border-b" style="color: var(--text-secondary); border-color: var(--border-subtle);">
-                实习经历
-            </h2>
-            
-            <div class="flex flex-col">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2">
-                    <h3 class="text-2xl font-bold" style="color: var(--text-primary);">深圳自由动脉科技有限公司</h3>
-                    <div class="text-sm mt-1 md:mt-0 font-medium tracking-wide" style="color: var(--text-tertiary);">
-                        2025年6月 – 2025年12月
+            <div class="section-divider mb-8"></div>
+            <div class="space-y-4">
+                <div class="bg-white p-7 rounded-2xl shadow-sm border border-stone-100 card-hover">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
+                            <i class="fas fa-brain text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-stone-900 mb-2 text-base leading-snug">大模型算法与应用能力</h3>
+                            <p class="text-stone-500 text-sm leading-relaxed">熟悉 Llama、Qwen、DeepSeek 等开源大语言模型，具备 <strong class="text-stone-700">LoRA 微调</strong>、推理优化与 <strong class="text-stone-700">Prompt Engineering</strong> 实践经验；熟悉 PyTorch、Transformers、vLLM 等框架，具备 <strong class="text-stone-700">RAG 系统</strong>、长文本理解及 Agent 应用开发经验。</p>
+                        </div>
                     </div>
                 </div>
-                <p class="text-lg font-medium mb-8" style="color: var(--brand-main);">算法实习生</p>
-
-                <div class="space-y-8 text-base leading-relaxed text-reading-length" style="color: var(--text-secondary);">
-                    <div class="flex flex-col gap-1">
-                        <strong class="text-lg font-semibold" style="color: var(--text-primary);">智能体系统开发</strong>
-                        <p>基于 Dify、HiAgent 等平台开发面向医院与政府的智能体系统，涵盖病历质控、合同对比、辅助诊疗等应用场景，推动医疗流程智能化。</p>
+                <div class="bg-white p-7 rounded-2xl shadow-sm border border-stone-100 card-hover">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
+                            <i class="fas fa-robot text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-stone-900 mb-2 text-base leading-snug">Agent 系统开发能力</h3>
+                            <p class="text-stone-500 text-sm leading-relaxed">具备基于 Dify、HiAgent 等平台及纯代码方式构建智能体系统的经验，能够完成<strong class="text-stone-700">多 Agent 架构设计</strong>、任务流程编排与工具调用机制开发，并在医疗与政务等场景中实现落地应用。</p>
+                        </div>
                     </div>
-                    <div class="flex flex-col gap-1">
-                        <strong class="text-lg font-semibold" style="color: var(--text-primary);">小模型训练与优化</strong>
-                        <p>参与口腔病症识别小模型的训练与优化，负责数据预处理、模型微调与评估，提升模型在医疗场景下的轻量化与准确性。</p>
+                </div>
+                <div class="bg-white p-7 rounded-2xl shadow-sm border border-stone-100 card-hover">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
+                            <i class="fas fa-code text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-stone-900 mb-2 text-base leading-snug">工程与开发能力</h3>
+                            <p class="text-stone-500 text-sm leading-relaxed">熟练使用 <strong class="text-stone-700">Python</strong>，熟悉 Linux 与 Docker 开发环境，具备良好的工程实现能力；<strong class="text-stone-700">熟练运用 AI 编程工具</strong>，能够将复杂任务拆解为适合大模型协同完成的模块化流程。</p>
+                        </div>
                     </div>
-                    <div class="flex flex-col gap-4">
-                        <strong class="text-lg font-semibold" style="color: var(--text-primary);">招投标智能体算法研发</strong>
-                        <p>功能涵盖招标助手、合同助手、清标助手等，攻克了实际业务中的两大核心难题：</p>
-                        
-                        <!-- 难题列表（不再使用内部卡片） -->
-                        <div class="pl-6 border-l-2 py-2 space-y-6" style="border-color: var(--border-subtle);">
-                            <div>
-                                <span class="font-bold text-sm tracking-wider uppercase mr-2" style="color: var(--text-primary);">难题一</span>
-                                提取结构不规整且文档内容长的标书信息。<br>
-                                <a href="https://github.com/2524278238/bid_clarification_llm" target="_blank" class="link-subtle inline-flex items-center gap-1 mt-2 text-sm font-medium">
-                                    <i class="fab fa-github"></i> 解决方案：bid_clarification_llm &rarr;
-                                </a>
-                            </div>
-                            <div>
-                                <span class="font-bold text-sm tracking-wider uppercase mr-2" style="color: var(--text-primary);">难题二</span>
-                                大模型生成文档如何与原文档格式一致。<br>
-                                <div class="mt-2 flex flex-col sm:flex-row gap-3 sm:gap-6">
-                                    <a href="https://github.com/2524278238/doc_fill" target="_blank" class="link-subtle inline-flex items-center gap-1 text-sm font-medium">
-                                        <i class="fab fa-github"></i> 解决方案 1：doc_fill &rarr;
-                                    </a>
-                                    <a href="https://github.com/2524278238/doc_generator" target="_blank" class="link-subtle inline-flex items-center gap-1 text-sm font-medium">
-                                        <i class="fab fa-github"></i> 解决方案 2：doc_generator &rarr;
-                                    </a>
-                                </div>
-                            </div>
+                </div>
+                <div class="bg-white p-7 rounded-2xl shadow-sm border border-stone-100 card-hover">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
+                            <i class="fas fa-rocket text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-stone-900 mb-2 text-base leading-snug">技术创新与前沿探索</h3>
+                            <p class="text-stone-500 text-sm leading-relaxed">持续关注大模型技术发展与应用范式演进，对新的 AI 应用形态有自己的独特见解与实践动力。</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 科研经历 -->
-        <section class="mb-24 fade-in delay-3 scroll-reveal">
-            <h2 class="text-xs uppercase tracking-widest font-bold mb-10 pb-4 border-b" style="color: var(--text-secondary); border-color: var(--border-subtle);">
-                科研经历
+        <section class="mb-20 fade-up fade-up-4">
+            <h2 class="text-2xl font-bold text-stone-900 mb-2 flex items-center gap-3">
+                <i class="fas fa-building text-amber-500 text-lg"></i> 实习经历
             </h2>
-            
-            <div class="flex flex-col">
-                <span class="text-sm font-bold tracking-widest uppercase mb-3" style="color: var(--brand-main);">学术论文 (一作)</span>
-                <h3 class="text-2xl font-bold mb-2" style="color: var(--text-primary);">基于源端易错词的大语言模型机器翻译优化方法</h3>
-                <p class="text-base font-medium mb-8" style="color: var(--text-tertiary);">《计算机工程与应用》录用，待刊出。</p>
-                
-                <div class="text-base leading-relaxed text-reading-length mb-10" style="color: var(--text-secondary);">
-                    <strong class="text-lg font-semibold block mb-2" style="color: var(--text-primary);">任务描述</strong>
-                    提出一种基于源端易错词的翻译优化方法。首先，通过大规模语料统计识别出显著影响翻译质量的易错词。在此基础上，设计了结合 <strong style="color: var(--text-primary);">BGE 语义检索</strong>与<strong style="color: var(--text-primary);">无监督质量评估</strong>的检索增强生成（<strong style="color: var(--text-primary);">RAG</strong>）策略，用于优化上下文学习示例选择。同时，构建针对易错词的高质量训练数据集，并采用 <strong style="color: var(--text-primary);">LoRA</strong> 微调基线模型。结果表明，该方法能够显著提高翻译质量，为提升大语言模型机器翻译的稳定性与准确性提供了一种有效途径。
+            <div class="section-divider mb-8"></div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-8 fade-up fade-up-5">
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-8 gap-3">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <h3 class="text-xl font-bold text-stone-900 tracking-tight">深圳自由动脉科技有限公司</h3>
+                        </div>
+                        <p class="text-amber-600 font-semibold text-sm mt-1">算法实习生</p>
+                    </div>
+                    <div class="text-stone-400 text-sm font-medium shrink-0 flex items-center gap-2">
+                        <i class="far fa-calendar-alt text-xs"></i> 2025年6月 - 2025年12月
+                    </div>
                 </div>
-                
-                <div class="flex flex-wrap gap-6">
-                    <a href="https://github.com/2524278238/Error-prone-Words-Optimization" target="_blank" class="group relative overflow-hidden px-6 py-3 font-semibold text-sm transition-all duration-500 ease-out-expo rounded-lg flex items-center gap-2 shadow-sm hover:shadow-xl hover:-translate-y-1" style="background-color: var(--text-primary); color: var(--bg-surface);">
-                        <span class="absolute inset-0 w-full h-full bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out-expo rounded-lg"></span>
-                        <i class="fab fa-github relative z-10"></i> <span class="relative z-10">开源项目代码</span>
+
+                <ul class="space-y-6 text-stone-600 text-sm leading-7">
+                    <li class="flex items-start">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2.5 mr-4 shrink-0"></span>
+                        <span><strong class="text-stone-800 font-semibold">智能体系统开发：</strong>基于 Dify、HiAgent 等平台开发面向医院与政府的智能体系统，涵盖病历质控、合同对比、辅助诊疗等应用场景，推动医疗流程智能化。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2.5 mr-4 shrink-0"></span>
+                        <span><strong class="text-stone-800 font-semibold">小模型训练与优化：</strong>参与口腔病症识别小模型的训练与优化，负责数据预处理、模型微调与评估，提升模型在医疗场景下的轻量化与准确性。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2.5 mr-4 shrink-0"></span>
+                        <div>
+                            <strong class="text-stone-800 font-semibold">招投标智能体算法研发：</strong>功能涵盖招标助手、合同助手、清标助手等，攻克了实际业务中的两大核心难题：
+                            <div class="mt-5 grid grid-cols-1 gap-4">
+                                <div class="bg-stone-50 p-5 rounded-xl border border-stone-100">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="tag-red font-bold text-xs px-2 py-0.5 rounded">难题一</span>
+                                        <span class="text-stone-600 text-sm font-medium">提取结构不规整且文档内容长的标书信息</span>
+                                    </div>
+                                    <a href="https://github.com/2524278238/bid_clarification_llm" target="_blank" class="inline-flex items-center gap-2 mt-2 text-stone-600 hover:text-amber-600 font-medium text-xs transition-colors">
+                                        <i class="fab fa-github text-sm"></i> 解决方案：bid_clarification_llm <span class="text-stone-300">→</span>
+                                    </a>
+                                </div>
+                                <div class="bg-stone-50 p-5 rounded-xl border border-stone-100">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="tag-red font-bold text-xs px-2 py-0.5 rounded">难题二</span>
+                                        <span class="text-stone-600 text-sm font-medium">大模型生成文档如何与原文档格式一致</span>
+                                    </div>
+                                    <div class="mt-2 flex flex-wrap gap-3">
+                                        <a href="https://github.com/2524278238/doc_fill" target="_blank" class="inline-flex items-center gap-1.5 text-stone-600 hover:text-amber-600 font-medium text-xs transition-colors">
+                                            <i class="fab fa-github text-sm"></i> 解决方案 1：doc_fill
+                                        </a>
+                                        <a href="https://github.com/2524278238/doc_generator" target="_blank" class="inline-flex items-center gap-1.5 text-stone-600 hover:text-amber-600 font-medium text-xs transition-colors">
+                                            <i class="fab fa-github text-sm"></i> 解决方案 2：doc_generator
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="mb-20 fade-up fade-up-6">
+            <h2 class="text-2xl font-bold text-stone-900 mb-2 flex items-center gap-3">
+                <i class="fas fa-microscope text-amber-500 text-lg"></i> 科研经历
+            </h2>
+            <div class="section-divider mb-8"></div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-8 fade-up fade-up-7">
+                <div class="mb-5">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="pill-tag px-3 py-1 rounded-full text-xs font-semibold tracking-wide">学术论文（一作）</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-stone-900 leading-snug tracking-tight">基于源端易错词的大语言模型机器翻译优化方法</h3>
+                    <p class="text-stone-400 text-sm mt-1.5 font-medium"><i class="fas fa-book-open text-amber-400 mr-1"></i> 《计算机工程与应用》录用，待刊出。</p>
+                </div>
+
+                <div class="text-stone-600 text-sm leading-7 mb-7 bg-stone-50 p-5 rounded-xl border-l-2 border-amber-300">
+                    <strong class="text-stone-800 font-semibold block mb-2">任务描述</strong>
+                    提出一种基于源端易错词的翻译优化方法。首先，通过大规模语料统计识别出显著影响翻译质量的易错词。在此基础上，设计了结合 <strong class="text-stone-800">BGE 语义检索</strong>与<strong class="text-stone-800">无监督质量评估</strong>的检索增强生成（<strong class="text-stone-800">RAG</strong>）策略，用于优化上下文学习示例选择。同时，构建针对易错词的高质量训练数据集，并采用 <strong class="text-stone-800">LoRA</strong> 微调基线模型。结果表明，该方法能够显著提高翻译质量，为提升大语言模型机器翻译的稳定性与准确性提供了一种有效途径。
+                </div>
+
+                <div class="flex flex-wrap gap-3">
+                    <a href="https://github.com/2524278238/Error-prone-Words-Optimization" target="_blank" class="btn-hover px-5 py-2.5 bg-stone-900 text-white rounded-xl text-sm font-semibold flex items-center gap-2 hover:bg-stone-700">
+                        <i class="fab fa-github"></i> 开源项目代码
                     </a>
-                    <a href="(2510-0140) .pdf" download="基于源端易错词的大语言模型机器翻译优化方法.pdf" class="group relative overflow-hidden px-6 py-3 font-semibold text-sm transition-all duration-500 ease-out-expo rounded-lg flex items-center gap-2 border hover:border-transparent hover:shadow-lg hover:-translate-y-1" style="background-color: transparent; border-color: var(--brand-main); color: var(--brand-main);">
-                        <span class="absolute inset-0 w-full h-full translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out-expo rounded-lg" style="background-color: var(--brand-surface);"></span>
-                        <i class="fas fa-file-pdf relative z-10"></i> <span class="relative z-10">下载论文 PDF</span>
+                    <a href="(2510-0140) .pdf" download="基于源端易错词的大语言模型机器翻译优化方法.pdf" class="btn-hover px-5 py-2.5 bg-stone-100 text-stone-600 rounded-xl text-sm font-semibold flex items-center gap-2 hover:bg-amber-100 hover:text-amber-700">
+                        <i class="fas fa-file-pdf"></i> 下载论文 PDF (2510-0140)
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- 技术方向探索 (使用错落有致的文本列表替代图标卡片阵列) -->
-        <section class="mb-16 fade-in delay-3 scroll-reveal">
-            <h2 class="text-xs uppercase tracking-widest font-bold mb-10 pb-4 border-b" style="color: var(--text-secondary); border-color: var(--border-subtle);">
-                技术方向探索
+        <section class="mb-20 fade-up fade-up-7">
+            <h2 class="text-2xl font-bold text-stone-900 mb-2 flex items-center gap-3">
+                <i class="fas fa-compass text-amber-500 text-lg"></i> 技术方向探索
             </h2>
-            <p class="text-base mb-8 text-reading-length" style="color: var(--text-secondary);">本人仍持续在以下前沿领域保持好奇心与探索欲：</p>
-            
-            <ul class="space-y-6 text-lg font-medium" style="color: var(--text-primary);">
-                <li class="flex items-start gap-4 group cursor-default transition-transform duration-500 ease-out-expo hover:translate-x-2">
-                    <span class="text-sm mt-1 transition-transform duration-500 ease-out-expo group-hover:translate-x-2 group-hover:scale-125" style="color: var(--brand-main);">&rarr;</span>
-                    <span class="transition-colors duration-500 ease-out-expo group-hover:text-[var(--brand-main)]">如何利用 LLM 进行量化交易？</span>
-                </li>
-                <li class="flex items-start gap-4 group cursor-default transition-transform duration-500 ease-out-expo hover:translate-x-2">
-                    <span class="text-sm mt-1 transition-transform duration-500 ease-out-expo group-hover:translate-x-2 group-hover:scale-125" style="color: var(--brand-main);">&rarr;</span>
-                    <span class="transition-colors duration-500 ease-out-expo group-hover:text-[var(--brand-main)]">基于视觉大模型的 AI 输入法应用开发</span>
-                </li>
-                <li class="flex items-start gap-4 group cursor-default transition-transform duration-500 ease-out-expo hover:translate-x-2">
-                    <span class="text-sm mt-1 transition-transform duration-500 ease-out-expo group-hover:translate-x-2 group-hover:scale-125" style="color: var(--brand-main);">&rarr;</span>
-                    <span class="transition-colors duration-500 ease-out-expo group-hover:text-[var(--brand-main)]">像 vibe-coding 一样撰写、修改 Word 文档</span>
-                </li>
-                <li class="flex items-start gap-4 group cursor-default transition-transform duration-500 ease-out-expo hover:translate-x-2">
-                    <span class="text-sm mt-1 transition-transform duration-500 ease-out-expo group-hover:translate-x-2 group-hover:scale-125" style="color: var(--brand-main);">&rarr;</span>
-                    <span class="transition-colors duration-500 ease-out-expo group-hover:text-[var(--brand-main)]">站在玩家的角度，LLM 如何给游戏带来革命？</span>
-                </li>
-            </ul>
+            <div class="section-divider mb-6"></div>
+            <p class="text-stone-400 text-sm mb-6 font-medium">持续在以下前沿领域保持好奇心与探索欲：</p>
+            <div class="grid grid-cols-1 gap-3">
+                <div class="flex items-center gap-4 p-5 bg-white rounded-2xl shadow-sm border border-stone-100 card-hover cursor-default">
+                    <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0">
+                        <i class="fas fa-chart-line text-sm"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-stone-600">如何利用 LLM 进行量化交易？</span>
+                </div>
+                <div class="flex items-center gap-4 p-5 bg-white rounded-2xl shadow-sm border border-stone-100 card-hover cursor-default">
+                    <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0">
+                        <i class="fas fa-eye text-sm"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-stone-600">基于视觉大模型的 AI 输入法应用开发</span>
+                </div>
+                <div class="flex items-center gap-4 p-5 bg-white rounded-2xl shadow-sm border border-stone-100 card-hover cursor-default">
+                    <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0">
+                        <i class="fas fa-file-word text-sm"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-stone-600">像 vibe-coding 一样撰写、修改 Word 文档</span>
+                </div>
+                <div class="flex items-center gap-4 p-5 bg-white rounded-2xl shadow-sm border border-stone-100 card-hover cursor-default">
+                    <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0">
+                        <i class="fas fa-gamepad text-sm"></i>
+                    </div>
+                    <span class="text-sm font-semibold text-stone-600">站在玩家的角度，LLM 如何给游戏带来革命？</span>
+                </div>
+            </div>
         </section>
 
     </main>
 
-    <!-- 极简页脚 -->
-    <footer class="relative z-10 py-12 text-center mt-auto border-t" style="border-color: var(--border-subtle); color: var(--text-tertiary);">
-        <p class="text-sm font-medium tracking-wide">&copy; 2024 李扬韬 (2524278238). All rights reserved.</p>
+    <footer class="bg-stone-900 text-stone-500 py-8 text-center mt-4">
+        <p class="text-sm tracking-wide">&copy; 2024 李扬韬 (2524278238). All rights reserved.</p>
     </footer>
 
 </body>
